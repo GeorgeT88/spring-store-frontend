@@ -1,7 +1,7 @@
 import React from "react";
 
 
-
+import ButtonAppBar from './views/ButtonAppBar';
 import SignIn from './views/SignIn';
 import "./App.css"
 
@@ -10,20 +10,14 @@ import "./App.css"
 
 
 
- function App() {
+function App() {
   return (
     <div className="App">
-    <header className="App-header">
-       <h2>Spring Store App</h2> 
-   
-
-        <SignIn/>
-
-
-         </header>
-     </div>
+      <ButtonAppBar />
+      <SignIn />
+    </div>
   );
- 
+
 }
 
 export default App;

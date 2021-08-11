@@ -8,8 +8,6 @@ const ACCESS_TOKEN = "access_token";
 
 function SignIn() {
 
-
-
     function handleLogin(username, password) {
         axios.post('http://localhost:8762/login', {
             username: username,
@@ -27,8 +25,6 @@ function SignIn() {
     const [password, setPassword] = useState('')
     return (
         <React.Fragment>
-
-
             <form noValidate autoComplete="off">
                 <div>
                     <TextField id="username" label="Username" onChange={e => setUsername(e.target.value)} />
@@ -38,8 +34,6 @@ function SignIn() {
                 </div>
             </form>
             <Button variant="contained" color="primary" onClick={() => handleLogin(username, password)}>Login</Button>
-
-
         </React.Fragment>
     );
 
