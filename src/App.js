@@ -14,8 +14,10 @@ import "./App.css"
   return (
     <div className="App">
     <header className="App-header">
+       <h2>Spring Store App</h2> 
+   
 
-    <SignIn/>
+        <SignIn/>
 
 
          </header>

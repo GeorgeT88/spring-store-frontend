@@ -26,17 +26,21 @@ function SignIn() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     return (
-        <div>
-           
+        <React.Fragment>
 
-                <form noValidate autoComplete="off">
-                    <TextField id="username" label="Username" onChange={e => setUsername(e.target.value)}/>
-                    <TextField id="password" label="Password"  onChange={e => setPassword(e.target.value)} />
-                </form>
-                <Button variant="contained" color="primary" onClick={() => handleLogin(username, password)}>Login</Button>
 
-            
-        </div>
+            <form noValidate autoComplete="off">
+                <div>
+                    <TextField id="username" label="Username" onChange={e => setUsername(e.target.value)} />
+                </div>
+                <div>
+                    <TextField id="password" label="Password" onChange={e => setPassword(e.target.value)} />
+                </div>
+            </form>
+            <Button variant="contained" color="primary" onClick={() => handleLogin(username, password)}>Login</Button>
+
+
+        </React.Fragment>
     );
 
 
