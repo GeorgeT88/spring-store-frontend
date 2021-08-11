@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class SignUp extends React.Component {
-    render() {
+function SignUp (){
+ 
         return (
             <div>
                 <h2>Sing Up</h2>
+                <button>This is a button</button>
             </div>
         );
     }
-}
+
 
 export default SignUp

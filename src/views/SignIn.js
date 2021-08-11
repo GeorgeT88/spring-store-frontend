@@ -1,35 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 
+import React, { useState } from "react";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 const axios = require('axios').default;
 const ACCESS_TOKEN = "access_token";
 
-class SignIn extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            username: "",
-            password: ""
-        }
-        this.handleChangeUsername = this.handleChangeUsername.bind(this);
-        this.handleChangePassword = this.handleChangePassword.bind(this);
-        this.onSignIn = this.onSignIn.bind(this);
-        this.onSignUp = this.onSignUp.bind(this);
-    }
+function SignIn() {
 
-    handleChangeUsername(event) {
-        this.setState({ username: event.target.value })
-    }
-    handleChangePassword(event) {
-        this.setState({ password: event.target.value })
-    }
-    onSignIn(event) {
+
+
+    function handleLogin(username, password) {
         axios.post('http://localhost:8762/login', {
-            username: this.state.username,
-            password: this.state.password
+            username: username,
+            password: password
         }).then((response) => {
             localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
             console.log(response.headers.authorization);
@@ -37,24 +21,24 @@ class SignIn extends React.Component {
             console.log(error)
         })
     }
-    onSignUp(event) { 
-    }
 
-    render() {
-        return (
-            <div>
-                <h2>Sing In</h2>
+
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    return (
+        <div>
+           
 
                 <form noValidate autoComplete="off">
-                    <TextField id="standard-basic" label="Username" value={this.state.username} onChange={this.handleChangeUsername} />
-                    <TextField id="filled-basic" label="Password" value={this.state.password} onChange={this.handleChangePassword}/>
+                    <TextField id="username" label="Username" onChange={e => setUsername(e.target.value)}/>
+                    <TextField id="password" label="Password"  onChange={e => setPassword(e.target.value)} />
                 </form>
+                <Button variant="contained" color="primary" onClick={() => handleLogin(username, password)}>Login</Button>
 
-                <Button variant="contained" color="primary" onClick={this.onSignIn}>Sign In</Button>
-                <Button variant="outlined" color="primary" onClick={this.onSignUp}>Sign Up</Button>
-            </div>
-        );
-    }
+            
+        </div>
+    );
+
+
 }
-
-export default SignIn
+export default SignIn;
