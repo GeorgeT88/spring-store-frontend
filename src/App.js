@@ -13,6 +13,7 @@ function App() {
         <Switch>
           <Route exact path = "/"><SignIn/></Route>
           <Route path = "/signUp"><SignUp/></Route>
+          <Route path = "/signIn"><SignIn/></Route>
         </Switch>
     </Router>
    );
