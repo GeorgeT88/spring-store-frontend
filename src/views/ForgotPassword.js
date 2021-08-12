@@ -3,15 +3,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link} from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 
 
 const axios = require('axios').default;
@@ -62,10 +60,9 @@ function handleSignIn(username, password) {
     })
 }
 
- function SignIn() {
+ function ForgotPassword() {
   const classes = useStyles();
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
 
   return (
     <Container component="main" maxWidth="xs">
@@ -75,36 +72,21 @@ function handleSignIn(username, password) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Password Reset
         </Typography>
+        <p>Lost your password? Please enter your email address. You will receive a link to create a new password via email.</p>
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
+            id="email"
+            label="email"
+            name="email"
+            autoComplete="email"
             autoFocus
-            onChange={e => setUsername(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={e => setPassword(e.target.value)}            
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            onChange={e => setEmail(e.target.value)}
           />
           <Button
             type="submit"
@@ -112,22 +94,15 @@ function handleSignIn(username, password) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => handleSignIn(username, password)}
+            onClick={() => handleSignIn(email)}       
           >
-            Sign In
+           Reset Password
           </Button>
-          <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" to= '/forgotPassword'>
-                Forgot password?
+              <Link href="#" variant="body2" to= '/signIn'>
+                Rememberd the password? Go back to Sign in!
               </Link>
             </Grid>
-            <Grid item>
-              <Link href="#" variant="body2"  to= '/signUp'>
-                {"Don't have an account? Sign Up"}               
-              </Link>            
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={8}>
@@ -136,4 +111,4 @@ function handleSignIn(username, password) {
     </Container>
   );
 }
-export default SignIn;
+export default ForgotPassword;
