@@ -11,9 +11,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { Link } from 'react-router-dom';
+
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -104,6 +107,7 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -134,7 +138,7 @@ export default function PrimarySearchAppBar() {
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
-            <MailIcon />
+            <FavoriteIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
@@ -142,7 +146,7 @@ export default function PrimarySearchAppBar() {
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
+            <ShoppingCartIcon />
           </Badge>
         </IconButton>
         <p>Notifications</p>
@@ -174,14 +178,14 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+           Spring Store App
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search product…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -193,12 +197,12 @@ export default function PrimarySearchAppBar() {
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+                <FavoriteIcon />
               </Badge>
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
+                <ShoppingCartIcon />
               </Badge>
             </IconButton>
             <IconButton
@@ -206,7 +210,8 @@ export default function PrimarySearchAppBar() {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+             // onClick={handleProfileMenuOpen}
+             component = {Link} to='/signIn'
               color="inherit"
             >
               <AccountCircle />
@@ -217,7 +222,9 @@ export default function PrimarySearchAppBar() {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              ia-haspopup="true"
+              component = {Link} to='/signIn'
+              
               color="inherit"
             >
               <MoreIcon />
