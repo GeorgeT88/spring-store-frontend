@@ -67,12 +67,6 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <CameraIcon className={classes.icon} />
-           <Button color="inherit"   component={Link} to="/signIn">Sign In</Button>
-        </Toolbar>
-      </AppBar>
       <main>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
