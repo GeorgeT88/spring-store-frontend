@@ -1,8 +1,8 @@
-import SignUp from './views/SignUp';
-import SignIn from './views/SignIn';
-import ForgotPassword from './views/ForgotPassword';
-import ProductCatalog from './views/ProductCatalog';
-import AppBar from './views/AppBar';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
+import ForgotPassword from './components/ForgotPassword';
+import ProductCatalog from './components/ProductCatalog';
+import AppBar from './components/AppBar';
 import {
   BrowserRouter as Router,
   Switch,

@@ -14,7 +14,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { Link } from 'react-router-dom';
+import UserMenu from './UserMenu';
 
 
 
@@ -205,17 +205,8 @@ export default function PrimarySearchAppBar() {
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-             // onClick={handleProfileMenuOpen}
-             component = {Link} to='/signIn'
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <UserMenu/>
+
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -223,7 +214,7 @@ export default function PrimarySearchAppBar() {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               ia-haspopup="true"
-              component = {Link} to='/signIn'
+              // component = {Link} to='/signIn'
               
               color="inherit"
             >
