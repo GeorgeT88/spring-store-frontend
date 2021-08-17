@@ -12,7 +12,11 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
+import SingleBedIcon from '@material-ui/icons/SingleBed';
+import WeekendIcon from '@material-ui/icons/Weekend';
+import EventSeatIcon from '@material-ui/icons/EventSeat';
+import LocalDiningOutlinedIcon from '@material-ui/icons/LocalDiningOutlined';
+import ChromeReaderModeOutlinedIcon from '@material-ui/icons/ChromeReaderModeOutlined';
 
 const useStyles = makeStyles({
   list: {
@@ -49,23 +53,36 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+     <Divider />
+    <h2>Categories </h2>
+    <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+      
+          <ListItem button key={'Tables'}>
+            <ListItemIcon> <LocalDiningOutlinedIcon /></ListItemIcon>
+            <ListItemText primary={'Tables'} />
           </ListItem>
-        ))}
+          
+          <ListItem button key={'Chairs'}>
+            <ListItemIcon> <EventSeatIcon /></ListItemIcon>
+            <ListItemText primary={'Chairs'} />
+          </ListItem>
+          <ListItem button key={'Sofas'}>
+            <ListItemIcon> <WeekendIcon /></ListItemIcon>
+            <ListItemText primary={'Sofas'} />
+          </ListItem>
+          <ListItem button key={'Beds'}>
+            <ListItemIcon> <SingleBedIcon /></ListItemIcon>
+            <ListItemText primary={'Beds'} />
+          </ListItem>
+          <ListItem button key={'Storage'}>
+            <ListItemIcon> <ChromeReaderModeOutlinedIcon /></ListItemIcon>
+            <ListItemText primary={'Storage'} />
+          </ListItem>
+      
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+
     </div>
   );
 
@@ -80,7 +97,6 @@ export default function TemporaryDrawer() {
 >
   <Grid item xs={12}>
   <Typography className={classes.root}>
-
   {['Categories'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
@@ -96,8 +112,6 @@ export default function TemporaryDrawer() {
           </Button>
         </React.Fragment>
       ))}
-
-     
 
     </Typography>
   </Grid>   
