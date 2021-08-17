@@ -17,6 +17,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import UserMenu from './UserMenu';
 import {Link} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import TemporaryDrawer from './TemporaryDrawer';
+
 
 
 
@@ -152,7 +154,10 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>In Cart</p>
       </MenuItem>
+ 
     </Menu>
+
+    
   );
 
   return (
@@ -213,6 +218,7 @@ export default function PrimarySearchAppBar() {
           </div>
         </Toolbar>
       </AppBar>
+      <TemporaryDrawer/>
       {renderMobileMenu}
       {renderMenu}
     </div>
