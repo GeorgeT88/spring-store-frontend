@@ -1,54 +1,101 @@
-import React, { useState, Fragment } from 'react';
-import Menu from '@material-ui/core/Menu';
+import React, { Fragment } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useHistory } from 'react-router-dom';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuList from '@material-ui/core/MenuList';
+import { makeStyles } from '@material-ui/core/styles';
 
 
-const UserMenu = ( props, context ) => {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const menuId = 'primary-search-account-menu';
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    paper: {
+        marginRight: theme.spacing(2),
+    },
+}));
+
+
+export default function UserMenu() {
+
+
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef(null);
     let history = useHistory();
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+    const handleToggle = () => {
+        setOpen((prevOpen) => !prevOpen);
     };
-    
-    const handleClose = () => {
-        setAnchorEl(null);
+
+    const handleClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+
+        setOpen(false);
     };
+
+    function handleListKeyDown(event) {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            setOpen(false);
+        }
+    }
 
     const handleSignIn = () => {
         history.push('/signIn');
     }
 
-    return (
-        <Fragment>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleClick}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-            <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-            <MenuItem onClick={handleSignIn}>
-                Sign in
-            </MenuItem>
-                <MenuItem onClick={handleClose}>Sign Up</MenuItem>
-            </Menu>
-        </Fragment>
-    )
-}
+    const handleSignUp = () => {
+        history.push('/signUp');
+    }
 
-export default UserMenu;
+    // return focus to the button when we transitioned from !open -> open
+    const prevOpen = React.useRef(open);
+    React.useEffect(() => {
+        if (prevOpen.current === true && open === false) {
+            anchorRef.current.focus();
+        }
+
+        prevOpen.current = open;
+    }, [open]);
+
+    return (
+        <Fragment className={classes.root}>
+            <IconButton
+                ref={anchorRef}
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={open ? 'menu-list-grow' : undefined}
+                aria-haspopup="true"
+                onClick={handleToggle}
+                color="inherit"
+            >
+                <AccountCircle />
+            </IconButton>
+            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                {({ TransitionProps, placement }) => (
+                    <Grow
+                        {...TransitionProps}
+                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                    >
+                        <Paper>
+                            <ClickAwayListener onClickAway={handleClose}>
+                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                    <MenuItem onClick={handleSignIn}>Sign In</MenuItem>
+                                    <MenuItem onClick={handleSignUp}>Sign Up</MenuItem>
+                                </MenuList>
+                            </ClickAwayListener>
+                        </Paper>
+                    </Grow>
+                )}
+            </Popper>
+        </Fragment>
+    );
+}
