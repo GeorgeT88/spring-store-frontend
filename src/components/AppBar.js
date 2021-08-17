@@ -15,6 +15,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import UserMenu from './UserMenu';
+import {Link} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -89,6 +91,7 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  let history = useHistory();
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -102,6 +105,10 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleBackToMainPage = () => {
+    history.push('/');
+}
 
 
   const menuId = 'primary-search-account-menu';
@@ -135,7 +142,7 @@ export default function PrimarySearchAppBar() {
             <FavoriteIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>Favorites</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -143,7 +150,7 @@ export default function PrimarySearchAppBar() {
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>In Cart</p>
       </MenuItem>
     </Menu>
   );
@@ -160,8 +167,8 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-           Spring Store App
+          <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >  
+          Spring Store App                   
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
