@@ -105,6 +105,9 @@ export default function TemporaryDrawer() {
             {list(anchor)}
           </Drawer>
           <Button>
+          Newest Products
+          </Button>
+          <Button>
            Offerts
           </Button>
           <Button>
