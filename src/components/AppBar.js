@@ -213,13 +213,12 @@ export default function PrimarySearchAppBar() {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              ia-haspopup="true"
-              // component = {Link} to='/signIn'
-              
+              ia-haspopup="true"              
               color="inherit"
             >
               <MoreIcon />
             </IconButton>
+            <UserMenu/>
           </div>
         </Toolbar>
       </AppBar>
