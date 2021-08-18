@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Product from './Product';
+import BasicPagination from './BasicPagination';
 import { Link } from 'react-router-dom';
 
 function Copyright() {
@@ -69,8 +70,11 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
               
               <Product card={card}/>
             ))}
+            
           </Grid>
+          
         </Container>
+        <BasicPagination/>
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
