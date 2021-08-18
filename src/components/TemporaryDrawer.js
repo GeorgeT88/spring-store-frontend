@@ -8,8 +8,6 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import SingleBedIcon from '@material-ui/icons/SingleBed';
@@ -53,33 +51,33 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-     <Divider />
-    <h2>Categories </h2>
-    <Divider />
+      <Divider />
+      <h2>Categories </h2>
+      <Divider />
       <List>
-      
-          <ListItem button key={'Tables'}>
-            <ListItemIcon> <LocalDiningOutlinedIcon /></ListItemIcon>
-            <ListItemText primary={'Tables'} />
-          </ListItem>
-          
-          <ListItem button key={'Chairs'}>
-            <ListItemIcon> <EventSeatIcon /></ListItemIcon>
-            <ListItemText primary={'Chairs'} />
-          </ListItem>
-          <ListItem button key={'Sofas'}>
-            <ListItemIcon> <WeekendIcon /></ListItemIcon>
-            <ListItemText primary={'Sofas'} />
-          </ListItem>
-          <ListItem button key={'Beds'}>
-            <ListItemIcon> <SingleBedIcon /></ListItemIcon>
-            <ListItemText primary={'Beds'} />
-          </ListItem>
-          <ListItem button key={'Storage'}>
-            <ListItemIcon> <ChromeReaderModeOutlinedIcon /></ListItemIcon>
-            <ListItemText primary={'Storage'} />
-          </ListItem>
-      
+
+        <ListItem button key={'Tables'}>
+          <ListItemIcon> <LocalDiningOutlinedIcon /></ListItemIcon>
+          <ListItemText primary={'Tables'} />
+        </ListItem>
+
+        <ListItem button key={'Chairs'}>
+          <ListItemIcon> <EventSeatIcon /></ListItemIcon>
+          <ListItemText primary={'Chairs'} />
+        </ListItem>
+        <ListItem button key={'Sofas'}>
+          <ListItemIcon> <WeekendIcon /></ListItemIcon>
+          <ListItemText primary={'Sofas'} />
+        </ListItem>
+        <ListItem button key={'Beds'}>
+          <ListItemIcon> <SingleBedIcon /></ListItemIcon>
+          <ListItemText primary={'Beds'} />
+        </ListItem>
+        <ListItem button key={'Storage'}>
+          <ListItemIcon> <ChromeReaderModeOutlinedIcon /></ListItemIcon>
+          <ListItemText primary={'Storage'} />
+        </ListItem>
+
       </List>
       <Divider />
 
@@ -87,37 +85,37 @@ export default function TemporaryDrawer() {
   );
 
   return (
-<Grid
-  container
-  spacing={0}
-  direction="column"
-  alignItems="center"
-  justify="center"
-  style={{ minHeight: '6vh' }}
->
-  <Grid item xs={12}>
-  <Typography className={classes.root}>
-  {['Categories'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-     
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
-          </Drawer>
-          <Button>        
-          Newest Products
-          </Button>
-          <Button>
-           Offerts
-          </Button>
-          <Button>
-           About Us
-          </Button>
-        </React.Fragment>
-      ))}
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: '6vh' }}
+    >
+      <Grid item xs={12}>
+        <Typography className={classes.root}>
+          {['Categories'].map((anchor) => (
+            <React.Fragment key={anchor}>
+              <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
 
-    </Typography>
-  </Grid>   
-</Grid>   
+              <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                {list(anchor)}
+              </Drawer>
+              <Button>
+                Newest Products
+              </Button>
+              <Button>
+                Offerts
+              </Button>
+              <Button>
+                About Us
+              </Button>
+            </React.Fragment>
+          ))}
+
+        </Typography>
+      </Grid>
+    </Grid>
   );
 }
