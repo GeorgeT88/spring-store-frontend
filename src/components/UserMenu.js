@@ -33,11 +33,7 @@ export default function UserMenu() {
         setOpen((prevOpen) => !prevOpen);
     };
 
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
-        }
-
+    const handleClose = () => {
         setOpen(false);
     };
 
@@ -87,9 +83,9 @@ export default function UserMenu() {
                     >
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                    <MenuItem onClick={handleSignIn}>Sign In</MenuItem>
-                                    <MenuItem onClick={handleSignUp}>Sign Up</MenuItem>
+                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>                            
+                                  <MenuItem onClick={() => [handleSignIn(), handleClose()]}>Sign In</MenuItem>
+                                  <MenuItem onClick={() => [handleSignUp(), handleClose()]}>Sign Up</MenuItem>
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>
