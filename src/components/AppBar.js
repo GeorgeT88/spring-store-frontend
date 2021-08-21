@@ -17,6 +17,7 @@ import UserMenu from './UserMenu';
 import { useHistory } from 'react-router-dom';
 import MenuListComposition from './MenuListComposition';
 import Button from '@material-ui/core/Button';
+import CustomizedInputBase from './CustomizedInputBase';
 
 
 
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-   
+
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -90,8 +91,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: '#3f51b5',
       color: '#f9f9f9',
-  },
-}}));
+    },
+  }
+}));
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
@@ -180,24 +182,11 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Button className={classes.button} variant="contained" color="primary" disableElevation disableRipple disableFocusRipple>
-          <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >
-            Spring Store App
-          </Typography>
-          </Button>
-
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search product…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+            <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >
+              Spring Store App
+            </Typography>
+          </Button>             
+            <CustomizedInputBase/>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
