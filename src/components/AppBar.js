@@ -15,7 +15,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import UserMenu from './UserMenu';
 import { useHistory } from 'react-router-dom';
-import TemporaryDrawer from './TemporaryDrawer';
+import MenuListComposition from './MenuListComposition';
 
 
 
@@ -216,7 +216,7 @@ export default function PrimarySearchAppBar() {
           </div>
         </Toolbar>
       </AppBar>
-      <TemporaryDrawer/>
+      <MenuListComposition/>
       {renderMobileMenu}
       {renderMenu}
     </div>
