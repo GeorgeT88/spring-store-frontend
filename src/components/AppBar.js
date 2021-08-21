@@ -16,6 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import UserMenu from './UserMenu';
 import { useHistory } from 'react-router-dom';
 import MenuListComposition from './MenuListComposition';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
+   
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -82,7 +84,14 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-}));
+  button: {
+    backgroundColor: '#3f51b5',
+    color: '#f9f9f9',
+    '&:hover': {
+      backgroundColor: '#3f51b5',
+      color: '#f9f9f9',
+  },
+}}));
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
@@ -108,7 +117,7 @@ export default function PrimarySearchAppBar() {
 
   const handleBackToMainPage = () => {
     history.push('/');
-}
+  }
 
 
   const menuId = 'primary-search-account-menu';
@@ -152,10 +161,10 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>In Cart</p>
       </MenuItem>
- 
+
     </Menu>
 
-    
+
   );
 
   return (
@@ -170,9 +179,12 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >  
-          Spring Store App                   
+          <Button className={classes.button} variant="contained" color="primary" disableElevation disableRipple disableFocusRipple>
+          <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >
+            Spring Store App
           </Typography>
+          </Button>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -198,7 +210,7 @@ export default function PrimarySearchAppBar() {
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            <UserMenu/>
+            <UserMenu />
 
           </div>
           <div className={classes.sectionMobile}>
@@ -206,17 +218,17 @@ export default function PrimarySearchAppBar() {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              ia-haspopup="true"   
-              onClick={handleMobileMenuOpen}          
+              ia-haspopup="true"
+              onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <MoreIcon />
             </IconButton>
-            <UserMenu/>
+            <UserMenu />
           </div>
         </Toolbar>
       </AppBar>
-      <MenuListComposition/>
+      <MenuListComposition />
       {renderMobileMenu}
       {renderMenu}
     </div>
