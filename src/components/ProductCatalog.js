@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import Product from './Product';
 import BasicPagination from './BasicPagination';
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -53,12 +54,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
- function ProductCatalog() {
+
+function ProductCatalog() {
+
+  const [Data, setData] = useState({
+    id: '',
+    productName: ''
+  })
+
+
+
+
+  useEffect(()=>{
+    axios.get('http://localhost:8081/getAllProducts')
+      .then(res => {
+        console.log('Response from main API: ', res)
+     
+    
+
+        for (let i = 0; i < res.data.length; i++) {
+
+        console.log('Test ID: ', res.data[i].id)
+        setData({ id: res.data[i].id, productName: res.data[i].productName})
+
+ 
+
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    },[])
+
+
   const classes = useStyles();
+  console.log('Data:  ',Data)
 
-  console.log('cards', cards);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -66,15 +98,20 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              
-              <Product card={card}/>
-            ))}
-            
-          </Grid>
+          <>
+            <h1>{Data.id}</h1>
+            <h1>{"Data.2"}</h1>
+            <p>{Data.productName}</p>
+            <Product data={Data}/>
+        </>
+
+           
           
+
+          </Grid>
+
         </Container>
-        <BasicPagination/>
+        <BasicPagination />
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
