@@ -58,7 +58,7 @@ export default function MenuListComposition() {
         spacing={0}
         direction="column"
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         style={{ minHeight: '6vh' }}
       >
         <Grid item xs={12}>

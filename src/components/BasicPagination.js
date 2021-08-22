@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
@@ -19,14 +19,14 @@ export default function BasicPagination() {
   spacing={0}
   direction="column"
   alignItems="center"
-  justify="center"
+  justifyContent="center"
   style={{ minHeight: '6vh' }}
 >
-    <Fragment className={classes.root}>
+    <div className={classes.root}>
       <Grid item xs>
         <Pagination count={10} color="primary" />
       </Grid>
-    </Fragment>
+    </div>
     </Grid>
   );
 }

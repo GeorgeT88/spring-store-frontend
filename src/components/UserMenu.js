@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -63,7 +63,7 @@ export default function UserMenu() {
     }, [open]);
 
     return (
-        <Fragment className={classes.root}>
+        <div className={classes.root}>
             <IconButton
                 ref={anchorRef}
                 edge="end"
@@ -92,6 +92,6 @@ export default function UserMenu() {
                     </Grow>
                 )}
             </Popper>
-        </Fragment>
+        </div>
     );
 }
