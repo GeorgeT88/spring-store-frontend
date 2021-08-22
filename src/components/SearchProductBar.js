@@ -12,35 +12,34 @@ const useStyles = makeStyles((theme) => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 400,
+    width: 300,
+    backgroundColor: 'rgb(216 219 239)'
   },
   input: {
     marginLeft: theme.spacing(3),
     flex: 1,
+    backgroundColor: 'rgb(216 219 239)'
   },
   iconButton: {
     padding: 6,
-  },
-  divider: {
-    height: 28,
-    margin: 4,
+    backgroundColor: 'rgb(216 219 239)'
   },
 }));
 
-export default function CustomizedInputBase() {
+export default function SearchProductBar() {
   const classes = useStyles();
 
   return (
-    <Paper component="form" className={classes.root}>
-      <InputBase
+    <Paper component="form" className={classes.root} >
+      <InputBase 
+
         className={classes.input}
         placeholder="Search Product.."
     
       />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search">
+      <IconButton type="submit"  className={classes.iconButton} aria-label="search">
         <SearchIcon />
       </IconButton>
-      <Divider className={classes.divider} orientation="vertical" />
     </Paper>
   );
 }

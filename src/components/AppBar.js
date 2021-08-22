@@ -15,7 +15,7 @@ import UserMenu from './UserMenu';
 import { useHistory } from 'react-router-dom';
 import MenuListComposition from './MenuListComposition';
 import Button from '@material-ui/core/Button';
-import CustomizedInputBase from './CustomizedInputBase';
+import SearchProductBar from './SearchProductBar';
 
 
 
@@ -184,7 +184,7 @@ export default function PrimarySearchAppBar() {
               Spring Store App
             </Typography>
           </Button>             
-            <CustomizedInputBase/>
+            <SearchProductBar/>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
