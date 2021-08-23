@@ -4,10 +4,19 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Product from './Product';
-import BasicPagination from './BasicPagination';
+
 import { Link } from 'react-router-dom';
 import axios from "axios";
+
+import Button from '@material-ui/core/Button';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+
+
+
 
 function Copyright() {
   return (
@@ -63,33 +72,41 @@ function ProductCatalog() {
     productName: ''
   })
 
+  const [products, setProducts] = useState([])
 
 
 
-  useEffect(()=>{
+
+
+  const getAllProducts = () => {
     axios.get('http://localhost:8081/getAllProducts')
-      .then(res => {
-        console.log('Response from main API: ', res)
-     
-    
+      .then(response => {
+        console.log('Response from main API: ', response)
 
-        for (let i = 0; i < res.data.length; i++) {
+        const allProducts = response.data
 
-        console.log('Test ID: ', res.data[i].id)
-        setData({ id: res.data[i].id, productName: res.data[i].productName})
+        setProducts(allProducts);
 
- 
 
-        }
+        console.log('Products', products)
+
       })
       .catch(err => {
         console.log(err);
       })
-    },[])
+  }
+
+
+  useEffect(() => {
+    getAllProducts();
+  }, [])
+
+
+
 
 
   const classes = useStyles();
-  console.log('Data:  ',Data)
+
 
   return (
     <React.Fragment>
@@ -98,20 +115,35 @@ function ProductCatalog() {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-          <>
-            <h1>{Data.id}</h1>
-            <h1>{"Data.2"}</h1>
-            <p>{Data.productName}</p>
-            <Product data={Data}/>
-        </>
-
-           
-          
-
+            {products.map((card) => (
+              <Grid item key={card} xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image="https://source.unsplash.com/random"
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {card.productName}
+                    </Typography>
+                    <Typography>
+                      This is a media card. You can use this section to describe the content.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" color="primary">
+                      View
+                    </Button>
+                    <Button size="small" color="primary">
+                      Edit
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-
         </Container>
-        <BasicPagination />
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
