@@ -75,7 +75,6 @@ function ProductCatalog() {
         const allProducts = response.data
 
         setProducts(allProducts);
-        console.log('Products', products)
 
       })
       .catch(err => {
@@ -108,7 +107,10 @@ function ProductCatalog() {
                       {card.productName}
                     </Typography>
                     <Typography>
-                      {card.productDescription}
+                      Description: {card.productDescription}
+                    </Typography>
+                    <Typography gutterBottom variant="h6" component="h2">
+                     Product price: {card.productPrice}
                     </Typography>
                   </CardContent>
                   <CardActions>
