@@ -12,6 +12,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import BasicPagination from './BasicPagination';
+import Product from './Product';
 
 
 
@@ -95,34 +96,7 @@ function ProductCatalog() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {products.map((card) => (
-              <Grid item key={card.id} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.productName}
-                    </Typography>
-                    <Typography>
-                      Description: {card.productDescription}
-                    </Typography>
-                    <Typography gutterBottom variant="h6" component="h2">
-                     Product price: {card.productPrice}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+              <Product card={card}/>
             ))}
           </Grid>
         </Container>
