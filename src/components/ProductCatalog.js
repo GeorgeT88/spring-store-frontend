@@ -29,6 +29,8 @@ function Copyright() {
   );
 }
 
+const ITEMS_PER_PAGE = 6;
+
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(220),
@@ -62,21 +64,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 function ProductCatalog() {
 
   const classes = useStyles();
   const [products, setProducts] = useState([])
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+  const [productsOnPage, setProductsOnPage] = useState([]);
 
   const getAllProducts = () => {
     axios.get('http://localhost:8081/getAllProducts')
       .then(response => {
         console.log('Response from main API: ', response)
-
-        const allProducts = response.data
-
+        const allProducts = response.data;
         setProducts(allProducts);
-
+        const currentProducts = [];
+        allProducts.forEach((product, index) => {
+          if (index < ITEMS_PER_PAGE) {
+            currentProducts.push(product);
+          }
+        });
+        setProductsOnPage(currentProducts);
       })
       .catch(err => {
         console.log(err);
@@ -84,10 +92,29 @@ function ProductCatalog() {
   }
   useEffect(() => {
     getAllProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  useEffect(() => {
+    setPageCount(Math.ceil(products.length / ITEMS_PER_PAGE));
+  }, [products]);
 
+  useEffect(() => {
+    const endSlice = (ITEMS_PER_PAGE * currentPage) > products.length ? null : ITEMS_PER_PAGE * currentPage;
+    let currentProducts = [];
+    if (endSlice) {
+      currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1), endSlice);
+    }
+    else {
+      currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1));
+
+    }
+    setProductsOnPage(currentProducts);
+  }, [currentPage])
+
+  const onPageChange = (event, page) => {
+    setCurrentPage(page);
+  }
   return (
     <React.Fragment>
       <CssBaseline />
@@ -95,12 +122,17 @@ function ProductCatalog() {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {products.map((card) => (
-              <Product card={card}/>
+            {productsOnPage.map((card) => (
+              <Product card={card} />
+
             ))}
           </Grid>
         </Container>
-        <BasicPagination />
+        <BasicPagination
+          onPageChange={onPageChange}
+          currentPage={currentPage}
+          pageCount={pageCount}
+        />
       </main>
       {/* Footer */}
       <footer className={classes.footer}>

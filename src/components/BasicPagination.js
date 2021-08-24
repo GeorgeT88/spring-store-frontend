@@ -11,7 +11,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicPagination() {
+
+
+
+export default function BasicPagination({ onPageChange, currentPage, pageCount }) {
   const classes = useStyles();
   return (
 <Grid
@@ -24,7 +27,15 @@ export default function BasicPagination() {
 >
     <div className={classes.root}>
       <Grid item xs>
-        <Pagination count={10} color="primary" />
+        <Pagination
+          count={pageCount}
+          onChange={onPageChange}
+          page={currentPage}
+          color="primary"
+          className={classes.pagination}
+          showFirstButton
+          showLastButton
+        />
       </Grid>
     </div>
     </Grid>
