@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext  } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -6,13 +6,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import axios from "axios";
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import BasicPagination from './BasicPagination';
 import Product from './Product';
+//Import Context
+import { AppContext } from '../App'
 
 
 
@@ -66,11 +63,25 @@ const useStyles = makeStyles((theme) => ({
 
 function ProductCatalog() {
 
+  const {state, dispatch} = useContext(AppContext);
+
+  const changeInputValue = (newValue) => {
+
+      dispatch({ type: 'UPDATE_INPUT', data: newValue,});
+  };
+
+
   const classes = useStyles();
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [productsOnPage, setProductsOnPage] = useState([]);
+
+
+  const [productsByCategory, setProductsByCategory] = useState([])
+
+
+
 
   const getAllProducts = () => {
     axios.get('http://localhost:8081/getAllProducts')
@@ -94,6 +105,33 @@ function ProductCatalog() {
     getAllProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getProductsByCategory = () => {
+    console.log("ProductCatalog State text:", state.inputText);
+
+    axios.get('http://localhost:8081/getByProductCategory/'+ state.inputText )
+      .then(response => {
+        console.log('TEXXXXXXXXXXXXXXXXXXXT: ', response)
+        const allProductsByCategory = response.data;
+        setProductsByCategory(allProductsByCategory);
+        const currentProducts = [];
+        allProductsByCategory.forEach((product, index) => {
+          if (index < ITEMS_PER_PAGE) {
+            currentProducts.push(product);
+          }
+        });
+        setProductsOnPage(currentProducts);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+  useEffect(() => {
+    getProductsByCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
+
+
 
   useEffect(() => {
     setPageCount(Math.ceil(products.length / ITEMS_PER_PAGE));

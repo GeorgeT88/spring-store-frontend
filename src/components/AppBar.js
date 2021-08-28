@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext,useState } from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,14 +13,27 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import UserMenu from './UserMenu';
 import { useHistory } from 'react-router-dom';
-import MenuListComposition from './MenuListComposition';
 import Button from '@material-ui/core/Button';
 import SearchProductBar from './SearchProductBar';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuList from '@material-ui/core/MenuList';
+import Grid from '@material-ui/core/Grid';
+import { AppContext } from '../App'
+
 
 
 
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  paper: {
+    marginRight: theme.spacing(2),
+  },
   grow: {
     flexGrow: 1,
   },
@@ -93,10 +106,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimaryAppBar() {
+  
+  const {state, dispatch} = useContext(AppContext);
+
+  
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const anchorRef = React.useRef(null);
+ 
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -119,6 +139,52 @@ export default function PrimarySearchAppBar() {
     history.push('/');
   }
 
+
+
+
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  
+
+  const changeInputValue = (newValue) => (event) =>{
+
+    dispatch({ type: 'UPDATE_INPUT', data: newValue,});
+
+    //console.log(state);
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+};
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -183,8 +249,8 @@ export default function PrimarySearchAppBar() {
             <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >
               Spring Store App
             </Typography>
-          </Button>             
-            <SearchProductBar/>
+          </Button>
+          <SearchProductBar />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
@@ -215,7 +281,59 @@ export default function PrimarySearchAppBar() {
           </div>
         </Toolbar>
       </AppBar>
-      <MenuListComposition />
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: '6vh' }}
+      >
+        <Grid item xs={12}>
+          <div className={classes.root}>
+
+            <div>
+              <Button
+                ref={anchorRef}
+                aria-controls={open ? 'menu-list-grow' : undefined}
+                aria-haspopup="true"
+                onClick={handleToggle}
+              >
+                Categories
+              </Button>
+              <Button>
+                Newest Products
+              </Button>
+              <Button>
+                Offerts
+              </Button>
+              <Button>
+                About Us
+              </Button>
+              <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                          <MenuItem selected={state==='Table'} onClick={changeInputValue('Table')}>Tables</MenuItem>
+                          <MenuItem selected={state==='Chair'} onClick={changeInputValue('Chair')}>Chairs</MenuItem>
+                          <MenuItem selected={state==='Sofa'} onClick={changeInputValue('Sofa')}>Sofas</MenuItem>
+                          <MenuItem selected={state==='Bedroom'} onClick={changeInputValue('Bedroom')}>Bedroom</MenuItem>
+                          <MenuItem selected={state==='Bed'} onClick={changeInputValue('Bed')}>Beds</MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </div>
+          </div>
+        </Grid>
+      </Grid>
       {renderMobileMenu}
       {renderMenu}
     </div>
