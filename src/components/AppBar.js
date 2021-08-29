@@ -289,6 +289,7 @@ export default function PrimaryAppBar() {
         justifyContent="center"
         style={{ minHeight: '6vh' }}
       >
+      
         <Grid item xs={12}>
           <div className={classes.root}>
 

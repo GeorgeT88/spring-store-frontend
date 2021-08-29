@@ -63,25 +63,13 @@ const useStyles = makeStyles((theme) => ({
 
 function ProductCatalog() {
 
-  const {state, dispatch} = useContext(AppContext);
-
-  const changeInputValue = (newValue) => {
-
-      dispatch({ type: 'UPDATE_INPUT', data: newValue,});
-  };
-
+  const {state} = useContext(AppContext);
 
   const classes = useStyles();
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [productsOnPage, setProductsOnPage] = useState([]);
-
-
-  const [productsByCategory, setProductsByCategory] = useState([])
-
-
-
 
   const getAllProducts = () => {
     axios.get('http://localhost:8081/getAllProducts')
@@ -95,6 +83,7 @@ function ProductCatalog() {
             currentProducts.push(product);
           }
         });
+      
         setProductsOnPage(currentProducts);
       })
       .catch(err => {
@@ -109,17 +98,18 @@ function ProductCatalog() {
   const getProductsByCategory = () => {
     console.log("ProductCatalog State text:", state.inputText);
 
-    axios.get('http://localhost:8081/getByProductCategory/'+ state.inputText )
+    axios.get(`http://localhost:8081/getByProductCategory/${state.inputText}`)
       .then(response => {
         console.log('TEXXXXXXXXXXXXXXXXXXXT: ', response)
         const allProductsByCategory = response.data;
-        setProductsByCategory(allProductsByCategory);
+        setProducts(allProductsByCategory);
         const currentProducts = [];
         allProductsByCategory.forEach((product, index) => {
           if (index < ITEMS_PER_PAGE) {
             currentProducts.push(product);
           }
         });
+       
         setProductsOnPage(currentProducts);
       })
       .catch(err => {
