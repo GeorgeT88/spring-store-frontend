@@ -137,7 +137,7 @@ function ProductCatalog() {
       currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1));
     }
     setProductsOnPage(currentProducts);
-  }, [currentPage])
+  }, [currentPage,products])
 
   const onPageChange = (event, page) => {
     setCurrentPage(page);
