@@ -143,6 +143,11 @@ function ProductCatalog() {
   const onPageChange = (event, page) => {
     setCurrentPage(page);
   }
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [state]);
+
   return (
     <React.Fragment>
       <CssBaseline />
