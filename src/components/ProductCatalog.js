@@ -135,7 +135,6 @@ function ProductCatalog() {
     }
     else {
       currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1));
-
     }
     setProductsOnPage(currentProducts);
   }, [currentPage])
@@ -155,9 +154,8 @@ function ProductCatalog() {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {productsOnPage.map((card) => (
-              <Product card={card} />
-
+            {productsOnPage.map((product) => (
+              <Product key= {product.id} {...product}/>
             ))}
           </Grid>
         </Container>

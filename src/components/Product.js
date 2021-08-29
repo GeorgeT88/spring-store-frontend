@@ -44,22 +44,22 @@ const Product = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid item key={props.card.id} xs={12} sm={6} md={4}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
-          image={props.card.productPhotoLink}
+          image={props.productPhotoLink}
           title="Image title"
         />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.card.productName}
+            {props.productName}
           </Typography>
           <Typography>
-            {`Description: ${props.card.productDescription}`}
+            {`Description: ${props.productDescription}`}
           </Typography>
           <Typography gutterBottom variant="h6" component="h2">
-            {`Product price:  ${props.card.productPrice}`}
+            {`Product price:  ${props.productPrice}`}
           </Typography>
         </CardContent>
         <CardActions>
