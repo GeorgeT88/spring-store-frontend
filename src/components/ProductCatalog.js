@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext  } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -71,7 +71,7 @@ function ProductCatalog() {
   const [pageCount, setPageCount] = useState(1);
   const [productsOnPage, setProductsOnPage] = useState([]);
 
-  const getAllProducts = () => {
+  useEffect(() => {
     axios.get('http://localhost:8081/getAllProducts')
       .then(response => {
         console.log('Response from main API: ', response)
@@ -83,19 +83,16 @@ function ProductCatalog() {
             currentProducts.push(product);
           }
         });
-      
+
         setProductsOnPage(currentProducts);
       })
       .catch(err => {
         console.log(err);
       })
-  }
-  useEffect(() => {
-    getAllProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getProductsByCategory = () => {
+
+  useEffect(() => {
     console.log("ProductCatalog State text:", state.inputText);
 
     axios.get(`http://localhost:8081/getByProductCategory/${state.inputText}`)
@@ -109,17 +106,14 @@ function ProductCatalog() {
             currentProducts.push(product);
           }
         });
-       
         setProductsOnPage(currentProducts);
       })
       .catch(err => {
         console.log(err);
       })
-  }
-  useEffect(() => {
-    getProductsByCategory();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
+
+
 
 
 
@@ -137,7 +131,7 @@ function ProductCatalog() {
       currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1));
     }
     setProductsOnPage(currentProducts);
-  }, [currentPage,products])
+  }, [currentPage, products])
 
   const onPageChange = (event, page) => {
     setCurrentPage(page);
@@ -155,7 +149,7 @@ function ProductCatalog() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {productsOnPage.map((product) => (
-              <Product key= {product.id} {...product}/>
+              <Product key={product.id} {...product} />
             ))}
           </Grid>
         </Container>
