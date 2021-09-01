@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,7 +11,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { AppContext } from '../App'
 
 
 const axios = require('axios').default;
@@ -51,21 +52,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function handleSignIn(username, password) {
-    axios.post('http://localhost:8762/login', {
-        username: username,
-        password: password
-    }).then((response) => {
-        localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
-        console.log(response.headers.authorization);
-    }).catch((error) => {
-        console.log(error)
-    })
+  axios.post('http://localhost:8762/login', {
+    username: username,
+    password: password
+  }).then((response) => {
+    localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
+    console.log(response.headers.authorization);
+  }).catch((error) => {
+    console.log(error)
+  })
 }
 
- function SignIn() {
+
+
+function SignIn() {
+  const { dispatch } = useContext(AppContext);
   const classes = useStyles();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+
+  const changeDispatch = (newValue) => {
+    dispatch({ type: 'UPDATE_INPUT', data: newValue, });
+  };
+
+
+
+  useEffect(() => {
+    changeDispatch('false');
+    return () => {
+      changeDispatch('true');
+    }
+      ;
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -100,7 +119,7 @@ function handleSignIn(username, password) {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={e => setPassword(e.target.value)}            
+            onChange={e => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -118,14 +137,14 @@ function handleSignIn(username, password) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" to= '/forgotPassword'>
+              <Link href="#" variant="body2" to='/forgotPassword'>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2"  to= '/signUp'>
-                {"Don't have an account? Sign Up"}               
-              </Link>            
+              <Link href="#" variant="body2" to='/signUp'>
+                {"Don't have an account? Sign Up"}
+              </Link>
             </Grid>
           </Grid>
         </form>
