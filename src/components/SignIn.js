@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-import { AppContext } from '../App'
+
 
 
 const axios = require('axios').default;
@@ -66,25 +66,16 @@ function handleSignIn(username, password) {
 
 
 function SignIn() {
-  const { dispatch } = useContext(AppContext);
+
   const classes = useStyles();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
 
-  const changeDispatch = (newValue) => {
-    dispatch({ type: 'UPDATE_INPUT', data: newValue, });
-  };
 
 
 
-  useEffect(() => {
-    changeDispatch('false');
-    return () => {
-      changeDispatch('true');
-    }
-      ;
-  }, []);
+
 
   return (
     <Container component="main" maxWidth="xs">

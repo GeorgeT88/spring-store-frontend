@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,7 +21,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import Grid from '@material-ui/core/Grid';
-import { AppContext } from '../App'
+
 
 
 
@@ -108,8 +108,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimaryAppBar() {
 
-  const { state, dispatch } = useContext(AppContext);
-  console.log(state);
+
+
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -158,11 +158,11 @@ export default function PrimaryAppBar() {
 
 
 
-  const changeInputValue = (newValue) => (event) => {
+  const changeInputValue = (event) => {
 
-    dispatch({ type: 'UPDATE_INPUT', data: newValue, });
 
-    //console.log(state);
+
+
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -292,7 +292,7 @@ export default function PrimaryAppBar() {
       >
 
         <Grid item xs={12}>
-        {state.inputText !=="false" && (
+
           <div className={classes.root} >
             <div>
               <Button
@@ -321,11 +321,11 @@ export default function PrimaryAppBar() {
                     <Paper>
                       <ClickAwayListener onClickAway={handleClose}>
                         <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                          <MenuItem selected={state === 'Table'} onClick={changeInputValue('Table')}>Tables</MenuItem>
-                          <MenuItem selected={state === 'Chair'} onClick={changeInputValue('Chair')}>Chairs</MenuItem>
-                          <MenuItem selected={state === 'Sofa'} onClick={changeInputValue('Sofa')}>Sofas</MenuItem>
-                          <MenuItem selected={state === 'Bedroom'} onClick={changeInputValue('Bedroom')}>Bedroom</MenuItem>
-                          <MenuItem selected={state === 'Bed'} onClick={changeInputValue('Bed')}>Beds</MenuItem>
+                          <MenuItem onClick={changeInputValue('Table')}>Tables</MenuItem>
+                          <MenuItem onClick={changeInputValue('Chair')}>Chairs</MenuItem>
+                          <MenuItem onClick={changeInputValue('Sofa')}>Sofas</MenuItem>
+                          <MenuItem onClick={changeInputValue('Bedroom')}>Bedroom</MenuItem>
+                          <MenuItem onClick={changeInputValue('Bed')}>Beds</MenuItem>
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>
@@ -333,9 +333,9 @@ export default function PrimaryAppBar() {
                 )}
               </Popper>
             </div>
-         
+
           </div>
-          )}
+
         </Grid>
       </Grid>
       {renderMobileMenu}

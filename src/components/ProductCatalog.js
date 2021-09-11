@@ -8,8 +8,13 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import BasicPagination from './BasicPagination';
 import Product from './Product';
-//Import Context
-import { AppContext } from '../App'
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getAllProducts,getAllProductsByCategory }from "../redux/ducks/products";
+import { connect } from 'react-redux';
+
+
+
 
 
 
@@ -61,85 +66,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function ProductCatalog() {
-
-  const {state} = useContext(AppContext);
+function ProductCatalog(props) {
 
   const classes = useStyles();
-  const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [productsOnPage, setProductsOnPage] = useState([]);
 
-  useEffect(() => {
-    axios.get('http://localhost:8081/getAllProducts')
-      .then(response => {
-        console.log('Response from main API: ', response)
-        const allProducts = response.data;
-        setProducts(allProducts);
-        const currentProducts = [];
-        allProducts.forEach((product, index) => {
-          if (index < ITEMS_PER_PAGE) {
-            currentProducts.push(product);
-          }
-        });
+  const { products, dispatchAllProducts } = props;
 
-        setProductsOnPage(currentProducts);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+  const handleAllProducts = () =>{
+    dispatchAllProducts();
+  };
+
+  useEffect(() => {
+   
+  handleAllProducts();
   }, []);
 
-
   useEffect(() => {
-    console.log("ProductCatalog State text:", state.inputText);
+    if (products.length) {
+      setPageCount(Math.ceil(products.length / ITEMS_PER_PAGE));
 
-    axios.get(`http://localhost:8081/getByProductCategory/${state.inputText}`)
-      .then(response => {
-        console.log('TEXXXXXXXXXXXXXXXXXXXT: ', response)
-        const allProductsByCategory = response.data;
-        setProducts(allProductsByCategory);
-        const currentProducts = [];
-        allProductsByCategory.forEach((product, index) => {
-          if (index < ITEMS_PER_PAGE) {
-            currentProducts.push(product);
-          }
-        });
-        setProductsOnPage(currentProducts);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, [state]);
-
-
-
-
-
-  useEffect(() => {
-    setPageCount(Math.ceil(products.length / ITEMS_PER_PAGE));
-  }, [products]);
-
-  useEffect(() => {
-    const endSlice = (ITEMS_PER_PAGE * currentPage) > products.length ? null : ITEMS_PER_PAGE * currentPage;
-    let currentProducts = [];
-    if (endSlice) {
-      currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1), endSlice);
+      const endSlice = (ITEMS_PER_PAGE * currentPage) > products.length ? null : ITEMS_PER_PAGE * currentPage;
+      let currentProducts = [];
+      if (endSlice) {
+        currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1), endSlice);
+      }
+      else {
+        currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1));
+      }
+      setProductsOnPage(currentProducts);
     }
-    else {
-      currentProducts = products.slice(ITEMS_PER_PAGE * (currentPage - 1));
-    }
-    setProductsOnPage(currentProducts);
-  }, [currentPage, products])
+
+  }, [products, currentPage]);
+
 
   const onPageChange = (event, page) => {
     setCurrentPage(page);
   }
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [state]);
 
   return (
     <React.Fragment>
@@ -173,4 +139,24 @@ function ProductCatalog() {
     </React.Fragment>
   );
 }
-export default ProductCatalog;
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatchAllProducts: () => {     
+      dispatch(getAllProducts());
+    }
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const { products } = state;
+  return {
+    products: products
+  }
+}
+// export default ;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductCatalog);

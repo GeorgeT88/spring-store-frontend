@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { AppContext } from '../App'
+
 
 function Copyright() {
   return (
@@ -49,20 +49,11 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp() {
   const classes = useStyles();
-  const { dispatch } = useContext(AppContext);
-
-  const changeDispatch = (newValue) => {
-    dispatch({ type: 'UPDATE_INPUT', data: newValue, });
-  };
 
 
-  useEffect(() => {
-    changeDispatch('false');
-    return () => {
-      changeDispatch('true');
-    }
-      ;
-  }, []);
+
+
+
   
   return (
     <Container component="main" maxWidth="xs">
