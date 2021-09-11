@@ -158,15 +158,10 @@ export default function PrimaryAppBar() {
 
 
 
-  const changeInputValue = (event) => {
-
-
-
-
+  const changeInputValue = (newValue) => (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 
@@ -321,11 +316,11 @@ export default function PrimaryAppBar() {
                     <Paper>
                       <ClickAwayListener onClickAway={handleClose}>
                         <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                          <MenuItem onClick={changeInputValue('Table')}>Tables</MenuItem>
-                          <MenuItem onClick={changeInputValue('Chair')}>Chairs</MenuItem>
-                          <MenuItem onClick={changeInputValue('Sofa')}>Sofas</MenuItem>
+                          <MenuItem onClick={changeInputValue('Tables')}>Tables</MenuItem>
+                          <MenuItem onClick={changeInputValue('Chairs')}>Chairs</MenuItem>
+                          <MenuItem onClick={changeInputValue('Sofas')}>Sofas</MenuItem>
                           <MenuItem onClick={changeInputValue('Bedroom')}>Bedroom</MenuItem>
-                          <MenuItem onClick={changeInputValue('Bed')}>Beds</MenuItem>
+                          <MenuItem onClick={changeInputValue('Beds')}>Beds</MenuItem>
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>
