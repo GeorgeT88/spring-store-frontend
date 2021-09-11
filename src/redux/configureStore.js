@@ -1,5 +1,7 @@
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import productsReducer from "./ducks/products";
+
+
 import thunk from 'redux-thunk';
 
 const reducer = combineReducers({

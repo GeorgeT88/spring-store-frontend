@@ -73,16 +73,19 @@ function ProductCatalog(props) {
   const [pageCount, setPageCount] = useState(1);
   const [productsOnPage, setProductsOnPage] = useState([]);
 
-  const { products, dispatchAllProducts } = props;
+  const {products, dispatchAllProducts } = props;
 
   const handleAllProducts = () =>{
     dispatchAllProducts();
   };
 
-  useEffect(() => {
-   
+  useEffect(() => {  
   handleAllProducts();
   }, []);
+
+  useEffect(() => {  
+    setCurrentPage(1);
+    }, [products]);
 
   useEffect(() => {
     if (products.length) {
@@ -145,14 +148,15 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatchAllProducts: () => {     
       dispatch(getAllProducts());
+    //  dispatch(getAllProductsByCategory());
     }
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { products } = state;
+  const {products } = state;
   return {
-    products: products
+    products: products,
   }
 }
 // export default ;

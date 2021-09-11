@@ -3,9 +3,7 @@ import axios from "axios";
 const ALLPRODUCTSBYCATEGORY = "allProductsByCategory";
 const ALLPRODUCTS = "allProducts";
 
-const initalState = {
-  products: []
-}
+
 
 const allProductsLoaded = (products) => ({
   type: ALLPRODUCTS,
@@ -30,6 +28,10 @@ export const getAllProductsByCategory = (category) => {
     const response = await axios.get(`http://localhost:8081/getByProductCategory/${category}`)
     dispatch(allProductsLoadedByCategory(response.data))
   }
+}
+
+const initalState = {
+  products: [],
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
