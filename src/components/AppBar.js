@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,7 +22,8 @@ import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import Grid from '@material-ui/core/Grid';
 import { getAllProductsByCategory }from "../redux/ducks/products";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
+
 
 
 
@@ -111,6 +112,9 @@ export default function PrimaryAppBar() {
 
 const dispatch = useDispatch();
 
+const appBar = useSelector((state)=>state);
+
+const newAppBar = appBar.appBar;
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -118,6 +122,7 @@ const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
 
+  console.log(newAppBar);
 
 
 
@@ -142,10 +147,6 @@ const dispatch = useDispatch();
   const handleBackToMainPage = () => {
     history.push('/');
   }
-
-
-
-
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -295,7 +296,7 @@ const dispatch = useDispatch();
       >
 
         <Grid item xs={12}>
-
+        {newAppBar.appbar !== false && (
           <div className={classes.root} >
             <div>
               <Button
@@ -338,7 +339,7 @@ const dispatch = useDispatch();
             </div>
 
           </div>
-
+          )}
         </Grid>
       </Grid>
       {renderMobileMenu}

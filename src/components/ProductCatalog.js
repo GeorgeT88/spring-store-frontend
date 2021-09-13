@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-import axios from "axios";
 import BasicPagination from './BasicPagination';
 import Product from './Product';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { getAllProducts,getAllProductsByCategory }from "../redux/ducks/products";
+import { getAllProducts }from "../redux/ducks/products";
 import { connect } from 'react-redux';
 
 
@@ -67,21 +66,17 @@ const useStyles = makeStyles((theme) => ({
 
 
 function ProductCatalog(props) {
-
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [productsOnPage, setProductsOnPage] = useState([]);
 
-  const {products, dispatchAllProducts } = props;
-
-  const handleAllProducts = () =>{
-    dispatchAllProducts();
-  };
+  const {products} = props;
 
   useEffect(() => {  
-  handleAllProducts();
-  }, []);
+    dispatch (getAllProducts());
+  }, [dispatch]);
 
   useEffect(() => {  
     setCurrentPage(1);
@@ -143,24 +138,13 @@ function ProductCatalog(props) {
   );
 }
 
-
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatchAllProducts: () => {     
-      dispatch(getAllProducts());
-    //  dispatch(getAllProductsByCategory());
-    }
-  };
-};
-
 const mapStateToProps = (state, ownProps) => {
   const {products } = state;
   return {
-    products: products,
+    products: products
   }
 }
 // export default ;
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(ProductCatalog);

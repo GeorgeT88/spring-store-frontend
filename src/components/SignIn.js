@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState,useEffect } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-
-
+import { appBarFalse,appBarTrue }from "../redux/ducks/appBar";
+import { useDispatch } from 'react-redux';
 
 const axios = require('axios').default;
 const ACCESS_TOKEN = "access_token";
@@ -67,12 +67,18 @@ function handleSignIn(username, password) {
 
 function SignIn() {
 
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
 
-
+  useEffect(() => {
+    dispatch (appBarFalse());
+    return () => {
+      dispatch (appBarTrue());
+    }     
+  }, [dispatch]);
 
 
 

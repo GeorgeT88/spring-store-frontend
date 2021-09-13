@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { appBarFalse,appBarTrue }from "../redux/ducks/appBar";
+import { useDispatch } from 'react-redux';
 
 function Copyright() {
   return (
@@ -26,6 +27,8 @@ function Copyright() {
     </Typography>
   );
 }
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,9 +54,15 @@ function SignUp() {
   const classes = useStyles();
 
 
+  const dispatch = useDispatch();
 
-
-
+  useEffect(() => {
+    dispatch (appBarFalse());
+    return () => {
+      dispatch (appBarTrue());
+    }
+      
+  }, [dispatch]);
   
   return (
     <Container component="main" maxWidth="xs">
