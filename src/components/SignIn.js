@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-import { appBarFalse,appBarTrue }from "../redux/ducks/appBar";
+import { appBarFalse,appBarTrue }from "../redux/actions/secondaryAppBar";
 import { useDispatch } from 'react-redux';
 
 const axios = require('axios').default;
@@ -22,7 +22,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://material-ui.com/" to='/'>
         Spring Store App
       </Link>{' '}
       {new Date().getFullYear()}
@@ -51,21 +51,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleSignIn(username, password) {
-  axios.post('http://localhost:8762/login', {
-    username: username,
-    password: password
-  }).then((response) => {
-    localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
-    console.log(response.headers.authorization);
-  }).catch((error) => {
-    console.log(error)
-  })
-}
 
 
-
-function SignIn() {
+function SignIn ()  {
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -80,7 +68,23 @@ function SignIn() {
     }     
   }, [dispatch]);
 
+  const handleSignIn = () =>{
+    console.log('User:', username)
+    console.log('Pass:', password)
+    axios.post('http://localhost:8762/login', {
+      username: username,
+      password: password
+    }).then((response) => {
+      localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
+      console.log(response.headers.authorization);
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+ 
 
+
+  
 
 
   return (
@@ -104,6 +108,7 @@ function SignIn() {
             name="username"
             autoComplete="username"
             autoFocus
+            value= {username}
             onChange={e => setUsername(e.target.value)}
           />
           <TextField
@@ -116,6 +121,7 @@ function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value= {password}
             onChange={e => setPassword(e.target.value)}
           />
           <FormControlLabel
@@ -128,13 +134,13 @@ function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => handleSignIn(username, password)}
+            onClick={handleSignIn}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" to='/forgotPassword'>
+              <Link  href="#" variant="body2" to='/forgotPassword'>
                 Forgot password?
               </Link>
             </Grid>

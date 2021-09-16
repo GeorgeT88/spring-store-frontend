@@ -17,9 +17,9 @@ const ACCESS_TOKEN = "access_token";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" color="textSecondary" align="center" >
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://material-ui.com/" to='/'>
         Spring Store App
       </Link>{' '}
       {new Date().getFullYear()}

@@ -8,8 +8,7 @@ import { Link } from 'react-router-dom';
 import BasicPagination from './BasicPagination';
 import Product from './Product';
 import { useDispatch } from 'react-redux';
-
-import { getAllProducts }from "../redux/ducks/products";
+import { getAllProducts }from "../redux/actions/productActions";
 import { connect } from 'react-redux';
 
 
@@ -66,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function ProductCatalog(props) {
+
   const dispatch = useDispatch();
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(1);
@@ -139,7 +139,7 @@ function ProductCatalog(props) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {products } = state;
+  const {products} = state;
   return {
     products: products
   }

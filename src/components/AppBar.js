@@ -21,7 +21,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import Grid from '@material-ui/core/Grid';
-import { getAllProductsByCategory }from "../redux/ducks/products";
+import { getAllProductsByCategory }from "../redux/actions/productActions";
 import { useDispatch,useSelector } from 'react-redux';
 
 
@@ -112,9 +112,9 @@ export default function PrimaryAppBar() {
 
 const dispatch = useDispatch();
 
-const appBar = useSelector((state)=>state);
+const secondaryAppBar = useSelector((state)=>state);
 
-const newAppBar = appBar.appBar;
+const newAppBar = secondaryAppBar.secondaryAppBar;
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -122,7 +122,6 @@ const newAppBar = appBar.appBar;
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
 
-  console.log(newAppBar);
 
 
 
@@ -160,14 +159,10 @@ const newAppBar = appBar.appBar;
     setOpen(false);
   };
 
-  const handleGetAllProductsByCategory= (category) =>{
+  const changeInputValue = (category) => (event) => {
+    console.log("selected",category )
+
     dispatch (getAllProductsByCategory(category));
-  }
-
-  const changeInputValue = (newValue) => (event) => {
-
-
-    handleGetAllProductsByCategory(newValue);
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }

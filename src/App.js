@@ -24,7 +24,7 @@ function App() {
     <AppBar/>
     
         <Switch>
-        <Route exact path = "/"><ProductCatalog/></Route>       
+          <Route exact path = "/"><ProductCatalog/></Route>       
           <Route path = "/signUp"><SignUp/></Route>
           <Route path = "/signIn"><SignIn/></Route>
           <Route path = "/forgotPassword"><ForgotPassword/></Route>

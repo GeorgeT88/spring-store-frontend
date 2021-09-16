@@ -5,30 +5,16 @@ const ALLPRODUCTS = "allProducts";
 
 
 
-const allProductsLoaded = (products) => ({
-  type: ALLPRODUCTS,
-  payload: products,
-});
-
-
-export const getAllProducts = () => {
-  return async dispatch => {
+export const getAllProducts = () => async (dispatch) => {
     const response = await axios.get('http://localhost:8081/getAllProducts')
-    dispatch(allProductsLoaded(response.data))
+    dispatch({type: ALLPRODUCTS, payload: response.data});
   }
-}
 
-const allProductsLoadedByCategory = (products) => ({
-  type: ALLPRODUCTSBYCATEGORY,
-  payload: products,
-});
 
-export const getAllProductsByCategory = (category) => {
-  return async dispatch => {
+export const getAllProductsByCategory = (category) => async (dispatch) => {
     const response = await axios.get(`http://localhost:8081/getByProductCategory/${category}`)
-    dispatch(allProductsLoadedByCategory(response.data))
+    dispatch({type: ALLPRODUCTSBYCATEGORY, payload: response.data})
   }
-}
 
 const initalState = {
   products: [],
