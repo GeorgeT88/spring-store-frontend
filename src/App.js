@@ -21,8 +21,7 @@ function App() {
     <Router>
     <div className="App">
     <Provider store={store}>
-    <AppBar/>
-    
+    <AppBar/>   
         <Switch>
           <Route exact path = "/"><ProductCatalog/></Route>       
           <Route path = "/signUp"><SignUp/></Route>

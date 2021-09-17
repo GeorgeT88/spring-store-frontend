@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import BasicPagination from './BasicPagination';
 import Product from './Product';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { getAllProducts }from "../redux/actions/productActions";
 import { connect } from 'react-redux';
 
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function ProductCatalog(props) {
+function ProductCatalog() {
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -72,7 +72,7 @@ function ProductCatalog(props) {
   const [pageCount, setPageCount] = useState(1);
   const [productsOnPage, setProductsOnPage] = useState([]);
 
-  const {products} = props;
+  const products = useSelector((state)=>state).products;
 
   useEffect(() => {  
     dispatch (getAllProducts());
@@ -138,13 +138,4 @@ function ProductCatalog(props) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const {products} = state;
-  return {
-    products: products
-  }
-}
-// export default ;
-export default connect(
-  mapStateToProps
-)(ProductCatalog);
+export default ProductCatalog

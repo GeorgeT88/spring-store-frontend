@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,7 +10,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-
+import { useDispatch } from 'react-redux';
+import { appBarFalse,appBarTrue }from "../redux/actions/secondaryAppBar";
 
 const axios = require('axios').default;
 const ACCESS_TOKEN = "access_token";
@@ -63,6 +64,15 @@ function handleSignIn(username, password) {
  function ForgotPassword() {
   const classes = useStyles();
   const [email, setEmail] = useState('')
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch (appBarFalse());
+    return () => {
+      dispatch (appBarTrue());
+    }     
+  }, [dispatch]);
 
   return (
     <Container component="main" maxWidth="xs">

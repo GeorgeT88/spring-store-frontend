@@ -13,7 +13,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import { appBarFalse,appBarTrue }from "../redux/actions/secondaryAppBar";
-import { useDispatch } from 'react-redux';
+import { loggedTrue,loggedFalse }from "../redux/actions/loginActions";
+import { useDispatch,useSelector } from 'react-redux';
 
 const axios = require('axios').default;
 const ACCESS_TOKEN = "access_token";
@@ -60,6 +61,8 @@ function SignIn ()  {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  const isLogged = useSelector((state)=>state.isLogged);
+
 
   useEffect(() => {
     dispatch (appBarFalse());
@@ -68,18 +71,26 @@ function SignIn ()  {
     }     
   }, [dispatch]);
 
+
+
+
   const handleSignIn = () =>{
-    console.log('User:', username)
-    console.log('Pass:', password)
-    axios.post('http://localhost:8762/login', {
-      username: username,
-      password: password
-    }).then((response) => {
-      localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
-      console.log(response.headers.authorization);
-    }).catch((error) => {
-      console.log(error)
-    })
+    dispatch (loggedTrue());
+   
+    console.log('isLogged:', isLogged)
+    // console.log('isLogged:', isLogged)
+    // console.log('User:', username)
+    // console.log('Pass:', password)
+    // axios.post('http://localhost:8762/login', {
+    //   username: username,
+    //   password: password
+    // }).then((response) => {
+    //   dispatch (loggedTrue());
+    //   localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
+    //   console.log(response.headers.authorization);
+    // }).catch((error) => {
+    //   console.log(error)
+    // })
   }
  
 

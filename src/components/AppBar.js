@@ -112,9 +112,7 @@ export default function PrimaryAppBar() {
 
 const dispatch = useDispatch();
 
-const secondaryAppBar = useSelector((state)=>state);
-
-const newAppBar = secondaryAppBar.secondaryAppBar;
+const appBar = useSelector((state)=>state).secondaryAppBar.appbar ;
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -291,7 +289,7 @@ const newAppBar = secondaryAppBar.secondaryAppBar;
       >
 
         <Grid item xs={12}>
-        {newAppBar.appbar !== false && (
+        {appBar!== false && (
           <div className={classes.root} >
             <div>
               <Button

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect,useRef } from "react";
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function UserMenu() {
+
+
+    const isLogged = useSelector((state) => state).isLogged.logged;
 
 
     const classes = useStyles();
@@ -52,13 +56,20 @@ export default function UserMenu() {
         history.push('/signUp');
     }
 
+    const handleLogout = () => {
+        history.push('/');
+    }
+
+    const handleUserSettings = () => {
+        history.push('/userSettings');
+    }
+
     // return focus to the button when we transitioned from !open -> open
-    const prevOpen = React.useRef(open);
-    React.useEffect(() => {
+    const prevOpen = useRef(open);
+    useEffect(() => {
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
         }
-
         prevOpen.current = open;
     }, [open]);
 
@@ -83,9 +94,26 @@ export default function UserMenu() {
                     >
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>                            
-                                  <MenuItem onClick={() => [handleSignIn(), handleClose()]}>Sign In</MenuItem>
-                                  <MenuItem onClick={() => [handleSignUp(), handleClose()]}>Sign Up</MenuItem>
+                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                    {isLogged !== true && (
+
+                                        <MenuItem onClick={() => [handleSignIn(), handleClose()]}>Sign In</MenuItem>
+                                    )}
+
+                                    {isLogged !== true && (
+
+                                        <MenuItem onClick={() => [handleSignUp(), handleClose()]}>Sign Up</MenuItem>
+                                    )}
+
+                                    
+                                    {isLogged !== false && (
+
+                                        <MenuItem onClick={() => [handleUserSettings(), handleClose()]}>Settings</MenuItem>
+                                    )}
+                                    {isLogged !== false && (
+
+                                        <MenuItem onClick={() => [handleLogout(), handleClose()]}>Logout</MenuItem>
+                                    )}
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>
