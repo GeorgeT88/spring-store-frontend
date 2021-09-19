@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PrimaryAppBar() {
+export default function NavBar() {
 
 const dispatch = useDispatch();
 
