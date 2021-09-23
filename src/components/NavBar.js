@@ -112,7 +112,7 @@ export default function NavBar() {
 
 const dispatch = useDispatch();
 
-const appBar = useSelector((state)=>state).secondaryAppBar.appbar ;
+const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -234,15 +234,7 @@ const appBar = useSelector((state)=>state).secondaryAppBar.appbar ;
   return (
     <div className={classes.grow}>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+        <Toolbar>      
           <Button className={classes.button} variant="contained" color="primary" disableElevation disableRipple disableFocusRipple>
             <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >
               Spring Store App

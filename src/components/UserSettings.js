@@ -91,7 +91,7 @@ function UserSettings ()  {
             required
             fullWidth
             id="username"
-            label="New Password"
+            label="Select New Password"
             name="username"
             autoComplete="username"
             autoFocus        

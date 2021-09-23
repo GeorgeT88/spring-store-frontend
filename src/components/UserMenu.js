@@ -1,4 +1,4 @@
-import React, {useEffect,useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -9,8 +9,11 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector,useDispatch } from 'react-redux';
-import { loggedFalse }from "../redux/actions/loginActions";
+import { useSelector, useDispatch } from 'react-redux';
+import { loggedFalse } from "../redux/actions/loginActions";
+import Avatar from '@material-ui/core/Avatar';
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,12 +62,41 @@ export default function UserMenu() {
 
     const handleLogout = () => {
         history.push('/');
-        dispatch (loggedFalse());
+        dispatch(loggedFalse());
     }
 
     const handleUserSettings = (e) => {
         history.push('/userSettings');
     }
+
+    function stringToColor(string) {
+        let hash = 0;
+        let i;
+      
+        /* eslint-disable no-bitwise */
+        for (i = 0; i < string.length; i += 1) {
+          hash = string.charCodeAt(i) + ((hash << 5) - hash);
+        }
+      
+        let color = '#';
+      
+        for (i = 0; i < 3; i += 1) {
+          const value = (hash >> (i * 8)) & 0xff;
+          color += `00${value.toString(16)}`.substr(-2);
+        }
+        /* eslint-enable no-bitwise */
+      
+        return color;
+      }
+
+    function stringAvatar(name) {
+        return {
+          sx: {
+            bgcolor: stringToColor(name),
+          },
+          children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+        };
+      }
 
     // return focus to the button when we transitioned from !open -> open
     const prevOpen = useRef(open);
@@ -86,7 +118,13 @@ export default function UserMenu() {
                 onClick={handleToggle}
                 color="inherit"
             >
-                <AccountCircle />
+                {isLogged === false && (
+                    <AccountCircle fontSize="large"/>
+                )}
+                {isLogged === true && (
+                    <Avatar {...stringAvatar('Admin Admin')}  style={{ height: '35px', width: '35px' }} />
+                )}
+
             </IconButton>
             <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                 {({ TransitionProps, placement }) => (
@@ -97,22 +135,22 @@ export default function UserMenu() {
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                    {isLogged !== true && (
+                                    {isLogged === false && (
 
                                         <MenuItem onClick={() => [handleSignIn(), handleClose()]}>Sign In</MenuItem>
                                     )}
 
-                                    {isLogged !== true && (
+                                    {isLogged === false && (
 
                                         <MenuItem onClick={() => [handleSignUp(), handleClose()]}>Sign Up</MenuItem>
                                     )}
 
-                                    
-                                    {isLogged !== false && (
+
+                                    {isLogged === true && (
 
                                         <MenuItem onClick={() => [handleUserSettings(), handleClose()]}>Settings</MenuItem>
                                     )}
-                                    {isLogged !== false && (
+                                    {isLogged === true && (
 
                                         <MenuItem onClick={() => [handleLogout(), handleClose()]}>Logout</MenuItem>
                                     )}
