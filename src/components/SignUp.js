@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import { appBarFalse, appBarTrue }from "../redux/actions/secondaryAppBar";
 import { useDispatch } from 'react-redux';
 
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -53,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 function SignUp() {
   const classes = useStyles();
 
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,6 +65,25 @@ function SignUp() {
       
   }, [dispatch]);
   
+  const handleSignIn = () =>{
+  //  dispatch (loggedTrue());
+   
+  //  console.log('isLogged:', isLogged)
+    // console.log('isLogged:', isLogged)
+    // console.log('User:', username)
+    // console.log('Pass:', password)
+    // axios.post('http://localhost:8762/login', {
+    //   username: username,
+    //   password: password
+    // }).then((response) => {
+    //   dispatch (loggedTrue());
+    //   localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
+    //   console.log(response.headers.authorization);
+    // }).catch((error) => {
+    //   console.log(error)
+    // })
+  }
+ 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -135,6 +155,7 @@ function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSignIn}
           >
             Sign Up
           </Button>

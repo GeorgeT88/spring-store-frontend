@@ -13,8 +13,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import { appBarFalse,appBarTrue }from "../redux/actions/secondaryAppBar";
-import { loggedTrue,loggedFalse }from "../redux/actions/loginActions";
-import { useDispatch,useSelector } from 'react-redux';
+import { loggedTrue }from "../redux/actions/loginActions";
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const axios = require('axios').default;
 const ACCESS_TOKEN = "access_token";
@@ -55,13 +56,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function SignIn ()  {
-
+  let history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const isLogged = useSelector((state)=>state.isLogged);
+
 
 
   useEffect(() => {
@@ -74,23 +75,21 @@ function SignIn ()  {
 
 
 
-  const handleSignIn = () =>{
-    dispatch (loggedTrue());
-   
-    console.log('isLogged:', isLogged)
-    // console.log('isLogged:', isLogged)
-    // console.log('User:', username)
-    // console.log('Pass:', password)
-    // axios.post('http://localhost:8762/login', {
-    //   username: username,
-    //   password: password
-    // }).then((response) => {
-    //   dispatch (loggedTrue());
-    //   localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
-    //   console.log(response.headers.authorization);
-    // }).catch((error) => {
-    //   console.log(error)
-    // })
+  const handleSignIn = (e) =>{
+    e.preventDefault();
+    axios.post('http://localhost:8762/login', {
+      username: username,
+      password: password
+    }).then((response) => {
+      dispatch (loggedTrue());
+      localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
+      console.log("TOKEN: ", response.headers.authorization);
+      console.log("username: ", username);
+      console.log("password: ",password);
+      history.push('/');
+    }).catch((error) => {
+      console.log(error)
+    })
   }
  
 

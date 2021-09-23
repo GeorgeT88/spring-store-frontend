@@ -9,7 +9,6 @@ import BasicPagination from './BasicPagination';
 import Product from './Product';
 import { useDispatch,useSelector } from 'react-redux';
 import { getAllProducts }from "../redux/actions/productActions";
-import { connect } from 'react-redux';
 
 
 

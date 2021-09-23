@@ -9,7 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { loggedFalse }from "../redux/actions/loginActions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserMenu() {
 
-
-    const isLogged = useSelector((state) => state).isLogged.logged;
+    const dispatch = useDispatch();
+    const isLogged = useSelector((state) => state.isLogged.logged);
 
 
     const classes = useStyles();
@@ -58,9 +59,10 @@ export default function UserMenu() {
 
     const handleLogout = () => {
         history.push('/');
+        dispatch (loggedFalse());
     }
 
-    const handleUserSettings = () => {
+    const handleUserSettings = (e) => {
         history.push('/userSettings');
     }
 
