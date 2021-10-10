@@ -62,7 +62,7 @@ export default function UserMenu() {
 
     const handleLogout = () => {
         history.push('/');
-        dispatch(signOut());  
+        dispatch(signOut());
     }
 
     const handleUserSettings = (e) => {
@@ -72,31 +72,31 @@ export default function UserMenu() {
     function stringToColor(string) {
         let hash = 0;
         let i;
-      
+
         /* eslint-disable no-bitwise */
         for (i = 0; i < string.length; i += 1) {
-          hash = string.charCodeAt(i) + ((hash << 5) - hash);
+            hash = string.charCodeAt(i) + ((hash << 5) - hash);
         }
-      
+
         let color = '#';
-      
+
         for (i = 0; i < 3; i += 1) {
-          const value = (hash >> (i * 8)) & 0xff;
-          color += `00${value.toString(16)}`.substr(-2);
+            const value = (hash >> (i * 8)) & 0xff;
+            color += `00${value.toString(16)}`.substr(-2);
         }
         /* eslint-enable no-bitwise */
-      
+
         return color;
-      }
+    }
 
     function stringAvatar(name) {
         return {
-          sx: {
-            bgcolor: stringToColor(name),
-          },
-          children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+            sx: {
+                bgcolor: stringToColor(name),
+            },
+            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
         };
-      }
+    }
 
     // return focus to the button when we transitioned from !open -> open
     const prevOpen = useRef(open);
@@ -118,12 +118,10 @@ export default function UserMenu() {
                 onClick={handleToggle}
                 color="inherit"
             >
-                {auth.id === null && (
-                    <AccountCircle fontSize="large"/>
-                )}
-                {auth.id !== null && (
-                    <Avatar {...stringAvatar(`${auth.firstName} ${auth.lastName}`)}  style={{ height: '35px', width: '35px' }} />
-                )}
+                {(auth.id === null || auth.id === undefined) 
+                    ?<AccountCircle fontSize="large" />
+                    :<Avatar {...stringAvatar(`${auth.firstName} ${auth.lastName}`)} style={{ height: '35px', width: '35px' }} />
+                }
 
             </IconButton>
             <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
