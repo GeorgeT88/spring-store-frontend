@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const ALLPRODUCTSBYCATEGORY = "allProductsByCategory";
-const ALLPRODUCTS = "allProducts";
+const ALLPRODUCTSBYCATEGORY = "ALLPRODUCTSBYCATEGORY";
+const ALLPRODUCTS = "ALLPRODUCTS";
 
 
 

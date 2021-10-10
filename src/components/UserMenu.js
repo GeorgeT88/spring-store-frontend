@@ -10,7 +10,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { loggedFalse } from "../redux/actions/loginActions";
+import { signOut } from "../redux/actions/authActions";
 import Avatar from '@material-ui/core/Avatar';
 
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 export default function UserMenu() {
 
     const dispatch = useDispatch();
-    const isLogged = useSelector((state) => state.isLogged.logged);
+    const auth = useSelector(state => state.auth)
 
 
     const classes = useStyles();
@@ -62,7 +62,7 @@ export default function UserMenu() {
 
     const handleLogout = () => {
         history.push('/');
-        dispatch(loggedFalse());
+        dispatch(signOut());  
     }
 
     const handleUserSettings = (e) => {
@@ -118,11 +118,11 @@ export default function UserMenu() {
                 onClick={handleToggle}
                 color="inherit"
             >
-                {isLogged === false && (
+                {auth.id === null && (
                     <AccountCircle fontSize="large"/>
                 )}
-                {isLogged === true && (
-                    <Avatar {...stringAvatar('Admin Admin')}  style={{ height: '35px', width: '35px' }} />
+                {auth.id !== null && (
+                    <Avatar {...stringAvatar(`${auth.firstName} ${auth.lastName}`)}  style={{ height: '35px', width: '35px' }} />
                 )}
 
             </IconButton>
@@ -135,22 +135,22 @@ export default function UserMenu() {
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                    {isLogged === false && (
+                                    {auth.id === null && (
 
                                         <MenuItem onClick={() => [handleSignIn(), handleClose()]}>Sign In</MenuItem>
                                     )}
 
-                                    {isLogged === false && (
+                                    {auth.id === null && (
 
                                         <MenuItem onClick={() => [handleSignUp(), handleClose()]}>Sign Up</MenuItem>
                                     )}
 
 
-                                    {isLogged === true && (
+                                    {auth.id !== null && (
 
                                         <MenuItem onClick={() => [handleUserSettings(), handleClose()]}>Settings</MenuItem>
                                     )}
-                                    {isLogged === true && (
+                                    {auth.id !== null && (
 
                                         <MenuItem onClick={() => [handleLogout(), handleClose()]}>Logout</MenuItem>
                                     )}

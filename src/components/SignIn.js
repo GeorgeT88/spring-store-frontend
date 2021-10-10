@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,13 +12,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-import { appBarFalse,appBarTrue }from "../redux/actions/secondaryAppBar";
-import { loggedTrue }from "../redux/actions/loginActions";
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-
-const axios = require('axios').default;
-const ACCESS_TOKEN = "access_token";
+import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
+import { useDispatch,useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { signIn } from "../../src/redux/actions/authActions";
 
 function Copyright() {
   return (
@@ -55,46 +52,39 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function SignIn ()  {
-  let history = useHistory();
-  const dispatch = useDispatch();
+function SignIn() {
   const classes = useStyles();
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
 
+
+  const auth = useSelector(state => state.auth)
+  const dispatch = useDispatch();
+  const [creds, setCreds] = useState({
+    email: "",
+    password: "",
+  });
 
 
 
   useEffect(() => {
-    dispatch (appBarFalse());
+    dispatch(appBarFalse());
     return () => {
-      dispatch (appBarTrue());
-    }     
+      dispatch(appBarTrue());
+    }
   }, [dispatch]);
 
 
-
-
-  const handleSignIn = (e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8762/login', {
-      username: username,
-      password: password
-    }).then((response) => {
-      dispatch (loggedTrue());
-      localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
-      console.log("TOKEN: ", response.headers.authorization);
-      console.log("username: ", username);
-      console.log("password: ",password);
-      history.push('/');
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
- 
+
+    dispatch(signIn(creds.email, creds.password));   
+    setCreds({ email: "", password: "" });
+  };
 
 
-  
+
+if (auth.id) return <Redirect to="/"/>
+
+
 
 
   return (
@@ -118,8 +108,8 @@ function SignIn ()  {
             name="username"
             autoComplete="username"
             autoFocus
-            value= {username}
-            onChange={e => setUsername(e.target.value)}
+            value={creds.email}
+            onChange={(e) => setCreds({ ...creds, email: e.target.value })}
           />
           <TextField
             variant="outlined"
@@ -131,8 +121,8 @@ function SignIn ()  {
             type="password"
             id="password"
             autoComplete="current-password"
-            value= {password}
-            onChange={e => setPassword(e.target.value)}
+            value={creds.password}
+            onChange={(e) => setCreds({ ...creds, password: e.target.value })}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -144,13 +134,13 @@ function SignIn ()  {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSignIn}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link  href="#" variant="body2" to='/forgotPassword'>
+              <Link href="#" variant="body2" to='/forgotPassword'>
                 Forgot password?
               </Link>
             </Grid>

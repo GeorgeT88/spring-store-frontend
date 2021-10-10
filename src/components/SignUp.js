@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { appBarFalse, appBarTrue }from "../redux/actions/secondaryAppBar";
-import { useDispatch } from 'react-redux';
+import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
+import { useDispatch, useSelector } from 'react-redux';
+import { signUp } from "../../src/redux/actions/authActions";
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -21,7 +23,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/"  to='/'>
+      <Link color="inherit" href="https://material-ui.com/" to='/'>
         Spring Store App
       </Link>{' '}
       {new Date().getFullYear()}
@@ -53,37 +55,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignUp() {
+  let history = useHistory();
   const classes = useStyles();
-
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("USER: ", user);
+    dispatch(signUp(user.firstName,user.lastName,user.email,user.password));
+    setUser({ firstName: "",lastName: "", email: "", password: "" });
+    history.push('/');
+  };
 
   useEffect(() => {
-    dispatch (appBarFalse());
+    dispatch(appBarFalse());
     return () => {
-      dispatch (appBarTrue());
+      dispatch(appBarTrue());
     }
-      
+
   }, [dispatch]);
-  
-  const handleSignIn = () =>{
-  //  dispatch (loggedTrue());
-   
-  //  console.log('isLogged:', isLogged)
-    // console.log('isLogged:', isLogged)
-    // console.log('User:', username)
-    // console.log('Pass:', password)
-    // axios.post('http://localhost:8762/login', {
-    //   username: username,
-    //   password: password
-    // }).then((response) => {
-    //   dispatch (loggedTrue());
-    //   localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
-    //   console.log(response.headers.authorization);
-    // }).catch((error) => {
-    //   console.log(error)
-    // })
-  }
- 
+
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -106,6 +105,8 @@ function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                value={user.firstName}
+                onChange={(e) => setUser({ ...user, firstName: e.target.value })}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -117,6 +118,8 @@ function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                value={user.lastName}
+                onChange={(e) => setUser({ ...user, lastName: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -128,6 +131,8 @@ function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -140,6 +145,8 @@ function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -155,7 +162,7 @@ function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSignIn}
+            onClick={handleSubmit}
           >
             Sign Up
           </Button>
