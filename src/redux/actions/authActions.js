@@ -9,19 +9,13 @@ const SIGN_OUT = "SIGN_OUT";
 
 
 export const signUp = (firstName, lastName, email, password) => {
-    return (dispatch) => {
+    return () => {
         axios
             .post('http://localhost:8762/user/addUser', {
                 firstName,
                 lastName,
                 email,
                 password
-            })
-            .then((token) => {
-                dispatch({
-                    type: SIGN_UP,
-                    token: token.data
-                });
             })
             .catch((error) => {
                 console.log(error.response);
@@ -31,17 +25,18 @@ export const signUp = (firstName, lastName, email, password) => {
 
 
 export const signIn = (email, password) => async (dispatch) => {
-await axios.post('http://localhost:8762/login', { email, password })
-    .then((token) => {
-        localStorage.setItem("token", token.headers.authorization)
-        dispatch({type: SIGN_IN, token: token.headers.authorization});
-     
-  })
-  await axios.get(`http://localhost:8762/user/getUserByEmail?email=${email}`,{
-    headers: {
-    'Content-Type': 'application/json',
-    'Authorization': localStorage.getItem('token')
-    }}).then((response) => {
+    await axios.post('http://localhost:8762/login', { email, password })
+        .then((token) => {
+            localStorage.setItem("token", token.headers.authorization)
+            dispatch({ type: SIGN_IN, token: token.headers.authorization });
+
+        })
+    await axios.get(`http://localhost:8762/user/getUserByEmail?email=${email}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        }
+    }).then((response) => {
         dispatch({
             type: SIGN_IN,
             id: response.data.id,
@@ -71,19 +66,20 @@ export const loadUser = () => {
         const token = getState().auth.token;
         if (token) {
             const user = jwtDecode(token);
-             axios.get(`http://localhost:8762/user/getUserByEmail?email=${user.sub}`,{
+            axios.get(`http://localhost:8762/user/getUserByEmail?email=${user.sub}`, {
                 headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token')
-                }}).then((response) => {
-                    dispatch({
-                        type: USER_LOADED,
-                        id: response.data.id,
-                        firstName: response.data.firstName,
-                        lastName: response.data.lastName,
-                        email: response.data.email,
-                    });
-                })
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then((response) => {
+                dispatch({
+                    type: USER_LOADED,
+                    id: response.data.id,
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName,
+                    email: response.data.email,
+                });
+            })
         } else return null;
     };
 };
@@ -123,7 +119,7 @@ const authActions = (state = initialState, action) => {
         default:
             console.log("INITIAL STATE", state);
             return state;
-            
+
     }
 };
 

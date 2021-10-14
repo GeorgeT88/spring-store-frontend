@@ -57,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
 function SignUp() {
   let history = useHistory();
   const classes = useStyles();
-  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     firstName: "",
@@ -71,7 +70,7 @@ function SignUp() {
     console.log("USER: ", user);
     dispatch(signUp(user.firstName,user.lastName,user.email,user.password));
     setUser({ firstName: "",lastName: "", email: "", password: "" });
-    history.push('/');
+    history.push('/signIn');
   };
 
   useEffect(() => {
