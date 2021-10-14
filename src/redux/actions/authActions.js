@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 const SIGN_IN = "SIGN_IN";
 const SIGN_UP = "SIGN_UP";
@@ -69,10 +70,20 @@ export const loadUser = () => {
     return (dispatch, getState) => {
         const token = getState().auth.token;
         if (token) {
-            dispatch({
-                type: USER_LOADED,
-                token,
-            });
+            const user = jwtDecode(token);
+             axios.get(`http://localhost:8762/user/getUserByEmail?email=${user.sub}`,{
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+                }}).then((response) => {
+                    dispatch({
+                        type: USER_LOADED,
+                        id: response.data.id,
+                        firstName: response.data.firstName,
+                        lastName: response.data.lastName,
+                        email: response.data.email,
+                    });
+                })
         } else return null;
     };
 };
@@ -92,6 +103,7 @@ const authActions = (state = initialState, action) => {
         case SIGN_IN:
         case SIGN_UP:
         case USER_LOADED:
+            console.log("USER_LOADED", state);
             return {
                 ...initialState,
                 id: action.id,

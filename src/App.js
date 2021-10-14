@@ -4,10 +4,10 @@ import ForgotPassword from './components/ForgotPassword';
 import ProductCatalog from './components/ProductCatalog';
 import UserSettings from './components/UserSettings';
 import NavBar from './components/NavBar';
-import React from 'react';
-import { Provider } from 'react-redux';
+import React, { useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
 import store from './redux/configureStore';
-
+import { loadUser } from './redux/actions/authActions';
 // Create context object
 import {
   BrowserRouter as Router,
@@ -15,13 +15,19 @@ import {
   Route,
 } from "react-router-dom";
 
+
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() =>{
+    dispatch(loadUser())
+  },[dispatch])
 
   return (
   
     <Router>
     <div className="App">
-    <Provider store={store}>
     <NavBar/>   
         <Switch>
           <Route exact path = "/"><ProductCatalog/></Route>       
@@ -30,7 +36,6 @@ function App() {
           <Route path = "/forgotPassword"><ForgotPassword/></Route>
           <Route path = "/userSettings"><UserSettings/></Route>
         </Switch>
-        </Provider>
         </div>
     </Router>  
     
