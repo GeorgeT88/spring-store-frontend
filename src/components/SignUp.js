@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signUp } from "../../src/redux/actions/authActions";
 import { useHistory } from 'react-router-dom';
 

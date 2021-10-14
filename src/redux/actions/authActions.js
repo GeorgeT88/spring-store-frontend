@@ -39,6 +39,7 @@ export const signIn = (email, password) => async (dispatch) => {
     }).then((response) => {
         dispatch({
             type: SIGN_IN,
+            token:localStorage.getItem('token'),
             id: response.data.id,
             firstName: response.data.firstName,
             lastName: response.data.lastName,
@@ -78,7 +79,7 @@ export const loadUser = () => {
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     email: response.data.email,
-                });
+                });          
             })
         } else return null;
     };
@@ -99,9 +100,9 @@ const authActions = (state = initialState, action) => {
         case SIGN_IN:
         case SIGN_UP:
         case USER_LOADED:
-            console.log("USER_LOADED", state);
             return {
                 ...initialState,
+                token: localStorage.getItem('token'),
                 id: action.id,
                 firstName: action.firstName,
                 lastName: action.lastName,
@@ -117,7 +118,6 @@ const authActions = (state = initialState, action) => {
                 email: null,
             };
         default:
-            console.log("INITIAL STATE", state);
             return state;
 
     }

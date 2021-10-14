@@ -1,4 +1,4 @@
-import { combineReducers, createStore, applyMiddleware, compose } from "redux";
+import { combineReducers} from "redux";
 import productsReducer from "./actions/productActions";
 import appBarReducer from "./actions/secondaryAppBar";
 import authReducer from "./actions/authActions";
@@ -10,8 +10,5 @@ const reducer = combineReducers({
     secondaryAppBar:appBarReducer,
     auth:authReducer
 });
-
-
-
 
 export default reducer;

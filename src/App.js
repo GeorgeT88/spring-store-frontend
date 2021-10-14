@@ -5,8 +5,7 @@ import ProductCatalog from './components/ProductCatalog';
 import UserSettings from './components/UserSettings';
 import NavBar from './components/NavBar';
 import React, { useEffect } from 'react';
-import { Provider, useDispatch } from 'react-redux';
-import store from './redux/configureStore';
+import { useDispatch } from 'react-redux';
 import { loadUser } from './redux/actions/authActions';
 // Create context object
 import {
@@ -19,6 +18,7 @@ import {
 function App() {
 
   const dispatch = useDispatch();
+
 
   useEffect(() =>{
     dispatch(loadUser())

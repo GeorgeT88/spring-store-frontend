@@ -8,12 +8,9 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './redux/configureStore'
 
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 const store = createStore(
     reducer, 
-    composeEnhancers(applyMiddleware(thunk)));
+    compose(applyMiddleware(thunk)));
 
 export default store;
 
