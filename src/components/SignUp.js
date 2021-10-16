@@ -62,14 +62,16 @@ function SignUp() {
     firstName: "",
     lastName: "",
     email: "",
+    phoneNumber: "",
+    deliveryAddress: "",
     password: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("USER: ", user);
-    dispatch(signUp(user.firstName,user.lastName,user.email,user.password));
-    setUser({ firstName: "",lastName: "", email: "", password: "" });
+    dispatch(signUp(user.firstName,user.lastName,user.email,user.phoneNumber,user.deliveryAddress,user.password));
+    setUser({ firstName: "",lastName: "", email: "", phoneNumber: "", deliveryAddress: "", password: "" });
     history.push('/signIn');
   };
 
@@ -132,6 +134,32 @@ function SignUp() {
                 autoComplete="email"
                 value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="phoneNumber"
+                label="Phone Number"
+                name="phoneNumber"
+                autoComplete="phoneNumber"
+                value={user.phoneNumber}
+                onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="deliveryAddress"
+                label="Delivery Address"
+                name="deliveryAddress"
+                autoComplete="deliveryAddress"
+                value={user.deliveryAddress}
+                onChange={(e) => setUser({ ...user, deliveryAddress: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>

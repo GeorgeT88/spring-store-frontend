@@ -8,13 +8,15 @@ const SIGN_OUT = "SIGN_OUT";
 
 
 
-export const signUp = (firstName, lastName, email, password) => {
+export const signUp = (firstName, lastName, email, phoneNumber, deliveryAddress, password) => {
     return () => {
         axios
             .post('http://localhost:8762/user/addUser', {
                 firstName,
                 lastName,
                 email,
+                phoneNumber,
+                deliveryAddress,
                 password
             })
             .catch((error) => {
@@ -44,6 +46,8 @@ export const signIn = (email, password) => async (dispatch) => {
             firstName: response.data.firstName,
             lastName: response.data.lastName,
             email: response.data.email,
+            phoneNumber: response.data.phoneNumber,
+            deliveryAddress: response.data.deliveryAddress
         });
     })
 };
@@ -79,6 +83,8 @@ export const loadUser = () => {
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     email: response.data.email,
+                    phoneNumber: response.data.phoneNumber,
+                    deliveryAddress: response.data.deliveryAddress
                 });          
             })
         } else return null;
@@ -91,6 +97,8 @@ const initialState = {
     firstName: null,
     lastName: null,
     email: null,
+    phoneNumber: null,
+    deliveryAddress: null
 };
 
 
@@ -107,6 +115,8 @@ const authActions = (state = initialState, action) => {
                 firstName: action.firstName,
                 lastName: action.lastName,
                 email: action.email,
+                phoneNumber: action.phoneNumber,
+                deliveryAddress: action.deliveryAddress
             };
         case SIGN_OUT:
             localStorage.removeItem("token");
@@ -116,6 +126,8 @@ const authActions = (state = initialState, action) => {
                 firstName: null,
                 lastName: null,
                 email: null,
+                phoneNumber: null,
+                deliveryAddress: null,
             };
         default:
             return state;
