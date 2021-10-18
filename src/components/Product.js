@@ -7,6 +7,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import ProductPage from './ProductPage'
+import { useDispatch } from 'react-redux';
+import { setProduct }from "../redux/actions/productActions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,8 +46,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Product = (product) => {
+  const dispatch = useDispatch();
+  let history = useHistory();
   const classes = useStyles();
-  const {productPhotoLink,productName, productDescription,productPrice} = product;
+  const {productPhotoLink, productName, productDescription, productPrice } = product;
+
+
+  const handleProductPage = () => {
+    dispatch (setProduct(product));
+    history.push(`/productPage`);
+
+  }
+ 
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -64,8 +79,8 @@ const Product = (product) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
-            {`View`}
+          <Button size="small" color="primary" onClick={() => handleProductPage()}>
+          {`Details`}
           </Button>
           <Button size="small" color="primary">
             {`Add To Cart`}

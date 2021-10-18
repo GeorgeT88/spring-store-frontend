@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import BasicPagination from './BasicPagination';
 import Product from './Product';
 import { useDispatch,useSelector } from 'react-redux';
-import { getAllProducts }from "../redux/actions/productActions";
+import { getAllProducts }from "../redux/actions/productsActions";
 
 
 

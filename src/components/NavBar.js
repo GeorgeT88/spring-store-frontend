@@ -20,7 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import Grid from '@material-ui/core/Grid';
-import { getAllProductsByCategory }from "../redux/actions/productActions";
+import { getAllProductsByCategory }from "../redux/actions/productsActions";
 import { useDispatch,useSelector } from 'react-redux';
 
 
