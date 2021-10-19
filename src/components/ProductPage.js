@@ -1,13 +1,13 @@
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import { useState } from "react";
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-  padding: 50px;
+  padding: 45px;
   display: flex;
 
 `;
@@ -17,8 +17,10 @@ const ImgContainer = styled.div`
 `;
 
 const Image = styled.img`
+  box-shadow: 5px 2px 8px grey;
+  border-radius: 10px;
   width: 100%;
-  height: 76vh;
+  height: 74vh;
   object-fit: cover;
 
 `;
@@ -41,40 +43,6 @@ const Price = styled.span`
   font-weight: 100;
   font-size: 40px;
 `;
-
-const FilterContainer = styled.div`
-  width: 50%;
-  margin: 30px 0px;
-  display: flex;
-  justify-content: space-between;
-
-`;
-
-const Filter = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const FilterTitle = styled.span`
-  font-size: 20px;
-  font-weight: 200;
-`;
-
-const FilterColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-  margin: 0px 5px;
-  cursor: pointer;
-`;
-
-const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
-`;
-
-const FilterSizeOption = styled.option``;
 
 const AddContainer = styled.div`
   width: 50%;
@@ -117,7 +85,7 @@ const ProductPage = () => {
 
   const [quantity, setQuantity] = useState(1);
 
-  const product = useSelector((state)=>state.product);
+  const product = useSelector((state) => state.product);
 
 
   const handleQuantity = (type) => {
@@ -130,7 +98,7 @@ const ProductPage = () => {
 
   const handleClick = () => {
     dispatch(
- //     addProduct({ ...product, quantity, color, size })
+      //     addProduct({ ...product, quantity, color, size })
     );
   };
   return (
