@@ -2,7 +2,8 @@ import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 const Container = styled.div``;
 
@@ -42,42 +43,10 @@ const Desc = styled.p`
 const Price = styled.span`
   font-weight: 100;
   font-size: 40px;
+  padding-bottom: 20px;
 `;
 
-const AddContainer = styled.div`
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
 
-const AmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 700;
-`;
-
-const Amount = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid teal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 5px;
-`;
-
-const Button = styled.button`
-  padding: 15px;
-  border: 2px solid teal;
-  background-color: white;
-  cursor: pointer;
-  font-weight: 500;
-  &:hover {
-    background-color: #f8f4f4;
-  }
-`;
 
 const ProductPage = () => {
 
@@ -110,17 +79,23 @@ const ProductPage = () => {
         <InfoContainer>
           <Title>{product.productName}</Title>
           <Desc>{product.productDescription}</Desc>
-          <Price>$ {product.productPrice}</Price>
-
-          <AddContainer>
-            <AmountContainer>
-              <Remove onClick={() => handleQuantity("dec")} />
-              <Amount>{quantity}</Amount>
-              <Add onClick={() => handleQuantity("inc")} />
-            </AmountContainer>
-            <Button onClick={handleClick}>ADD TO CART</Button>
-          </AddContainer>
+          <Grid container spacing={1}>
+            <Price>$ {product.productPrice}</Price>
+          </Grid>
+          <Grid container spacing={1}>
+            <Grid item xs={2.5}>
+              <div>
+                <Button variant="outlined" onClick={handleClick}>ADD TO FAVORITES</Button>
+              </div>
+            </Grid>
+            <Grid item xs={2.5}>
+              <div>
+                <Button variant="outlined" onClick={handleClick}>ADD TO CART</Button>
+              </div>
+            </Grid>
+          </Grid>
         </InfoContainer>
+
       </Wrapper>
     </Container>
   );
