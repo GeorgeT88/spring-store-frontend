@@ -7,8 +7,8 @@ import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import BasicPagination from './BasicPagination';
 import Product from './Product';
-import { useDispatch,useSelector } from 'react-redux';
-import { getAllProducts }from "../redux/actions/productsActions";
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProducts } from "../redux/actions/productsActions";
 
 
 
@@ -71,15 +71,19 @@ function ProductCatalog() {
   const [pageCount, setPageCount] = useState(1);
   const [productsOnPage, setProductsOnPage] = useState([]);
 
-  const products = useSelector((state)=>state).products;
+  const products = useSelector((state) => state).products.products;
+  const category = useSelector((state) => state).products.category;
 
-  useEffect(() => {  
-    dispatch (getAllProducts());
-  }, [dispatch]);
+  useEffect(() => {
+  if(category ==='All Products'){
+      dispatch(getAllProducts());
+    }
+  }, [dispatch,category]);
 
-  useEffect(() => {  
+  useEffect(() => {
+    console.log("PROOO", products)
     setCurrentPage(1);
-    }, [products]);
+  }, [products]);
 
   useEffect(() => {
     if (products.length) {

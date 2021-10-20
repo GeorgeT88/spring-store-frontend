@@ -7,29 +7,40 @@ const ALLPRODUCTS = "ALLPRODUCTS";
 
 export const getAllProducts = () => async (dispatch) => {
     const response = await axios.get('http://localhost:8081/getAllProducts')
-    dispatch({type: ALLPRODUCTS, payload: response.data});
+    dispatch({type: ALLPRODUCTS, 
+      category: 'All Products',
+      products: response.data});
   }
 
 
 export const getAllProductsByCategory = (category) => async (dispatch) => {
     const response = await axios.get(`http://localhost:8081/getByProductCategory/${category}`)
-    dispatch({type: ALLPRODUCTSBYCATEGORY, payload: response.data})
+    dispatch({type: ALLPRODUCTSBYCATEGORY,
+       category: category,
+       products: response.data})
   }
 
-const initalState = {
+const initialState = {
+  category:'',
   products: [],
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state = initalState, action) => {
+export default (state = initialState, action) => {
 
   switch (action.type) {
-    case ALLPRODUCTS: {
-      return action.payload;
-    }
-    case ALLPRODUCTSBYCATEGORY: {
-      return action.payload;
-    }
+    case ALLPRODUCTS: 
+      return {
+        ...initialState,
+      category: action.category,
+      products:action.products
+      }   
+    case ALLPRODUCTSBYCATEGORY: 
+      console.log("AACTIOOOOON1",action);
+      return{
+        ...initialState,
+        category: action.category,
+        products:action.products }
     default:
       return state;
   }

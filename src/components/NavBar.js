@@ -310,6 +310,7 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
                     <Paper>
                       <ClickAwayListener onClickAway={handleClose}>
                         <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                          <MenuItem onClick={changeInputValue('All Products')}>All Products</MenuItem>
                           <MenuItem onClick={changeInputValue('Table')}>Tables</MenuItem>
                           <MenuItem onClick={changeInputValue('Chair')}>Chairs</MenuItem>
                           <MenuItem onClick={changeInputValue('Sofa')}>Sofas</MenuItem>
