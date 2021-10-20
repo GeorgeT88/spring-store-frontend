@@ -83,12 +83,12 @@ const ProductPage = () => {
             <Price>$ {product.productPrice}</Price>
           </Grid>
           <Grid container spacing={1}>
-            <Grid item xs={2.5}>
+            <Grid item xs="auto">
               <div>
                 <Button variant="outlined" onClick={handleClick}>ADD TO FAVORITES</Button>
               </div>
             </Grid>
-            <Grid item xs={2.5}>
+            <Grid item xs="auto">
               <div>
                 <Button variant="outlined" onClick={handleClick}>ADD TO CART</Button>
               </div>

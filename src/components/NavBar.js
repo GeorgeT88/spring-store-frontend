@@ -164,6 +164,7 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
       return;
     }
     setOpen(false);
+    handleBackToMainPage();
   };
 
   function handleListKeyDown(event) {
