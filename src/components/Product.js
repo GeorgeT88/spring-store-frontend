@@ -69,7 +69,6 @@ const Product = (product) => {
         <CardMedia
           className={classes.cardMedia}
           image={productPhotoLink}
-          title="Image title"
         />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
