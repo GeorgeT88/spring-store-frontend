@@ -1,4 +1,3 @@
-import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,18 +51,7 @@ const ProductPage = () => {
 
   const dispatch = useDispatch();
 
-  const [quantity, setQuantity] = useState(1);
-
   const product = useSelector((state) => state.product);
-
-
-  const handleQuantity = (type) => {
-    if (type === "dec") {
-      quantity > 1 && setQuantity(quantity - 1);
-    } else {
-      setQuantity(quantity + 1);
-    }
-  };
 
   const handleClick = () => {
     dispatch(

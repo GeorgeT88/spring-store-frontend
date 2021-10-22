@@ -218,7 +218,7 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
         <p>Favorites</p>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
+        <IconButton aria-label="show 11 new notifications" color="inherit" onClick={()=>history.push('/cartPage')} >
           <Badge badgeContent={11} color="secondary">
             <ShoppingCartIcon />
           </Badge>
@@ -248,7 +248,7 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
                 <FavoriteIcon />
               </Badge>
             </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            <IconButton aria-label="show 17 new notifications" color="inherit"  onClick={()=>history.push('/cartPage')} >
               <Badge badgeContent={17} color="secondary">
                 <ShoppingCartIcon />
               </Badge>

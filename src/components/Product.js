@@ -8,10 +8,13 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import ProductPage from './ProductPage'
 import { useDispatch } from 'react-redux';
-import { setProduct }from "../redux/actions/productActions";
+import { setProduct } from "../redux/actions/productActions";
+import IconButton from '@material-ui/core/IconButton';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { Link as RouterLink } from 'react-router-dom'
+import Link from '@material-ui/core/Link'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,18 +52,19 @@ const Product = (product) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const classes = useStyles();
-  const {productPhotoLink, productName, productDescription, productPrice } = product;
+  const { productPhotoLink, productName, productDescription, productPrice } = product;
 
 
   const handleProductPage = () => {
-    dispatch (setProduct(product));
+    dispatch(setProduct(product));
     history.push(`/productPage`);
 
   }
- 
+
 
   return (
     <Grid item xs={12} sm={6} md={4}>
+    <Link underline='none' component={RouterLink} to='/productPage'>
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
@@ -79,14 +83,15 @@ const Product = (product) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" onClick={() => handleProductPage()}>
-          {`Details`}
-          </Button>
-          <Button size="small" color="primary">
-            {`Add To Cart`}
-          </Button>
+          <IconButton color="primary" onClick={() => history.push('/cartPage')} >    
+              <ShoppingCartIcon />         
+          </IconButton>
+          <IconButton color="primary" onClick={() => history.push('/cartPage')} >    
+              <FavoriteIcon />         
+          </IconButton>
         </CardActions>
       </Card>
+      </Link>
     </Grid>
   )
 }
