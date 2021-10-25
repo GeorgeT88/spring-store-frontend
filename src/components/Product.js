@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -13,8 +13,14 @@ import { setProduct } from "../redux/actions/productActions";
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { Link as RouterLink } from 'react-router-dom'
-import Link from '@material-ui/core/Link'
+
+import styled, { ThemeProvider } from 'styled-components';
+import NoSsr from '@material-ui/core/NoSsr';
+import {
+  createTheme,
+  ThemeProvider as MuiThemeProvider,
+} from '@material-ui/core/styles';
+import { grey, indigo } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(8),
   },
   card: {
+
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -48,6 +55,31 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(6),
   },
 }));
+
+
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: grey[50],
+      secondary: indigo[500],
+    },
+  },
+});
+
+const StyledCard = styled(Card)`
+  ${({ theme }) => `
+  cursor: pointer;
+  background-color: ${theme.palette.primary.main};
+  transition: ${theme.transitions.create(['background-color', 'transform'], {
+  duration: theme.transitions.duration.standard,
+})};
+  &:hover {
+    background-color: ${theme.palette.primary.main};
+    transform: scale(1.07);
+  }
+  `}
+`;
+
 const Product = (product) => {
   const dispatch = useDispatch();
   let history = useHistory();
@@ -63,35 +95,49 @@ const Product = (product) => {
 
 
   return (
+
+
+
+
     <Grid item xs={12} sm={6} md={4}>
-    <Link underline='none' component={RouterLink} to='/productPage'>
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.cardMedia}
-          image={productPhotoLink}
-        />
-        <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {productName}
-          </Typography>
-          <Typography>
-            {`Description: ${productDescription}`}
-          </Typography>
-          <Typography gutterBottom variant="h6" component="h2">
-            {`Product price:  ${productPrice}`}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <IconButton color="primary" onClick={() => history.push('/cartPage')} >    
-              <ShoppingCartIcon />         
-          </IconButton>
-          <IconButton color="primary" onClick={() => history.push('/cartPage')} >    
-              <FavoriteIcon />         
-          </IconButton>
-        </CardActions>
-      </Card>
-      </Link>
+
+      <NoSsr>
+        <MuiThemeProvider theme={customTheme}>
+          <ThemeProvider theme={customTheme}>
+            <StyledCard className={classes.card} onClick={() => handleProductPage()}>          
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={productPhotoLink}
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {productName}
+                  </Typography>
+                  <Typography>
+                    {`Description: ${productDescription}`}
+                  </Typography>
+                  <Typography gutterBottom variant="h6" component="h2">
+                    {`Product price:  ${productPrice}`}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <IconButton color="default" onClick={() => history.push('/cartPage')} >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                  <IconButton  onClick={() => history.push('/cartPage')} >
+                    <FavoriteIcon />
+                  </IconButton>
+                </CardActions>
+  
+            </StyledCard>
+          </ThemeProvider>
+        </MuiThemeProvider>
+      </NoSsr>
+
     </Grid>
+
+
+
   )
 }
 

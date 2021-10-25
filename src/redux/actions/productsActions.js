@@ -36,7 +36,6 @@ export default (state = initialState, action) => {
       products:action.products
       }   
     case ALLPRODUCTSBYCATEGORY: 
-      console.log("AACTIOOOOON1",action);
       return{
         ...initialState,
         category: action.category,

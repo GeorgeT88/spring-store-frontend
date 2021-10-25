@@ -41,7 +41,7 @@ export const signIn = (email, password) => async (dispatch) => {
     }).then((response) => {
         dispatch({
             type: SIGN_IN,
-            token:localStorage.getItem('token'),
+            token: localStorage.getItem('token'),
             id: response.data.id,
             firstName: response.data.firstName,
             lastName: response.data.lastName,
@@ -58,11 +58,9 @@ export const signIn = (email, password) => async (dispatch) => {
 
 export const signOut = () => {
     return (dispatch) => {
-
         dispatch({
             type: SIGN_OUT,
         });
-
     };
 };
 
@@ -85,7 +83,7 @@ export const loadUser = () => {
                     email: response.data.email,
                     phoneNumber: response.data.phoneNumber,
                     deliveryAddress: response.data.deliveryAddress
-                });          
+                });
             })
         } else return null;
     };
@@ -120,6 +118,7 @@ const authActions = (state = initialState, action) => {
             };
         case SIGN_OUT:
             localStorage.removeItem("token");
+
             return {
                 token: null,
                 id: null,
@@ -131,7 +130,6 @@ const authActions = (state = initialState, action) => {
             };
         default:
             return state;
-
     }
 };
 

@@ -33,7 +33,6 @@ const initialState = {
   
     switch (action.type) {
       case SET_PRODUCT:
-        console.log("AACTIOON SET",action);
         return {
             ...initialState,
             id: action.id,
@@ -43,7 +42,6 @@ const initialState = {
             productPhotoLink: action.productPhotoLink    
         }
       case GET_PRODUCT:
-        console.log("AACTIOON GET",action);
           return {...state}
       default:
         return state;

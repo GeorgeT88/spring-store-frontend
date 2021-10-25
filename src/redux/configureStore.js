@@ -3,17 +3,20 @@ import productsReducer from "./actions/productsActions";
 import productReducer from "./actions/productActions";
 import appBarReducer from "./actions/secondaryAppBar";
 import authReducer from "./actions/authActions";
+import carthReducer from "./actions/cartActions";
 import storage from 'redux-persist/lib/storage';
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist' 
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 
 const reducers = combineReducers({
     products: productsReducer,
     product: productReducer,
     secondaryAppBar:appBarReducer,
-    auth:authReducer
+    cart:carthReducer,
+    auth:authReducer,
 });
 
 const persistConfig = {
@@ -24,8 +27,9 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = createStore(
-    persistedReducer, // pass the persisted reducer instead of rootReducer to createStore
-    applyMiddleware(thunk) // add any middlewares here
+    persistedReducer,
+    composeWithDevTools( // pass the persisted reducer instead of rootReducer to createStore
+    applyMiddleware(thunk)) // add any middlewares here
 )
 
 

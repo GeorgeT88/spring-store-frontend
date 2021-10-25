@@ -16,6 +16,7 @@ import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
 import { useDispatch,useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signIn } from "../../src/redux/actions/authActions";
+import { getCartByUserEmail } from "../../src/redux/actions/cartActions";
 
 function Copyright() {
   return (
@@ -76,8 +77,10 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(signIn(creds.email, creds.password));   
+    dispatch(signIn(creds.email, creds.password));      
     setCreds({ email: "", password: "" });
+    dispatch(getCartByUserEmail());   
+   
   };
 
 
