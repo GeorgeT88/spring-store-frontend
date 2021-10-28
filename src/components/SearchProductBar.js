@@ -9,6 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '2px 4px',
+    marginLeft: theme.spacing(3),
     display: 'flex',
     alignItems: 'center',
     width: 300,
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     marginLeft: theme.spacing(3),
-    flex: 1,
+    flex: 2,
     backgroundColor: 'rgb(216 219 239)'
   },
   iconButton: {

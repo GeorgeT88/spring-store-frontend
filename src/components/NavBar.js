@@ -14,14 +14,11 @@ import UserMenu from './UserMenu';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import SearchProductBar from './SearchProductBar';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import Grid from '@material-ui/core/Grid';
-import { getAllProductsByCategory }from "../redux/actions/productsActions";
-import { useDispatch,useSelector } from 'react-redux';
+import { getAllProductsByCategory } from "../redux/actions/productsActions";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 
 
@@ -42,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -109,9 +105,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavBar() {
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
+  const appBar = useSelector((state) => state.secondaryAppBar.appbar);
+
+  const favoriteProducts = useSelector((state) => state.auth.favoriteProductList);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -119,13 +117,19 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
 
-
-
-
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   let history = useHistory();
+
+  function handleClick(event) {
+    if (anchorEl !== event.currentTarget) {
+      setAnchorEl(event.currentTarget);
+    }
+  }
+
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
+
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -144,26 +148,15 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
     history.push('/');
   }
 
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   const changeInputValue = (category) => (event) => {
-    console.log("selected",category )
+    console.log("selected", category)
 
-    dispatch (getAllProductsByCategory(category));
+    dispatch(getAllProductsByCategory(category));
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-    setOpen(false);
+    handleClose();
     handleBackToMainPage();
   };
 
@@ -173,6 +166,7 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
       setOpen(false);
     }
   }
+
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
@@ -192,7 +186,7 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
       id={menuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
+      //  open={isMenuOpen}
       onClose={handleMenuClose}
     >
     </Menu>
@@ -206,19 +200,19 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
       id={mobileMenuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
+      //  open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={favoriteProducts?.length} color="secondary">
             <FavoriteIcon />
           </Badge>
         </IconButton>
         <p>Favorites</p>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit" onClick={()=>history.push('/cartPage')} >
+        <IconButton aria-label="show 11 new notifications" color="inherit" onClick={() => history.push('/cartPage')} >
           <Badge badgeContent={11} color="secondary">
             <ShoppingCartIcon />
           </Badge>
@@ -234,9 +228,10 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
   return (
     <div className={classes.grow}>
       <AppBar position="static">
-        <Toolbar>      
+        <Toolbar>
           <Button className={classes.button} variant="contained" color="primary" disableElevation disableRipple disableFocusRipple>
             <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >
+
               Spring Store App
             </Typography>
           </Button>
@@ -244,11 +239,11 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={favoriteProducts?.length} color="secondary">
                 <FavoriteIcon />
               </Badge>
             </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit"  onClick={()=>history.push('/cartPage')} >
+            <IconButton aria-label="show 17 new notifications" color="inherit" onClick={() => history.push('/cartPage')} >
               <Badge badgeContent={17} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
@@ -281,51 +276,49 @@ const appBar = useSelector((state)=>state.secondaryAppBar.appbar);
       >
 
         <Grid item xs={12}>
-        {appBar!== false && (
-          <div className={classes.root} >
-            <div>
-              <Button
-                ref={anchorRef}
-                aria-controls={open ? 'menu-list-grow' : undefined}
-                aria-haspopup="true"
-                onClick={handleToggle}
-              >
-                Categories
-              </Button>
-              <Button>
-                Newest Products
-              </Button>
-              <Button>
-                Offerts
-              </Button>
-              <Button>
-                About Us
-              </Button>
-              <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
-                        <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                          <MenuItem onClick={changeInputValue('All Products')}>All Products</MenuItem>
-                          <MenuItem onClick={changeInputValue('Table')}>Tables</MenuItem>
-                          <MenuItem onClick={changeInputValue('Chair')}>Chairs</MenuItem>
-                          <MenuItem onClick={changeInputValue('Sofa')}>Sofas</MenuItem>
-                          <MenuItem onClick={changeInputValue('Bedroom')}>Bedroom</MenuItem>
-                          <MenuItem onClick={changeInputValue('Bed')}>Beds</MenuItem>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
+          {appBar !== false && (
+            <div className={classes.root} >
+              <div>
+                <Button
+                  aria-owns={anchorEl ? "simple-menu" : undefined}
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  onMouseOver={handleClick}
+                >
+                  Categories
+                </Button>
+                <Button>
+                  Newest Products
+                </Button>
+                <Button>
+                  Offerts
+                </Button>
+                <Button>
+                  About Us
+                </Button>
+                <Menu
+                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                  transformOrigin={{ vertical: "top", horizontal: "left" }}
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  MenuListProps={{ onMouseLeave: handleClose }}
+                  getContentAnchorEl={null}
+                >
+                  <MenuList  id="simple-men" onKeyDown={handleListKeyDown}>
+                    <MenuItem onClick={changeInputValue('All Products')}>All Products</MenuItem>
+                    <MenuItem onClick={changeInputValue('Table')}>Tables</MenuItem>
+                    <MenuItem onClick={changeInputValue('Chair')}>Chairs</MenuItem>
+                    <MenuItem onClick={changeInputValue('Sofa')}>Sofas</MenuItem>
+                    <MenuItem onClick={changeInputValue('Bedroom')}>Bedroom</MenuItem>
+                    <MenuItem onClick={changeInputValue('Bed')}>Beds</MenuItem>
+                  </MenuList>
+                </Menu>
+              </div>
             </div>
-
-          </div>
           )}
+
         </Grid>
       </Grid>
       {renderMobileMenu}

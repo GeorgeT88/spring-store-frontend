@@ -74,12 +74,14 @@ function SignIn() {
   }, [dispatch]);
 
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     dispatch(signIn(creds.email, creds.password));      
     setCreds({ email: "", password: "" });
-    dispatch(getCartByUserEmail());   
+    dispatch(getCartByUserEmail()); 
+    
    
   };
 

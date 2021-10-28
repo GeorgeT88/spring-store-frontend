@@ -26,31 +26,46 @@ export const signUp = (firstName, lastName, email, phoneNumber, deliveryAddress,
 };
 
 
-export const signIn = (email, password) => async (dispatch) => {
-    await axios.post('http://localhost:8762/login', { email, password })
-        .then((token) => {
-            localStorage.setItem("token", token.headers.authorization)
-            dispatch({ type: SIGN_IN, token: token.headers.authorization });
 
+
+
+export const signIn = (email, password) => async (dispatch) => {
+    
+    try {
+        await axios.post('http://localhost:8762/login', { email, password })
+            .then((token) => {
+                localStorage.setItem("token", token.headers.authorization)
+                dispatch({ type: SIGN_IN, token: token.headers.authorization });
+
+            })
+    } catch (e) {
+        console.log("Token setup failed!")
+    }
+
+    try {
+        await axios.get(`http://localhost:8762/user/getUserByEmail?email=${email}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            }
+        }).then((response) => {
+            dispatch({
+                type: SIGN_IN,
+                token: localStorage.getItem('token'),
+                id: response.data.id,
+                firstName: response.data.firstName,
+                lastName: response.data.lastName,
+                email: response.data.email,
+                phoneNumber: response.data.phoneNumber,
+                deliveryAddress: response.data.deliveryAddress,
+                favoriteProductList: response.data.favoriteProductList
+            });
         })
-    await axios.get(`http://localhost:8762/user/getUserByEmail?email=${email}`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
-    }).then((response) => {
-        dispatch({
-            type: SIGN_IN,
-            token: localStorage.getItem('token'),
-            id: response.data.id,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            email: response.data.email,
-            phoneNumber: response.data.phoneNumber,
-            deliveryAddress: response.data.deliveryAddress
-        });
-    })
-};
+    }
+    catch (e) {
+        console.log("Login failed!")
+    }
+}
 
 
 
@@ -82,7 +97,8 @@ export const loadUser = () => {
                     lastName: response.data.lastName,
                     email: response.data.email,
                     phoneNumber: response.data.phoneNumber,
-                    deliveryAddress: response.data.deliveryAddress
+                    deliveryAddress: response.data.deliveryAddress,
+                    favoriteProductList: response.data.favoriteProductList
                 });
             })
         } else return null;
@@ -96,7 +112,8 @@ const initialState = {
     lastName: null,
     email: null,
     phoneNumber: null,
-    deliveryAddress: null
+    deliveryAddress: null,
+    favoriteProductList: []
 };
 
 
@@ -114,7 +131,8 @@ const authActions = (state = initialState, action) => {
                 lastName: action.lastName,
                 email: action.email,
                 phoneNumber: action.phoneNumber,
-                deliveryAddress: action.deliveryAddress
+                deliveryAddress: action.deliveryAddress,
+                favoriteProductList: action.favoriteProductList
             };
         case SIGN_OUT:
             localStorage.removeItem("token");
@@ -127,6 +145,7 @@ const authActions = (state = initialState, action) => {
                 email: null,
                 phoneNumber: null,
                 deliveryAddress: null,
+                favoriteProductList: []
             };
         default:
             return state;

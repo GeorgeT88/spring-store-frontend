@@ -4,11 +4,11 @@ import jwtDecode from "jwt-decode";
 const SET_PRODUCT_TO_FAVORITES = "SET_PRODUCT_TO_FAVORITES";
 
 
-export const getSetProductToFavorites = (product) => {
-    return (dispatch, getState) => {
-       
-        const token = getState().auth.token;
-        
+export const addProductToFavorites = (product) => {
+    return (dispatch, getState) => {  
+             
+        const token = getState().auth.token;    
+
         console.log("TOKKEEN  ",token);
         if (token) {
             const user = jwtDecode(token);
@@ -47,7 +47,6 @@ const cartActions = (state = initialState, action) => {
                 total: action.total
             };
         default:
-            console.log("CART DATAAAA:  ", state);
             return state;
     }
 };
