@@ -306,7 +306,7 @@ export default function NavBar() {
                   MenuListProps={{ onMouseLeave: handleClose }}
                   getContentAnchorEl={null}
                 >
-                  <MenuList  id="simple-men" onKeyDown={handleListKeyDown}>
+                  <MenuList  id="simple-menu" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={changeInputValue('All Products')}>All Products</MenuItem>
                     <MenuItem onClick={changeInputValue('Table')}>Tables</MenuItem>
                     <MenuItem onClick={changeInputValue('Chair')}>Chairs</MenuItem>
