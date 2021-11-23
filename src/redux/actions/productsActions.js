@@ -21,7 +21,7 @@ export const getAllProductsByCategory = (category) => async (dispatch) => {
   }
 
 const initialState = {
-  category:'',
+  category:'All Products',
   products: [],
 }
 
