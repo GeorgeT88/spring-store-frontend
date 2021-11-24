@@ -283,7 +283,7 @@ export default function NavBar() {
                   aria-owns={anchorEl ? "simple-menu" : undefined}
                   aria-haspopup="true"
                   onClick={handleClick}
-                  onMouseOver={handleClick}
+                  //onMouseOver={handleClick}
                 >
                   Categories
                 </Button>
