@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOut } from "../redux/actions/authActions";
 import Avatar from '@material-ui/core/Avatar';
-
+import Menu from '@material-ui/core/Menu';
 
 
 
@@ -33,6 +33,7 @@ export default function UserMenu() {
 
 
     const classes = useStyles();
+    const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     let history = useHistory();
@@ -41,10 +42,12 @@ export default function UserMenu() {
         setOpen((prevOpen) => !prevOpen);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
 
+
+    function handleClose() {
+        setAnchorEl(null);
+      }
+      
     function handleListKeyDown(event) {
         if (event.key === 'Tab') {
             event.preventDefault();
@@ -67,6 +70,12 @@ export default function UserMenu() {
 
     const handleUserSettings = (e) => {
         history.push('/userSettings');
+    }
+
+    function handleClick(event) {
+        if (anchorEl !== event.currentTarget) {
+            setAnchorEl(event.currentTarget);
+        }
     }
 
     function stringToColor(string) {
@@ -113,51 +122,49 @@ export default function UserMenu() {
                 ref={anchorRef}
                 edge="end"
                 aria-label="account of current user"
-                aria-controls={open ? 'menu-list-grow' : undefined}
                 aria-haspopup="true"
-                onClick={handleToggle}
+                aria-owns={anchorEl ? "simple-menu" : undefined}
+                onClick={handleClick}
                 color="inherit"
             >
-                {(auth.id === null || auth.id === undefined) 
-                    ?<AccountCircle fontSize="large" />
-                    :<Avatar {...stringAvatar(`${auth.firstName} ${auth.lastName}`)} style={{ height: '35px', width: '35px' }} />
+                {(auth.id === null || auth.id === undefined)
+                    ? <AccountCircle fontSize="large" />
+                    : <Avatar {...stringAvatar(`${auth.firstName} ${auth.lastName}`)} style={{ height: '35px', width: '35px' }} />
                 }
+                <Menu
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                  transformOrigin={{ vertical: "top", horizontal: "left" }}
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  MenuListProps={{ onMouseLeave: handleClose }}
+                  getContentAnchorEl={null}
+                  disableAutoFocusItem={true}
+                >               <MenuList id="simple-menu" onKeyDown={handleListKeyDown}>
+                        {auth.id === null && (
+
+                            <MenuItem onClick={() => [handleSignIn(), handleClose()]}>Sign In</MenuItem>
+                        )}
+
+                        {auth.id === null && (
+
+                            <MenuItem onClick={() => [handleSignUp(), handleClose()]}>Sign Up</MenuItem>
+                        )}
+
+
+                        {auth.id !== null && (
+
+                            <MenuItem onClick={() => [handleUserSettings(), handleClose()]}>Settings</MenuItem>
+                        )}
+                        {auth.id !== null && (
+
+                            <MenuItem onClick={() => [handleLogout(), handleClose()]}>Logout</MenuItem>
+                        )}
+                    </MenuList>
+                </Menu>
 
             </IconButton>
-            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                {({ TransitionProps, placement }) => (
-                    <Grow
-                        {...TransitionProps}
-                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                    >
-                        <Paper>
-                            <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                    {auth.id === null && (
-
-                                        <MenuItem onClick={() => [handleSignIn(), handleClose()]}>Sign In</MenuItem>
-                                    )}
-
-                                    {auth.id === null && (
-
-                                        <MenuItem onClick={() => [handleSignUp(), handleClose()]}>Sign Up</MenuItem>
-                                    )}
-
-
-                                    {auth.id !== null && (
-
-                                        <MenuItem onClick={() => [handleUserSettings(), handleClose()]}>Settings</MenuItem>
-                                    )}
-                                    {auth.id !== null && (
-
-                                        <MenuItem onClick={() => [handleLogout(), handleClose()]}>Logout</MenuItem>
-                                    )}
-                                </MenuList>
-                            </ClickAwayListener>
-                        </Paper>
-                    </Grow>
-                )}
-            </Popper>
         </div>
     );
 }
