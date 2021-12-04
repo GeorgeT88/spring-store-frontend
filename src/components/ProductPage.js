@@ -63,6 +63,9 @@ const ProductPage = () => {
     if(favoriteProducts.some(p =>(p.productName === product.productName))){
        setClicked(true);
       }
+      else{
+        setClicked(false) 
+      }
     }, [favoriteProducts,product.productName]);
 
   const handleClick = () => {
