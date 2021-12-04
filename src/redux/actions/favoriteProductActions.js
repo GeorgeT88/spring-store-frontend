@@ -1,29 +1,55 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-const SET_PRODUCT_TO_FAVORITES = "SET_PRODUCT_TO_FAVORITES";
+const PRODUCT_FAVORITES = "SET_PRODUCT_TO_FAVORITES";
 
 
 export const addProductToFavorites = (product) => {
-    return (dispatch, getState) => {  
-             
-        const token = getState().auth.token;    
+    return (dispatch, getState) => {
 
-        console.log("TOKKEEN  ",token);
+        const token = getState().auth.token;
+
         if (token) {
             const user = jwtDecode(token);
-            axios.get(`http://localhost:8762/user/addProductToUserFavorites/${user.sub}/${product}`, {
+
+            axios.put(`http://localhost:8762/user/addProductToUserFavorites/${user.sub}/${product}`,{},
+             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-type': 'application/json',
                     'Authorization': localStorage.getItem('token')
                 }
             }).then((response) => {
                 dispatch({
-                    type: SET_PRODUCT_TO_FAVORITES,
+                    type: PRODUCT_FAVORITES,
                     id: response.data.id,
                     productList: response.data.productList,
                     total: response.data.total
-                });          
+                });
+            })
+        } else return null;
+    };
+};
+
+export const removeProductToFavorites = (product) => {
+    return (dispatch, getState) => {
+
+        const token = getState().auth.token;
+        
+        if (token) {
+            const user = jwtDecode(token);
+
+            axios.put(`http://localhost:8762/user/removeProductFromUserFavorites/${user.sub}/${product}`,{},
+             {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then((response) => {
+                dispatch({
+                    type: PRODUCT_FAVORITES,
+                    id: response.data.id,
+                    productList: response.data.productList,          
+                });
             })
         } else return null;
     };
@@ -32,23 +58,21 @@ export const addProductToFavorites = (product) => {
 const initialState = {
     id: null,
     productList: [],
-    total: null
 };
 
 
 
-const cartActions = (state = initialState, action) => {
+const favoriteProductActions = (state = initialState, action) => {
     switch (action.type) {
-        case SET_PRODUCT_TO_FAVORITES:
+        case PRODUCT_FAVORITES:
             return {
                 ...initialState,
                 id: action.id,
                 productList: action.productList,
-                total: action.total
             };
         default:
             return state;
     }
 };
 
-export default cartActions;
+export default favoriteProductActions;

@@ -6,6 +6,7 @@ const ALLPRODUCTS = "ALLPRODUCTS";
 
 
 export const getAllProducts = () => async (dispatch) => {
+
     const response = await axios.get('http://localhost:8081/getAllProducts')
     dispatch({type: ALLPRODUCTS, 
       category: 'All Products',

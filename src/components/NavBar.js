@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,7 +17,8 @@ import SearchProductBar from './SearchProductBar';
 import MenuList from '@material-ui/core/MenuList';
 import Grid from '@material-ui/core/Grid';
 import { getAllProductsByCategory } from "../redux/actions/productsActions";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
+import { addProductToFavorites } from "../redux/actions/favoriteProductActions";
 
 
 
@@ -110,7 +111,6 @@ export default function NavBar() {
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
 
   const favoriteProducts = useSelector((state) => state.auth.favoriteProductList);
-
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);

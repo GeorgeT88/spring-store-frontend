@@ -1,10 +1,14 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-
-const Container = styled.div``;
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { red } from '@mui/material/colors';
+import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
+import { removeProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
+import Container from '@mui/material/Container';
 
 const Wrapper = styled.div`
   padding: 45px;
@@ -51,12 +55,30 @@ const ProductPage = () => {
 
   const dispatch = useDispatch();
 
+  const favoriteProducts = useSelector((state) => state.auth.favoriteProductList);
   const product = useSelector((state) => state.product);
+  const [clicked, setClicked] = useState(false)
+
+  useEffect(() => {
+    if(favoriteProducts.some(p =>(p.productName === product.productName))){
+       setClicked(true);
+      }
+    }, [favoriteProducts,product.productName]);
 
   const handleClick = () => {
-    dispatch(
-      //     addProduct({ ...product, quantity, color, size })
-    );
+    if (clicked === false) {
+      console.log(product.productName)
+      setClicked(true)
+      dispatch(
+        addProductToFavorites(product.productName)
+      );
+    } else {
+      setClicked(false)
+      dispatch(
+        removeProductToFavorites(product.productName)
+      );
+    }
+
   };
   return (
     <Container>
@@ -73,7 +95,8 @@ const ProductPage = () => {
           <Grid container spacing={1}>
             <Grid item xs="auto">
               <div>
-                <Button variant="outlined" onClick={handleClick}>ADD TO FAVORITES</Button>
+                <Button variant="outlined" onClick={handleClick} startIcon={clicked ?  <FavoriteIcon sx={{ color: red[500] }}/> : <FavoriteBorderIcon /> } >ADD TO FAVORITES
+                </Button>
               </div>
             </Grid>
             <Grid item xs="auto">
