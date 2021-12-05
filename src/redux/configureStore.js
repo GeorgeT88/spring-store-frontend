@@ -9,6 +9,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist' 
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import favoriteProductActions from './actions/favoriteProductActions';
 
 
 const reducers = combineReducers({
@@ -17,6 +18,7 @@ const reducers = combineReducers({
     secondaryAppBar:appBarReducer,
     cart:carthReducer,
     auth:authReducer,
+    favoriteProduct: favoriteProductActions,
 });
 
 const persistConfig = {

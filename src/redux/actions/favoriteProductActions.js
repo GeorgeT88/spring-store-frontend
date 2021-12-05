@@ -11,7 +11,7 @@ export const addProductToFavorites = (product) => {
 
         if (token) {
             const user = jwtDecode(token);
-
+            console.log('add to fav')
             axios.put(`http://localhost:8762/user/addProductToUserFavorites/${user.sub}/${product}`,{},
              {
                 headers: {
@@ -19,10 +19,12 @@ export const addProductToFavorites = (product) => {
                     'Authorization': localStorage.getItem('token')
                 }
             }).then((response) => {
+                console.log('response', response);
+
                 dispatch({
                     type: PRODUCT_FAVORITES,
                     id: response.data.id,
-                    productList: response.data.productList,
+                    productList: response.data.favoriteProductList,
                     total: response.data.total
                 });
             })
@@ -34,7 +36,7 @@ export const removeProductToFavorites = (product) => {
     return (dispatch, getState) => {
 
         const token = getState().auth.token;
-        
+        console.log('remove from fav')
         if (token) {
             const user = jwtDecode(token);
 
@@ -48,7 +50,7 @@ export const removeProductToFavorites = (product) => {
                 dispatch({
                     type: PRODUCT_FAVORITES,
                     id: response.data.id,
-                    productList: response.data.productList,          
+                    productList: response.data.favoriteProductList,          
                 });
             })
         } else return null;
@@ -65,12 +67,14 @@ const initialState = {
 const favoriteProductActions = (state = initialState, action) => {
     switch (action.type) {
         case PRODUCT_FAVORITES:
+            console.log('test', initialState, action);
             return {
                 ...initialState,
                 id: action.id,
                 productList: action.productList,
             };
         default:
+            console.log('default');
             return state;
     }
 };
