@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
@@ -14,6 +14,12 @@ import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MenuItem from '@material-ui/core/MenuItem';
+import Image from 'material-ui-image';
+import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
 
 import styled, { ThemeProvider } from 'styled-components';
 import NoSsr from '@material-ui/core/NoSsr';
@@ -64,6 +70,7 @@ const customTheme = createTheme({
   },
 });
 
+
 const StyledCard = styled(Card)`
   ${({ theme }) => `
   cursor: pointer;
@@ -82,7 +89,7 @@ const FavoriteProduct = (product) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const classes = useStyles();
-  const {productPhotoLink, productName } = product;
+  const { productPhotoLink, productName } = product;
 
 
   const handleProductPage = () => {
@@ -99,11 +106,31 @@ const FavoriteProduct = (product) => {
 
 
 
-    <MenuItem className={classes.card} onClick={() => handleProductPage()}>{productName}
-      <CardMedia   style={{height: 0, paddingTop: '56.25%'}}
+    <MenuItem
+    
+      className={classes.card}
+      onClick={() => handleProductPage()}>
+      
 
+      <Card sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <CardContent sx={{ flex: '1 0 auto' }}>
+          <Typography component="div" variant="h5">
+          {productName }
+          </Typography>
+        </CardContent>
+     
+      <CardMedia
+        style={{
+          height: 0,
+           paddingTop: '56.25%'}}
         image={productPhotoLink}
+
       />
+       </Box>
+    </Card>
+
+
     </MenuItem>
 
 
