@@ -3,22 +3,22 @@ import productsReducer from "./actions/productsActions";
 import productReducer from "./actions/productActions";
 import appBarReducer from "./actions/secondaryAppBar";
 import authReducer from "./actions/authActions";
-import carthReducer from "./actions/cartActions";
+import cartReducer from "./actions/cartActions";
 import storage from 'redux-persist/lib/storage';
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist' 
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import favoriteProductActions from './actions/favoriteProductActions';
+import favoriteProductReducer from './actions/favoriteProductActions';
 
 
 const reducers = combineReducers({
     products: productsReducer,
     product: productReducer,
     secondaryAppBar:appBarReducer,
-    cart:carthReducer,
+    cart:cartReducer,
     auth:authReducer,
-    favoriteProduct: favoriteProductActions,
+    favoriteProduct: favoriteProductReducer,
 });
 
 const persistConfig = {
