@@ -93,7 +93,6 @@ const FavoriteProduct = (product) => {
 
 
   const handleProductPage = () => {
-    console.log(product)
     dispatch(setProduct(product));
     history.push(`/productPage`);
 
@@ -123,7 +122,8 @@ const FavoriteProduct = (product) => {
       <CardMedia
         style={{
           height: 0,
-           paddingTop: '56.25%'}}
+           paddingTop: '56.25%',
+            marginLeft:'130'}}
         image={productPhotoLink}
 
       />

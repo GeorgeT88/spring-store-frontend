@@ -55,7 +55,6 @@ function handleSignIn(username, password) {
         password: password
     }).then((response) => {
         localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
-        console.log(response.headers.authorization);
     }).catch((error) => {
         console.log(error)
     })

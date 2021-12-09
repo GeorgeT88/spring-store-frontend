@@ -17,8 +17,7 @@ import SearchProductBar from './SearchProductBar';
 import MenuList from '@material-ui/core/MenuList';
 import Grid from '@material-ui/core/Grid';
 import { getAllProductsByCategory } from "../redux/actions/productsActions";
-import { useDispatch, useSelector } from 'react-redux'
-import { addProductToFavorites } from "../redux/actions/favoriteProductActions";
+import { useDispatch, useSelector } from 'react-redux';
 import FavoriteProduct from './FavoriteProduct';
 
 
@@ -112,15 +111,12 @@ export default function NavBar() {
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
 
   const favoriteProducts = useSelector((state) => {
-    console.log('state', state);
+    console.log('state OF Fav PRODUCTS', state.favoriteProduct.productList);
     return state.favoriteProduct.productList
   });
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElDropDown, setAnchorElDropDown] = useState(null);
-  const [productsOnPage, setProductsOnPage] = useState([]);
-
-
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
@@ -174,7 +170,6 @@ export default function NavBar() {
 
 
   const changeInputValue = (category) => (event) => {
-    console.log("selected", category)
 
     dispatch(getAllProductsByCategory(category));
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -194,13 +189,15 @@ export default function NavBar() {
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
 
     prevOpen.current = open;
   }, [open]);
+
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (

@@ -3,16 +3,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useHistory } from 'react-router-dom';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOut } from "../redux/actions/authActions";
+import { signOutProductFavorites } from "../redux/actions/favoriteProductActions";
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
+
 
 
 
@@ -56,7 +54,7 @@ export default function UserMenu() {
     }
 
     const handleSignIn = () => {
-        history.push('/signIn');
+        history.push('/signIn');      
     }
 
     const handleSignUp = () => {
@@ -66,6 +64,7 @@ export default function UserMenu() {
     const handleLogout = () => {
         history.push('/');
         dispatch(signOut());
+        dispatch(signOutProductFavorites());    
     }
 
     const handleUserSettings = (e) => {

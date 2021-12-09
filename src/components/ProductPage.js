@@ -70,7 +70,6 @@ const ProductPage = () => {
 
   const handleClick = () => {
     if (clicked === false) {
-      console.log(product.productName)
       setClicked(true)
       dispatch(
         addProductToFavorites(product.productName)

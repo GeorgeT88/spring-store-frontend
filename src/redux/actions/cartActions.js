@@ -7,7 +7,6 @@ const GET_CART = "GET_CART";
 export const getCartByUserEmail = () => async (dispatch) => { 
         const token = localStorage.getItem('token');
         
-        console.log("TOKKEEN  ",token);
         if (token) {
             const user = jwtDecode(token);
           await axios.get(`http://localhost:8762/cart/getCartByEmail?email=${user.sub}`, {

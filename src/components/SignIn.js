@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,AsyncStorage,
+  View,
+  Text } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,6 +19,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signIn } from "../../src/redux/actions/authActions";
 import { getCartByUserEmail } from "../../src/redux/actions/cartActions";
+import { getAllProductsFromUserFavorites } from "../../src/redux/actions/favoriteProductActions";
+
 
 function Copyright() {
   return (
@@ -55,8 +59,6 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
   const classes = useStyles();
-
-
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch();
   const [creds, setCreds] = useState({
@@ -78,9 +80,11 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(signIn(creds.email, creds.password));      
+    dispatch(signIn(creds.email, creds.password));  
     setCreds({ email: "", password: "" });
-    dispatch(getCartByUserEmail()); 
+  //  console.log('token: ',localStorage.getItem('token'));  
+  return  dispatch(getAllProductsFromUserFavorites())    
+  //  dispatch(getCartByUserEmail()); 
     
    
   };

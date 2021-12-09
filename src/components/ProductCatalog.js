@@ -81,7 +81,6 @@ function ProductCatalog() {
   }, [dispatch,category]);
 
   useEffect(() => {
-    console.log("PROOO", products)
     setCurrentPage(1);
   }, [products]);
 

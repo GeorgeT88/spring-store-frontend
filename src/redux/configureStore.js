@@ -8,8 +8,8 @@ import storage from 'redux-persist/lib/storage';
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist' 
 import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import favoriteProductReducer from './actions/favoriteProductActions';
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 
 const reducers = combineReducers({
@@ -28,9 +28,10 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
+
 const store = createStore(
     persistedReducer,
-    composeWithDevTools( // pass the persisted reducer instead of rootReducer to createStore
+    composeWithDevTools( 
     applyMiddleware(thunk)) // add any middlewares here
 )
 
