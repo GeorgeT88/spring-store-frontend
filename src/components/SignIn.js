@@ -83,7 +83,7 @@ function SignIn() {
     dispatch(signIn(creds.email, creds.password));  
     setCreds({ email: "", password: "" });
   //  console.log('token: ',localStorage.getItem('token'));  
-  return  dispatch(getAllProductsFromUserFavorites())    
+     dispatch(getAllProductsFromUserFavorites())    
   //  dispatch(getCartByUserEmail()); 
     
    
