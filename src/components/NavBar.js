@@ -110,10 +110,8 @@ export default function NavBar() {
 
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
 
-  const favoriteProducts = useSelector((state) => {
-    console.log('state OF Fav PRODUCTS', state.favoriteProduct.productList);
-    return state.favoriteProduct.productList
-  });
+  const favoriteProducts = useSelector((state) =>  state.favoriteProduct.productList);
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElDropDown, setAnchorElDropDown] = useState(null);
@@ -279,6 +277,7 @@ export default function NavBar() {
                   disableAutoFocusItem={true}
                 >
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+           
                     {favoriteProducts.map((favoriteProduct) => (
                       <FavoriteProduct key={favoriteProduct.id} {...favoriteProduct} />
                     ))}

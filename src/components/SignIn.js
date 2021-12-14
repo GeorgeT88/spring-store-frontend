@@ -1,6 +1,8 @@
-import React, { useState, useEffect ,AsyncStorage,
+import React, {
+  useState, useEffect, AsyncStorage,
   View,
-  Text } from "react";
+  Text
+} from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,7 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signIn } from "../../src/redux/actions/authActions";
 import { getCartByUserEmail } from "../../src/redux/actions/cartActions";
@@ -80,18 +82,18 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(signIn(creds.email, creds.password));  
+    dispatch(signIn(creds.email, creds.password));
     setCreds({ email: "", password: "" });
-  //  console.log('token: ',localStorage.getItem('token'));  
-     dispatch(getAllProductsFromUserFavorites())    
-  //  dispatch(getCartByUserEmail()); 
-    
-   
+    setTimeout(() => {
+      dispatch(getAllProductsFromUserFavorites());
+    }, 500)
+
+    //  dispatch(getCartByUserEmail()); 
   };
 
 
 
-if (auth.id) return <Redirect to="/"/>
+  if (auth.id) return <Redirect to="/" />
 
 
 

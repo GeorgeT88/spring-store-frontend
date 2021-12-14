@@ -60,7 +60,7 @@ export const getAllProductsFromUserFavorites = () => {
         console.log('TKKKNNNN',token);
         if (token) {
             const user = jwtDecode(token);
-            axios.put(`http://localhost:8762/user/getAllProductsFromUserFavorites/${user.sub}`,
+            axios.get(`http://localhost:8762/user/getAllProductsFromUserFavorites/${user.sub}`,
              {
                 headers: {
                     'Content-type': 'application/json',
@@ -68,11 +68,11 @@ export const getAllProductsFromUserFavorites = () => {
                 }
             }).then((response) => {
 
-                console.log('initial fav prod',response.data.favoriteProductList);
+                console.log('initial fav prod',response.data);
                 dispatch({
                     type: PRODUCT_FAVORITES,
                     id: response.data.id,
-                    productList: response.data.favoriteProductList,
+                    productList: response.data,
                 });
             })
         } else return null;
