@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '@material-ui/core/Button';
+import { useState,useEffect  } from "react";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,11 +8,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setProduct } from "../redux/actions/productActions";
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
+import { removeProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+import { red } from '@mui/material/colors';
 
 import styled, { ThemeProvider } from 'styled-components';
 import NoSsr from '@material-ui/core/NoSsr';
@@ -85,6 +90,8 @@ const Product = (product) => {
   let history = useHistory();
   const classes = useStyles();
   const { productPhotoLink, productName, productDescription, productPrice } = product;
+  const [clicked, setClicked] = useState(false)
+  const favoriteProducts = useSelector((state) => state.auth.favoriteProductList);
 
 
   const handleProductPage = () => {
@@ -92,6 +99,31 @@ const Product = (product) => {
     history.push(`/productPage`);
 
   }
+
+  useEffect(() => {
+    if(favoriteProducts.some(p =>(p.productName === product.productName))){
+       setClicked(true);
+      }
+      else{
+        setClicked(false) 
+      }
+    }, [favoriteProducts,product.productName]);
+
+
+  const handleClick = () => {
+    if (clicked === false) {
+      setClicked(true)
+      dispatch(
+        addProductToFavorites(product.productName)
+      );
+    } else {
+      setClicked(false)
+      dispatch(
+        removeProductToFavorites(product.productName)
+      );
+    }
+
+  };
 
 
   return (
@@ -104,31 +136,42 @@ const Product = (product) => {
       <NoSsr>
         <MuiThemeProvider theme={customTheme}>
           <ThemeProvider theme={customTheme}>
-            <StyledCard className={classes.card} onClick={() => handleProductPage()}>          
-                <CardMedia
-                  className={classes.cardMedia}
-                  image={productPhotoLink}
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {productName}
-                  </Typography>
-                  <Typography>
-                    {`Description: ${productDescription}`}
-                  </Typography>
-                  <Typography gutterBottom variant="h6" component="h2">
-                    {`Product price:  ${productPrice}`}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <IconButton color="default" onClick={() => history.push('/cartPage')} >
-                    <ShoppingCartIcon />
-                  </IconButton>
-                  <IconButton  onClick={() => history.push('/cartPage')} >
-                    <FavoriteIcon />
-                  </IconButton>
-                </CardActions>
-  
+            <StyledCard className={classes.card} >
+              <CardMedia
+                className={classes.cardMedia}
+                image={productPhotoLink}
+                onClick={() => handleProductPage()}
+              />
+              <CardContent className={classes.cardContent} onClick={() => handleProductPage()}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {productName}
+                </Typography>
+                <Typography>
+                  {`Description: ${productDescription}`}
+                </Typography>
+                <Typography gutterBottom variant="h6" component="h2">
+                  {`Product price:  ${productPrice}`}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <IconButton color="default" onClick={() => history.push('/cartPage')} >
+                  <ShoppingCartIcon />
+                </IconButton>
+                {clicked === true && (
+                  <IconButton color="default"  onClick={() => handleClick()}  >
+                  <FavoriteIcon sx={{ color: red[500] }}/>
+                </IconButton>    
+                )}
+                {clicked !== true && (
+                  <IconButton color="default"  onClick={() => handleClick()}  >
+                  <FavoriteBorderIcon />
+                </IconButton>
+         
+                )}
+        
+                
+
+              </CardActions>
             </StyledCard>
           </ThemeProvider>
         </MuiThemeProvider>
