@@ -36,12 +36,6 @@ export default function UserMenu() {
     const anchorRef = React.useRef(null);
     let history = useHistory();
 
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-    };
-
-
-
     function handleClose() {
         setAnchorEl(null);
       }

@@ -39,15 +39,6 @@ const TopButton = styled.button`
   color: ${(props) => props.type === "filled" && "white"};
 `;
 
-const TopTexts = styled.div`
-  ${mobile({ display: "none" })}
-`;
-const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0px 10px;
-`;
-
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
@@ -83,13 +74,6 @@ const Details = styled.div`
 const ProductName = styled.span``;
 
 const ProductId = styled.span``;
-
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-`;
 
 const ProductSize = styled.span``;
 

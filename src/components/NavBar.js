@@ -26,6 +26,8 @@ import FavoriteProduct from './FavoriteProduct';
 
 
 
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -131,11 +133,6 @@ export default function NavBar() {
   function handleCloseDropDown() {
     setAnchorElDropDown(null);
   }
-
-  const handleMenuCloseDropDown = () => {
-    setAnchorElDropDown(null);
-    handleMobileMenuClose();
-  };
 
   function handleClick(event) {
     if (anchorEl !== event.currentTarget) {
