@@ -25,6 +25,7 @@ import Grid from '@mui/material/Grid';
 import ButtonBase from '@mui/material/ButtonBase';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
+import { removeProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
 
 
 
@@ -89,41 +90,49 @@ const FavoriteProduct = (product) => {
 
   }
 
-  return (
-    <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }} onClick={() => handleProductPage()}>
+  const handleClick = () => {
+    dispatch(
+      removeProductToFavorites(product.productName)
+    );
+  };
 
-      <Grid container spacing={2} style={{ border: "1px solid grey" }}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="complex" src={productPhotoLink} />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={3}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div" style={{ fontWeight: 600 }}>
-                Product
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                {productName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Product price: {productPrice}
-              </Typography>
-              <IconButton color="default" onClick={() => history.push('/cartPage')} >
-                <ShoppingCartIcon fontSize="small" />
-              </IconButton>
-              <IconButton onClick={() => history.push('/cartPage')} >
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-            </Grid>
+
+
+return (
+  <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+
+    <Grid container spacing={2} style={{ border: "1px solid grey" }}  >
+      <Grid item>
+        <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleProductPage()}>
+          <Img alt="complex" src={productPhotoLink} />
+        </ButtonBase>
+      </Grid>
+      <Grid item xs={12} sm container>
+        <Grid item xs container direction="column" spacing={3}>
+          <Grid item xs>
+            <Typography gutterBottom variant="subtitle1" component="div" style={{ fontWeight: 600 }}>
+              Product
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              {productName}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Product price: {productPrice}
+            </Typography>
+            <IconButton color="default" onClick={() => history.push('/cartPage')} >
+              <ShoppingCartIcon fontSize="small" />
+            </IconButton>
+            <IconButton  onClick={() => handleClick()}>
+              <DeleteIcon fontSize="small" />
+            </IconButton>
           </Grid>
         </Grid>
       </Grid>
-    </Paper>
+    </Grid>
+  </Paper>
 
 
-  );
+);
 }
 
 export default FavoriteProduct;
