@@ -142,7 +142,7 @@ const Product = (product) => {
                 image={productPhotoLink}
                 onClick={() => handleProductPage()}
               />
-              <CardContent className={classes.cardContent} onClick={() => handleProductPage()}>
+              <CardContent className={classes.cardContent}    onClick={() => handleProductPage()} >
                 <Typography gutterBottom variant="h5" component="h2">
                   {productName}
                 </Typography>
@@ -159,7 +159,7 @@ const Product = (product) => {
                 </IconButton>
                 {clicked === true && (
                   <IconButton color="default"  onClick={() => handleClick()}  >
-                  <FavoriteIcon sx={{ color: red[500] }}/>
+                  <FavoriteIcon style={{ color: red[500] }}/>
                 </IconButton>    
                 )}
                 {clicked !== true && (
