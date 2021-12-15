@@ -20,8 +20,14 @@ import Box from '@mui/material/Box';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
+import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import ButtonBase from '@mui/material/ButtonBase';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Divider from '@mui/material/Divider';
 
-import styled, { ThemeProvider } from 'styled-components';
+
+
 import NoSsr from '@material-ui/core/NoSsr';
 import {
   createTheme,
@@ -47,49 +53,34 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
 
-    height: '100%',
+    height: '50%',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
   cardContent: {
-    flexGrow: 1,
+    flexGrow: 2,
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
+    padding: theme.spacing(12),
   },
 }));
 
-
-const customTheme = createTheme({
-  palette: {
-    primary: {
-      main: grey[50],
-      secondary: indigo[500],
-    },
-  },
+const Img = styled('img')({
+  margin: 'auto',
+  display: 'block',
+  maxWidth: '100%',
+  maxHeight: '100%',
 });
 
 
-const StyledCard = styled(Card)`
-  ${({ theme }) => `
-  cursor: pointer;
-  background-color: ${theme.palette.primary.main};
-  transition: ${theme.transitions.create(['background-color', 'transform'], {
-  duration: theme.transitions.duration.standard,
-})};
-  &:hover {
-    background-color: ${theme.palette.primary.main};
-    transform: scale(1.07);
-  }
-  `}
-`;
+
+
 
 const FavoriteProduct = (product) => {
   const dispatch = useDispatch();
   let history = useHistory();
-  const classes = useStyles();
-  const { productPhotoLink, productName } = product;
+  const { productPhotoLink, productName, productPrice } = product;
 
 
   const handleProductPage = () => {
@@ -98,45 +89,41 @@ const FavoriteProduct = (product) => {
 
   }
 
-
   return (
+    <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }} onClick={() => handleProductPage()}>
+
+      <Grid container spacing={2} style={{ border: "1px solid grey" }}>
+        <Grid item>
+          <ButtonBase sx={{ width: 128, height: 128 }}>
+            <Img alt="complex" src={productPhotoLink} />
+          </ButtonBase>
+        </Grid>
+        <Grid item xs={12} sm container>
+          <Grid item xs container direction="column" spacing={3}>
+            <Grid item xs>
+              <Typography gutterBottom variant="subtitle1" component="div" style={{ fontWeight: 600 }}>
+                Product
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                {productName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Product price: {productPrice}
+              </Typography>
+              <IconButton color="default" onClick={() => history.push('/cartPage')} >
+                <ShoppingCartIcon fontSize="small" />
+              </IconButton>
+              <IconButton onClick={() => history.push('/cartPage')} >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Paper>
 
 
-
-
-
-    <MenuItem
-    
-      className={classes.card}
-      onClick={() => handleProductPage()}>
-      
-
-      <Card sx={{ display: 'flex' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography component="div" variant="h5">
-          {productName }
-          </Typography>
-        </CardContent>
-     
-      <CardMedia
-        style={{
-          height: 0,
-           paddingTop: '56.25%',
-            marginLeft:'130'}}
-        image={productPhotoLink}
-
-      />
-       </Box>
-    </Card>
-
-
-    </MenuItem>
-
-
-
-
-  )
+  );
 }
 
 export default FavoriteProduct;
