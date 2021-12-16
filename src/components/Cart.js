@@ -62,9 +62,6 @@ const Cart = (product) => {
               <Typography variant="body2" color="text.secondary">
                 Product price: {productPrice}
               </Typography>
-              <IconButton color="default" onClick={() => history.push('/cartPage')} >
-                <ShoppingCartIcon fontSize="small" />
-              </IconButton>
               <IconButton onClick={() => handleClick()}>
                 <DeleteIcon fontSize="small" />
               </IconButton>
