@@ -14,7 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
-import { removeProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
+import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import { red } from '@mui/material/colors';
@@ -119,7 +119,7 @@ const Product = (product) => {
     } else {
       setClicked(false)
       dispatch(
-        removeProductToFavorites(product.productName)
+        removeProductFromFavorites(product.productName)
       );
     }
 

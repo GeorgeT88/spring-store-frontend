@@ -30,7 +30,7 @@ export const addProductToFavorites = (product) => {
     };
 };
 
-export const removeProductToFavorites = (product) => {
+export const removeProductFromFavorites = (product) => {
     return (dispatch, getState) => {
 
         const token = getState().auth.token;

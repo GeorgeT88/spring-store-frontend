@@ -10,7 +10,7 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import ButtonBase from '@mui/material/ButtonBase';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
+import { removeProductFromCart } from '../redux/actions/cartActions';
 
 
 const Img = styled('img')({
@@ -20,7 +20,7 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-const FavoriteProduct = (product) => {
+const Cart = (product) => {
   
   const dispatch = useDispatch();
   let history = useHistory();
@@ -35,7 +35,7 @@ const FavoriteProduct = (product) => {
 
   const handleClick = () => {
     dispatch(
-      removeProductFromFavorites(product.productName)
+      removeProductFromCart(product.productName)
     );
   };
 
@@ -78,4 +78,4 @@ const FavoriteProduct = (product) => {
   );
 }
 
-export default FavoriteProduct;
+export default Cart;

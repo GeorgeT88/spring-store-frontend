@@ -19,6 +19,7 @@ import Grid from '@material-ui/core/Grid';
 import { getAllProductsByCategory } from "../redux/actions/productsActions";
 import { useDispatch, useSelector } from 'react-redux';
 import FavoriteProduct from './FavoriteProduct';
+import Cart from './Cart';
 
 
 
@@ -112,11 +113,13 @@ export default function NavBar() {
 
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
 
-  const favoriteProducts = useSelector((state) =>  state.favoriteProduct.productList);
+  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const productsInCart = useSelector((state) => state.cart.productList);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [anchorElDropDown, setAnchorElDropDown] = useState(null);
+  const [anchorElDropDownProductFavorites, setAnchorElDropDownProductFavorites] = useState(null);
+  const [anchorElDropDownProductInCart, setAnchorElDropDownProductInCart] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
@@ -124,14 +127,23 @@ export default function NavBar() {
   let history = useHistory();
 
 
-  function handleClickDropDown(event) {
-    if (anchorElDropDown !== event.currentTarget) {
-      setAnchorElDropDown(event.currentTarget);
+  function handleClickDropDownProductFavorites(event) {
+    if (anchorElDropDownProductFavorites !== event.currentTarget) {
+      setAnchorElDropDownProductFavorites(event.currentTarget);
     }
   }
 
-  function handleCloseDropDown() {
-    setAnchorElDropDown(null);
+  function handleClickDropDownProductInCart(event) {
+    if (anchorElDropDownProductInCart !== event.currentTarget) {
+      setAnchorElDropDownProductInCart(event.currentTarget);
+    }
+  }
+
+  function handleCloseDropDownProductFavorites() {
+    setAnchorElDropDownProductFavorites(null);
+  }
+  function handleCloseDropDownProductInCart() {
+    setAnchorElDropDownProductInCart(null);
   }
 
   function handleClick(event) {
@@ -254,38 +266,61 @@ export default function NavBar() {
           <SearchProductBar />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show favorite products" color="inherit">
+            <IconButton aria-label="show favorite products" color="inherit" onClick={handleClickDropDownProductFavorites}>
               <Badge badgeContent={favoriteProducts?.length} color="secondary">
                 <FavoriteIcon
-                  aria-owns={anchorElDropDown ? "simple-dropdown" : undefined}
+                  aria-owns={anchorElDropDownProductFavorites ? "simple-dropdown" : undefined}
                   aria-haspopup="true"
-                  onClick={handleClickDropDown}
+                  
                 // onMouseOver={handleClickDropDown}
                 />
                 <Menu
                   anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                   transformOrigin={{ vertical: "top", horizontal: "left" }}
                   id="simple-dropdown"
-                  anchorEl={anchorElDropDown}
-                  open={Boolean(anchorElDropDown)}
-                  onClose={handleCloseDropDown}
-                  MenuListProps={{ onMouseLeave: handleCloseDropDown }}
+                  anchorEl={anchorElDropDownProductFavorites}
+                  open={Boolean(anchorElDropDownProductFavorites)}
+                  onClose={handleCloseDropDownProductFavorites}
+                  MenuListProps={{ onMouseLeave: handleCloseDropDownProductFavorites}}
                   getContentAnchorEl={null}
                   disableAutoFocusItem={true}
                 >
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
-           
+
                     {favoriteProducts.map((favoriteProduct) => (
                       <FavoriteProduct key={favoriteProduct.id} {...favoriteProduct} />
                     ))}
                   </MenuList>
                 </Menu>
               </Badge>
-
             </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit" onClick={() => history.push('/cartPage')} >
-              <Badge badgeContent={17} color="secondary">
-                <ShoppingCartIcon />
+
+            <IconButton aria-label="show 17 new notifications" color="inherit"  onClick={handleClickDropDownProductInCart}>
+              <Badge badgeContent={productsInCart?.length} color="secondary">
+                <ShoppingCartIcon
+                  aria-owns={anchorElDropDownProductInCart ? "simple-dropdown" : undefined}
+                  aria-haspopup="true"
+                
+                // onMouseOver={handleClickDropDown}
+                />
+                <Menu
+                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                  transformOrigin={{ vertical: "top", horizontal: "left" }}
+                  id="simple-dropdown"
+                  anchorEl={anchorElDropDownProductInCart}
+                  open={Boolean(anchorElDropDownProductInCart)}
+                  onClose={handleCloseDropDownProductInCart}
+                  MenuListProps={{ onMouseLeave: handleCloseDropDownProductInCart}}
+                  getContentAnchorEl={null}
+                  disableAutoFocusItem={true}
+                >
+                  <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+
+                    {productsInCart.map((productInCart) => (
+                      <Cart key={productInCart.id} {...productInCart} />
+                    ))}
+                  </MenuList>
+                </Menu>
               </Badge>
             </IconButton>
             <UserMenu />

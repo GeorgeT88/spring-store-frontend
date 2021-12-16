@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signIn } from "../../src/redux/actions/authActions";
 import { getAllProductsFromUserFavorites } from "../../src/redux/actions/favoriteProductActions";
+import { getCartByUserEmail } from "../../src/redux/actions/cartActions";
+
 
 
 function Copyright() {
@@ -81,9 +83,10 @@ function SignIn() {
     setCreds({ email: "", password: "" });
     setTimeout(() => {
       dispatch(getAllProductsFromUserFavorites());
-    }, 500)
-
-    //  dispatch(getCartByUserEmail()); 
+    }, 1000)
+    setTimeout(() => {
+      dispatch(getCartByUserEmail());
+    }, 2000) 
   };
 
 

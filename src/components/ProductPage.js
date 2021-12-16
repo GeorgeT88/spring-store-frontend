@@ -7,7 +7,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { red } from '@mui/material/colors';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
-import { removeProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
+import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
 import Container from '@mui/material/Container';
 
 const Wrapper = styled.div`
@@ -76,7 +76,7 @@ const ProductPage = () => {
     } else {
       setClicked(false)
       dispatch(
-        removeProductToFavorites(product.productName)
+        removeProductFromFavorites(product.productName)
       );
     }
 
