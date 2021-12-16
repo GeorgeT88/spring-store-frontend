@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOut } from "../redux/actions/authActions";
 import { signOutProductFavorites } from "../redux/actions/favoriteProductActions";
+import { signOutCart } from "../redux/actions/cartActions";
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 
@@ -59,6 +60,7 @@ export default function UserMenu() {
         history.push('/');
         dispatch(signOut());
         dispatch(signOutProductFavorites());    
+        dispatch(signOutCart());          
     }
 
     const handleUserSettings = (e) => {

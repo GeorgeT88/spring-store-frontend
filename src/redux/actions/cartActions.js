@@ -2,6 +2,8 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 const GET_CART = "GET_CART";
+const CART_SIGN_OUT = "CART_SIGN_OUT";
+
 
 
 export const getCartByUserEmail = () => async (dispatch) => { 
@@ -49,6 +51,14 @@ export const removeProductFromCart = () => async (dispatch) => {
 };
 };
 
+export const signOutCart = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CART_SIGN_OUT,
+        });
+    };
+};
+
 const initialState = {
     id: null,
     productList: [],
@@ -59,7 +69,7 @@ const initialState = {
 
 const cartActions = (state = initialState, action) => {
     switch (action.type) {
-        
+
         case GET_CART:
             return {
                 ...initialState,
@@ -67,6 +77,12 @@ const cartActions = (state = initialState, action) => {
                 productList: action.productList,
                 total: action.total
             };
+            case CART_SIGN_OUT:   
+            return {
+                id: null,
+                productList: [],
+                total: null
+            };     
            
         default:
             return state;
