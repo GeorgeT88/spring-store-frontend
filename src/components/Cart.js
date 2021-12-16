@@ -35,7 +35,7 @@ const Cart = (product) => {
 
   const handleClick = () => {
     dispatch(
-      removeProductFromCart(product.productName)
+      removeProductFromCart(product.productName,1)
     );
   };
 
@@ -57,7 +57,7 @@ const Cart = (product) => {
                 Product
               </Typography>
               <Typography variant="body2" gutterBottom>
-                {productName}
+                {productName} size: 3
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Product price: {productPrice}

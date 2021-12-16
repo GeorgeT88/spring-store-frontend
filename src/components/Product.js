@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState,useEffect  } from "react";
+import { useState, useEffect } from "react";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,10 +12,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProduct } from "../redux/actions/productActions";
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { addProductToCart } from '../../src/redux/actions/cartActions';
+import { removeProductFromCart } from '../../src/redux/actions/cartActions';
+
+
 
 import { red } from '@mui/material/colors';
 
@@ -90,8 +95,10 @@ const Product = (product) => {
   let history = useHistory();
   const classes = useStyles();
   const { productPhotoLink, productName, productDescription, productPrice } = product;
-  const favoriteProducts = useSelector((state) =>  state.favoriteProduct.productList);
+  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const productsInCart = useSelector((state) => state.cart.productList);
   const [clicked, setClicked] = useState(false)
+  const [cartClicked, setCartClicked] = useState(false)
 
 
   const handleProductPage = () => {
@@ -101,13 +108,25 @@ const Product = (product) => {
   }
 
   useEffect(() => {
-    if(favoriteProducts.some(p =>(p.productName === product.productName))){
-       setClicked(true);
-      }
-      else{
-        setClicked(false) 
-      }
-    }, [favoriteProducts,product.productName]);
+    if (productsInCart.some(p => (p.productName === product.productName))) {
+      setCartClicked(true);
+    }
+    else {
+      setCartClicked(false)
+    }
+  }, [productsInCart, product.productName]);
+
+
+
+
+  useEffect(() => {
+    if (favoriteProducts.some(p => (p.productName === product.productName))) {
+      setClicked(true);
+    }
+    else {
+      setClicked(false)
+    }
+  }, [favoriteProducts, product.productName]);
 
 
   const handleClick = () => {
@@ -125,6 +144,14 @@ const Product = (product) => {
 
   };
 
+  const handleClickCart = () => {
+    if (cartClicked === false) {
+      setCartClicked(true)
+      dispatch(
+        addProductToCart(product.productName, 1)
+      );
+    }
+  };
 
   return (
 
@@ -142,7 +169,7 @@ const Product = (product) => {
                 image={productPhotoLink}
                 onClick={() => handleProductPage()}
               />
-              <CardContent className={classes.cardContent}    onClick={() => handleProductPage()} >
+              <CardContent className={classes.cardContent} onClick={() => handleProductPage()} >
                 <Typography gutterBottom variant="h5" component="h2">
                   {productName}
                 </Typography>
@@ -154,22 +181,37 @@ const Product = (product) => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <IconButton color="default" onClick={() => history.push('/cartPage')} >
-                  <ShoppingCartIcon />
-                </IconButton>
+
+
+
+
+
+                {cartClicked === true && (
+                  <IconButton color="default" onClick={() => handleClickCart()}  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                )}
+                {cartClicked !== true && (
+                  <IconButton color="default" onClick={() => handleClickCart()}  >
+                    <AddShoppingCartIcon />
+                  </IconButton>
+
+                )}
+
+
                 {clicked === true && (
-                  <IconButton color="default"  onClick={() => handleClick()}  >
-                  <FavoriteIcon style={{ color: red[500] }}/>
-                </IconButton>    
+                  <IconButton color="default" onClick={() => handleClick()}  >
+                    <FavoriteIcon style={{ color: red[500] }} />
+                  </IconButton>
                 )}
                 {clicked !== true && (
-                  <IconButton color="default"  onClick={() => handleClick()}  >
-                  <FavoriteBorderIcon />
-                </IconButton>
-         
+                  <IconButton color="default" onClick={() => handleClick()}  >
+                    <FavoriteBorderIcon />
+                  </IconButton>
+
                 )}
-        
-                
+
+
 
               </CardActions>
             </StyledCard>
