@@ -90,8 +90,8 @@ const Product = (product) => {
   let history = useHistory();
   const classes = useStyles();
   const { productPhotoLink, productName, productDescription, productPrice } = product;
+  const favoriteProducts = useSelector((state) =>  state.favoriteProduct.productList);
   const [clicked, setClicked] = useState(false)
-  const favoriteProducts = useSelector((state) => state.auth.favoriteProductList);
 
 
   const handleProductPage = () => {

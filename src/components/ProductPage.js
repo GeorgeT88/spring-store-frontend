@@ -54,8 +54,7 @@ const Price = styled.span`
 const ProductPage = () => {
 
   const dispatch = useDispatch();
-
-  const favoriteProducts = useSelector((state) => state.auth.favoriteProductList);
+  const favoriteProducts = useSelector((state) =>  state.favoriteProduct.productList);
   const product = useSelector((state) => state.product);
   const [clicked, setClicked] = useState(false)
 
