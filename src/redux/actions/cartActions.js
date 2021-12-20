@@ -19,10 +19,11 @@ export const getCartByUserEmail = () => async (dispatch) => {
                     'Authorization': localStorage.getItem('token')
                 }
             }).then((response) => {
+                console.log("RESPONSE..",response)
                 dispatch({
                     type: GET_CART,
                     id: response.data.id,
-                    productList: response.data.productList,
+                    productsInCartList: response.data.productsInCartList,
                     total: response.data.total
                 });          
             })
@@ -47,7 +48,7 @@ export const addProductToCart = (product,size) => {
                 dispatch({
                     type: ADD_PRODUCT_TO_CART,
                     id: response.data.id,
-                    productList: response.data.productList,
+                    productsInCartList: response.data.productsInCartList,
                     total: response.data.total  
                 });
             })
@@ -71,7 +72,7 @@ export const removeProductFromCart = (product,size) => {
                 dispatch({
                     type: REMOVE_PRODUCT_FROM_CART,
                     id: response.data.id,
-                    productList: response.data.productList,
+                    productsInCartList: response.data.productsInCartList,
                     total: response.data.total        
                 });
             })
@@ -88,7 +89,7 @@ export const signOutCart = () => {
 
 const initialState = {
     id: null,
-    productList: [],
+    productsInCartList: null,
     total: null
 };
 
@@ -100,16 +101,17 @@ const cartActions = (state = initialState, action) => {
         case GET_CART:
         case ADD_PRODUCT_TO_CART:    
         case REMOVE_PRODUCT_FROM_CART:
+            console.log("ACTION CART....",action )
             return {
                 ...initialState,
                 id: action.id,
-                productList: action.productList,
+                productsInCartList: action.productsInCartList,
                 total: action.total
             };
             case CART_SIGN_OUT:   
             return {
                 id: null,
-                productList: [],
+                productsInCartList: [],
                 total: null
             };     
            

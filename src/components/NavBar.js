@@ -114,7 +114,9 @@ export default function NavBar() {
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
 
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
-  const productsInCart = useSelector((state) => state.cart.productList);
+  const productsInCart = useSelector((state) => state.cart.productsInCartList);
+ 
+
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -315,10 +317,10 @@ export default function NavBar() {
                   disableAutoFocusItem={true}
                 >
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
-
-                    {productsInCart.map((productInCart) => (
-                      <Cart key={productInCart.id} {...productInCart} />
+                  {productsInCart.map((productInCart) => (
+                      <Cart key={productInCart.productDto.id} {...productInCart} />
                     ))}
+
                   </MenuList>
                 </Menu>
               </Badge>

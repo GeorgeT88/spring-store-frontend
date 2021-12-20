@@ -96,7 +96,7 @@ const Product = (product) => {
   const classes = useStyles();
   const { productPhotoLink, productName, productDescription, productPrice } = product;
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
-  const productsInCart = useSelector((state) => state.cart.productList);
+  const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const [clicked, setClicked] = useState(false)
   const [cartClicked, setCartClicked] = useState(false)
 
@@ -113,8 +113,8 @@ const Product = (product) => {
     }
     else {
       setCartClicked(false)
-    }
-  }, [productsInCart, product.productName]);
+    }  
+}, [productsInCart, product.productName]);
 
 
 

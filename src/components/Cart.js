@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setProduct } from "../redux/actions/productActions";
 import IconButton from '@material-ui/core/IconButton';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -24,18 +23,18 @@ const Cart = (product) => {
   
   const dispatch = useDispatch();
   let history = useHistory();
-  const { productPhotoLink, productName, productPrice } = product;
+  const { productDto, quantity } = product;
 
 
   const handleProductPage = () => {
-    dispatch(setProduct(product));
+    dispatch(setProduct(productDto));
     history.push(`/productPage`);
 
   }
 
   const handleClick = () => {
     dispatch(
-      removeProductFromCart(product.productName,1)
+      removeProductFromCart(productDto.productName,1)
     );
   };
 
@@ -47,7 +46,7 @@ const Cart = (product) => {
       <Grid container spacing={2} style={{ border: "1px solid grey" }}  >
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleProductPage()}>
-            <Img alt="complex" src={productPhotoLink} />
+            <Img alt="complex" src={productDto.productPhotoLink} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
@@ -57,10 +56,10 @@ const Cart = (product) => {
                 Product
               </Typography>
               <Typography variant="body2" gutterBottom>
-                {productName} size: 3
+                {productDto.productName} size: {quantity}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Product price: {productPrice}
+                Product price: {productDto.productPrice}
               </Typography>
               <IconButton onClick={() => handleClick()}>
                 <DeleteIcon fontSize="small" />
