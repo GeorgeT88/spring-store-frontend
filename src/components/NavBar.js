@@ -20,6 +20,9 @@ import { getAllProductsByCategory } from "../redux/actions/productsActions";
 import { useDispatch, useSelector } from 'react-redux';
 import FavoriteProduct from './FavoriteProduct';
 import Cart from './Cart';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+
 
 
 
@@ -115,7 +118,7 @@ export default function NavBar() {
 
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
- 
+
 
 
   const classes = useStyles();
@@ -126,9 +129,14 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
 
-  const productsInCartSize = productsInCart.reduce( function(tot, productDto) {
+
+  const firstThreeProductsInCart = productsInCart.slice(0, 3);
+  const firstThreeFavoriteProducts = favoriteProducts.slice(0, 3);
+
+
+  const productsInCartSize = productsInCart.reduce(function (tot, productDto) {
     return tot + productDto.quantity;
-},0);
+  }, 0);
 
   let history = useHistory();
 
@@ -178,6 +186,14 @@ export default function NavBar() {
   };
 
   const handleBackToMainPage = () => {
+    history.push('/');
+  }
+
+  const handleGoToFavoriteProductPage = () => {
+    history.push('/');
+  }
+
+  const handleGoToCartPage = () => {
     history.push('/');
   }
 
@@ -276,7 +292,7 @@ export default function NavBar() {
                 <FavoriteIcon
                   aria-owns={anchorElDropDownProductFavorites ? "simple-dropdown" : undefined}
                   aria-haspopup="true"
-                  
+
                 // onMouseOver={handleClickDropDown}
                 />
                 <Menu
@@ -286,26 +302,37 @@ export default function NavBar() {
                   anchorEl={anchorElDropDownProductFavorites}
                   open={Boolean(anchorElDropDownProductFavorites)}
                   onClose={handleCloseDropDownProductFavorites}
-                  MenuListProps={{ onMouseLeave: handleCloseDropDownProductFavorites}}
+                  MenuListProps={{ onMouseLeave: handleCloseDropDownProductFavorites }}
                   getContentAnchorEl={null}
                   disableAutoFocusItem={true}
                 >
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
 
-                    {favoriteProducts.map((favoriteProduct) => (
+                    {firstThreeFavoriteProducts.map((favoriteProduct) => (
                       <FavoriteProduct key={favoriteProduct.id} {...favoriteProduct} />
                     ))}
+
                   </MenuList>
+                  <Box onClick={handleGoToFavoriteProductPage}
+                    display="flex"
+                    width={400} height={40}
+                    bgcolor="primary.main"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Link style={{  color: 'white' }}  underline="hover" > {'View All Favorite Products >>>>'}</Link>
+                  </Box>
                 </Menu>
+
               </Badge>
             </IconButton>
 
-            <IconButton aria-label="show 17 new notifications" color="inherit"  onClick={handleClickDropDownProductInCart}>
+            <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleClickDropDownProductInCart}>
               <Badge badgeContent={productsInCartSize} color="secondary">
                 <ShoppingCartIcon
                   aria-owns={anchorElDropDownProductInCart ? "simple-dropdown" : undefined}
                   aria-haspopup="true"
-                
+
                 // onMouseOver={handleClickDropDown}
                 />
                 <Menu
@@ -315,16 +342,24 @@ export default function NavBar() {
                   anchorEl={anchorElDropDownProductInCart}
                   open={Boolean(anchorElDropDownProductInCart)}
                   onClose={handleCloseDropDownProductInCart}
-                  MenuListProps={{ onMouseLeave: handleCloseDropDownProductInCart}}
+                  MenuListProps={{ onMouseLeave: handleCloseDropDownProductInCart }}
                   getContentAnchorEl={null}
                   disableAutoFocusItem={true}
                 >
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
-                  {productsInCart.map((productInCart) => (
+                    {firstThreeProductsInCart.map((productInCart) => (
                       <Cart key={productInCart.productDto.id} {...productInCart} />
                     ))}
-
                   </MenuList>
+                  <Box onClick={handleGoToCartPage}
+                    display="flex"
+                    width={400} height={40}
+                    bgcolor="primary.main"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Link href="#" style={{  color: 'white' }} underline="hover" > {'View All Products In Cart >>>>'}</Link>
+                  </Box>
                 </Menu>
               </Badge>
             </IconButton>
