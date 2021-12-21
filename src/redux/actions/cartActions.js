@@ -38,8 +38,8 @@ export const addProductToCart = (product,size) => {
 
         if (token) {
             const user = jwtDecode(token);
-            axios.post(`http://localhost:8762/cart/addProductToCart/${user.sub}/${product}/${size}`,
-             {
+            axios.put(`http://localhost:8762/cart/addProductToCart/${user.sub}/${product}/${size}`,{},
+             {         
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': localStorage.getItem('token')

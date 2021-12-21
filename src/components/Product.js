@@ -18,7 +18,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { addProductToCart } from '../../src/redux/actions/cartActions';
-import { removeProductFromCart } from '../../src/redux/actions/cartActions';
 
 
 

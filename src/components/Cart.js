@@ -56,7 +56,7 @@ const Cart = (product) => {
                 Product
               </Typography>
               <Typography variant="body2" gutterBottom>
-                {productDto.productName} size: {quantity}
+                {productDto.productName} quantity: {quantity}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Product price: {productDto.productPrice}

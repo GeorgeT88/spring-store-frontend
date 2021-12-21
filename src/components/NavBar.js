@@ -126,6 +126,10 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
 
+  const productsInCartSize = productsInCart.reduce( function(tot, productDto) {
+    return tot + productDto.quantity;
+},0);
+
   let history = useHistory();
 
 
@@ -179,7 +183,6 @@ export default function NavBar() {
 
 
   const changeInputValue = (category) => (event) => {
-
     dispatch(getAllProductsByCategory(category));
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -298,7 +301,7 @@ export default function NavBar() {
             </IconButton>
 
             <IconButton aria-label="show 17 new notifications" color="inherit"  onClick={handleClickDropDownProductInCart}>
-              <Badge badgeContent={productsInCart?.length} color="secondary">
+              <Badge badgeContent={productsInCartSize} color="secondary">
                 <ShoppingCartIcon
                   aria-owns={anchorElDropDownProductInCart ? "simple-dropdown" : undefined}
                   aria-haspopup="true"
