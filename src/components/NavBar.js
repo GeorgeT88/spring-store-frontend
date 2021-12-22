@@ -194,7 +194,7 @@ export default function NavBar() {
   }
 
   const handleGoToCartPage = () => {
-    history.push('/');
+    history.push('/CartPage');
   }
 
 
@@ -306,6 +306,18 @@ export default function NavBar() {
                   getContentAnchorEl={null}
                   disableAutoFocusItem={true}
                 >
+                  <Box
+                    display="flex"
+                    width={400} height={40}
+                    bgcolor="primary.main"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Typography variant="h6" style={{ color: 'white' }} align="center">
+                      {'Favorite Products'}
+                    </Typography>
+
+                  </Box>
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
 
                     {firstThreeFavoriteProducts.map((favoriteProduct) => (
@@ -320,7 +332,7 @@ export default function NavBar() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Link style={{  color: 'white' }}  underline="hover" > {'View All Favorite Products >>>>'}</Link>
+                    <Link href="#" style={{ color: 'white' }} underline="hover" > {'View All Favorite Products >>>>'}</Link>
                   </Box>
                 </Menu>
 
@@ -346,7 +358,20 @@ export default function NavBar() {
                   getContentAnchorEl={null}
                   disableAutoFocusItem={true}
                 >
+                  <Box
+                    display="flex"
+                    width={400} height={40}
+                    bgcolor="primary.main"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Typography variant="h6" style={{ color: 'white' }} align="center">
+                      {'Cart'}
+                    </Typography>
+
+                  </Box>
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+
                     {firstThreeProductsInCart.map((productInCart) => (
                       <Cart key={productInCart.productDto.id} {...productInCart} />
                     ))}
@@ -358,7 +383,7 @@ export default function NavBar() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Link href="#" style={{  color: 'white' }} underline="hover" > {'View All Products In Cart >>>>'}</Link>
+                    <Link href="#" style={{ color: 'white' }} underline="hover" > {'View All Products In Cart >>>>'}</Link>
                   </Box>
                 </Menu>
               </Badge>
