@@ -23,6 +23,7 @@ const Img = styled('img')({
 const CartPage = () => {
 
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const handleProductQuantity = (productName, quantity) => {
@@ -38,6 +39,12 @@ const CartPage = () => {
 
 
     <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
+
+
+      <Typography gutterBottom variant="subtitle1" component="div">
+        Total : {cart.total}
+      </Typography>
+
       {productsInCart.map((product) => (
 
 
@@ -73,7 +80,7 @@ const CartPage = () => {
 
                       value={
 
-                        product.quantity-1}
+                        product.quantity - 1}
                     >
 
                       {[...Array(product.productDto.productStock)].map((e, i) => {
