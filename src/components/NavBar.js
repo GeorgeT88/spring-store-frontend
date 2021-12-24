@@ -130,13 +130,12 @@ export default function NavBar() {
   const anchorRef = React.useRef(null);
 
 
-  const firstThreeProductsInCart = productsInCart.slice(0, 3);
-  const firstThreeFavoriteProducts = favoriteProducts.slice(0, 3);
 
 
-  const productsInCartSize = productsInCart.reduce(function (tot, productDto) {
-    return tot + productDto.quantity;
-  }, 0);
+
+
+
+
 
   let history = useHistory();
 
@@ -320,9 +319,14 @@ export default function NavBar() {
                   </Box>
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
 
-                    {firstThreeFavoriteProducts.map((favoriteProduct) => (
-                      <FavoriteProduct key={favoriteProduct.id} {...favoriteProduct} />
-                    ))}
+
+                    {favoriteProducts !== null && (
+
+                      favoriteProducts.slice(0, 3).map((favoriteProduct) => (
+                        <FavoriteProduct key={favoriteProduct.id} {...favoriteProduct} />
+                      ))
+                    )}
+
 
                   </MenuList>
                   <Box onClick={handleGoToFavoriteProductPage}
@@ -340,7 +344,14 @@ export default function NavBar() {
             </IconButton>
 
             <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleClickDropDownProductInCart}>
-              <Badge badgeContent={productsInCartSize} color="secondary">
+              <Badge 
+              badgeContent={productsInCart !== null && (productsInCart.reduce(
+                function (tot, productDto) { return tot + productDto.quantity; }, 0))
+
+              }
+                color="secondary"
+              
+              >
                 <ShoppingCartIcon
                   aria-owns={anchorElDropDownProductInCart ? "simple-dropdown" : undefined}
                   aria-haspopup="true"
@@ -372,9 +383,17 @@ export default function NavBar() {
                   </Box>
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
 
-                    {firstThreeProductsInCart.map((productInCart) => (
-                      <Cart key={productInCart.productDto.id} {...productInCart} />
-                    ))}
+                    {productsInCart !== null && (
+
+                      productsInCart.slice(0, 3).map((productInCart) => (
+                        <Cart key={productInCart.productDto.id} {...productInCart} />
+                      ))
+                    )}
+
+
+
+
+
                   </MenuList>
                   <Box onClick={handleGoToCartPage}
                     display="flex"
@@ -464,6 +483,6 @@ export default function NavBar() {
       </Grid>
       {renderMobileMenu}
       {renderMenu}
-    </div>
+    </div >
   );
 }

@@ -107,7 +107,8 @@ const Product = (product) => {
   }
 
   useEffect(() => {
-    if (productsInCart.some(p => (p.productName === product.productName))) {
+
+    if (productsInCart!== null && productsInCart.some(p => (p.productName === product.productName))) {
       setCartClicked(true);
     }
     else {
