@@ -5,11 +5,10 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
-import { useSelector } from 'react-redux';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { removeProductFromCart } from '../redux/actions/cartActions';
-import { addProductToCart } from '../redux/actions/cartActions';
+import { updateProductToCart } from '../redux/actions/cartActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Img = styled('img')({
@@ -24,18 +23,15 @@ const Img = styled('img')({
 const CartPage = () => {
 
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
- 
+  const dispatch = useDispatch();
 
-  const handleProductQuantityAdd = (productName,quantity) => {
-    addProductToCart(productName,quantity);
+  const handleProductQuantity = (productName, quantity) => {
+    dispatch(updateProductToCart(productName, quantity));
 
-    console.log('add',quantity);
+    console.log('update', quantity);
   }
 
-  const handleProductQuantityRemove = (productName,quantity) => {
-    removeProductFromCart(productName,quantity);
-    console.log('remove',quantity);
-  }
+
 
 
   return (
@@ -75,24 +71,23 @@ const CartPage = () => {
                         width: 57
                       }}
 
-                      value={product.quantity - 1}
+                      value={
+
+                        product.quantity-1}
                     >
 
                       {[...Array(product.productDto.productStock)].map((e, i) => {
 
-                        if (product.quantity <= i) {
-                          return <MenuItem value={i} onClick={() => handleProductQuantityAdd(product.productDto.productName,i + 1)}>
 
-                            {i + 1}
+                        return <MenuItem value={i} onClick={() => handleProductQuantity(product.productDto.productName, i + 1)}>
 
-                          </MenuItem>
-                        } else {
-                          return <MenuItem value={i} onClick={() => handleProductQuantityRemove(product.productDto.productName,i + 1)}>
+                          {i + 1}
 
-                            {i + 1}
+                        </MenuItem>
 
-                          </MenuItem>
-                        }
+
+
+
                       })}
 
 

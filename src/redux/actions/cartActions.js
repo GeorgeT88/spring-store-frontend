@@ -56,6 +56,32 @@ export const addProductToCart = (product,size) => {
     };
 };
 
+
+export const updateProductToCart = (product,size) => {
+    return (dispatch, getState) => {
+
+        const token = getState().auth.token;
+        console.log('log',size);
+        if (token) {
+            const user = jwtDecode(token);
+            axios.put(`http://localhost:8762/cart/updateProductToCart/${user.sub}/${product}/${size}`,{},
+             {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).then((response) => {
+                dispatch({
+                    type: REMOVE_PRODUCT_FROM_CART,
+                    id: response.data.id,
+                    productsInCartList: response.data.productsInCartList,
+                    total: response.data.total        
+                });
+            })
+        } else return null;
+    };
+};
+
 export const removeProductFromCart = (product,size) => {
     return (dispatch, getState) => {
 
