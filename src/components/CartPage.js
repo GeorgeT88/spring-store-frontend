@@ -40,7 +40,7 @@ const CartPage = () => {
 
     <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
 
-      {productsInCart.length === 0 && (
+      {productsInCart.length !== 0 && (
 
         <Typography display="flex" justifyContent="flex-end" gutterBottom variant="h6" component="div">
           Total : {cart.total}
