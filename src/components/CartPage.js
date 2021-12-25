@@ -38,12 +38,28 @@ const CartPage = () => {
   return (
 
 
-    <Paper   sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
+    <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
+
+      {productsInCart !== null &&(
+
+          <Typography display="flex" justifyContent="flex-end" gutterBottom variant="h6" component="div">
+            Total : {cart.total}
+          </Typography>
+        )}
+      {cart.total === 0 && (
+
+        <Typography display="flex" justifyContent="center" gutterBottom variant="h6" component="div">
+          Cart is Empty!
+        </Typography>
+      )}
 
 
-      <Typography display="flex" justifyContent="flex-end" gutterBottom variant="h6" component="div">
-        Total : {cart.total}
-      </Typography>
+
+
+
+
+
+
 
       {productsInCart.map((product) => (
 
