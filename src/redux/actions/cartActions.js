@@ -115,8 +115,8 @@ export const signOutCart = () => {
 
 const initialState = {
     id: null,
-    productsInCartList: null,
-    total: null
+    productsInCartList: [],
+    total: 0
 };
 
 
@@ -138,7 +138,7 @@ const cartActions = (state = initialState, action) => {
             return {
                 id: null,
                 productsInCartList: [],
-                total: null
+                total: 0
             };     
            
         default:
