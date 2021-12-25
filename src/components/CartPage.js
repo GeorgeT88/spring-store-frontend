@@ -38,10 +38,10 @@ const CartPage = () => {
   return (
 
 
-    <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
+    <Paper   sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
 
 
-      <Typography gutterBottom variant="subtitle1" component="div">
+      <Typography display="flex" justifyContent="flex-end" gutterBottom variant="h6" component="div">
         Total : {cart.total}
       </Typography>
 
@@ -107,7 +107,7 @@ const CartPage = () => {
               </Grid>
               <Grid item>
                 <Typography variant="subtitle1" component="div">
-                  {product.quantity} x: {product.productTotalPrice}
+                  Product price : {product.productTotalPrice}
                 </Typography>
               </Grid>
               <Grid >
