@@ -118,7 +118,6 @@ export default function NavBar() {
 
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
-  const cart = useSelector((state) => state.cart);
 
 
 
@@ -345,14 +344,17 @@ export default function NavBar() {
             </IconButton>
 
             <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleClickDropDownProductInCart}>
+
+
+
+
               <Badge
-                badgeContent={productsInCart !== null && (productsInCart.reduce(
-                  function (tot, productDto) { return tot + productDto.quantity; }, 0))
-
+                badgeContent={productsInCart.reduce(
+                  function (tot, productDto) { return tot + productDto.quantity; }, 0)
                 }
-                color="secondary"
-
+                color="secondary"       
               >
+
                 <ShoppingCartIcon
                   aria-owns={anchorElDropDownProductInCart ? "simple-dropdown" : undefined}
                   aria-haspopup="true"
