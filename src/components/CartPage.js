@@ -1,5 +1,5 @@
 
-import React, {} from 'react';
+import React, { } from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -39,6 +39,11 @@ const CartPage = () => {
 
 
     <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
+
+      <Typography display="flex" justifyContent="center" gutterBottom variant="h5" >
+        Cart
+      </Typography>
+      
 
       {productsInCart.length !== 0 && (
 
@@ -93,7 +98,7 @@ const CartPage = () => {
                         product.quantity - 1}
                     >
 
-                      {[...Array( product.productDto.productStock !== 0 && product.productDto.productStock)].map((e, i) => {
+                      {[...Array(product.productDto.productStock !== 0 && product.productDto.productStock)].map((e, i) => {
 
 
                         return <MenuItem value={i} onClick={() => handleProductQuantity(product.productDto.productName, i + 1)}>

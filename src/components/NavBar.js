@@ -128,15 +128,6 @@ export default function NavBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
-
-
-
-
-
-
-
-
-
   let history = useHistory();
 
 
@@ -169,8 +160,6 @@ export default function NavBar() {
     setAnchorEl(null);
   }
 
-
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -189,7 +178,7 @@ export default function NavBar() {
   }
 
   const handleGoToFavoriteProductPage = () => {
-    history.push('/');
+    history.push('/FavoriteProductPage');
   }
 
   const handleGoToCartPage = () => {
@@ -352,7 +341,7 @@ export default function NavBar() {
                 badgeContent={productsInCart.reduce(
                   function (tot, productDto) { return tot + productDto.quantity; }, 0)
                 }
-                color="secondary"       
+                color="secondary"
               >
 
                 <ShoppingCartIcon
