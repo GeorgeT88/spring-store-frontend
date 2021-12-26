@@ -18,6 +18,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { addProductToCart } from '../../src/redux/actions/cartActions';
+import { removeProductFromCart } from '../../src/redux/actions/cartActions';
+
+
+import Button from '@material-ui/core/Button';
 
 
 
@@ -108,7 +112,7 @@ const Product = (product) => {
 
   useEffect(() => {
 
-    if (productsInCart!== null && productsInCart.some(p => (p.productName === product.productName))) {
+    if (productsInCart.length !==0 && productsInCart.some(p => (p.productDto.productName === product.productName))) {
       setCartClicked(true);
     }
     else {
@@ -150,9 +154,8 @@ const Product = (product) => {
       dispatch(
         addProductToCart(product.productName, 1)
       );
-    }
-  };
-
+    } 
+  }
   return (
 
 
@@ -186,16 +189,15 @@ const Product = (product) => {
 
 
 
-                {cartClicked === true && (
-                  <IconButton color="default" onClick={() => handleClickCart()}  >
-                    <ShoppingCartIcon />
-                  </IconButton>
-                )}
                 {cartClicked !== true && (
-                  <IconButton color="default" onClick={() => handleClickCart()}  >
-                    <AddShoppingCartIcon />
-                  </IconButton>
-
+                  <Grid  >
+                    <Button onClick={() => handleClickCart()} variant="primary"   style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon /> }> {'Add to Cart'}</Button>
+                  </Grid>
+                )}
+                {cartClicked === true && (
+                  <Grid  >
+                    <Button onClick={() => handleClickCart()} variant="primary"   style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5" ,color: '#FFFFFF' }} startIcon={<ShoppingCartIcon /> }> {'Prod. in Cart'}</Button>
+                  </Grid>
                 )}
 
 
