@@ -9,9 +9,12 @@ import { red } from '@mui/material/colors';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
 import Container from '@mui/material/Container';
+import { addProductToCart } from '../../src/redux/actions/cartActions';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const Wrapper = styled.div`
-  padding: 45px;
+  padding: 55px;
   display: flex;
 
 `;
@@ -54,20 +57,32 @@ const Price = styled.span`
 const ProductPage = () => {
 
   const dispatch = useDispatch();
-  const favoriteProducts = useSelector((state) =>  state.favoriteProduct.productList);
+  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const product = useSelector((state) => state.product);
   const [clicked, setClicked] = useState(false)
+  const [cartClicked, setCartClicked] = useState(false)
+
 
   useEffect(() => {
-    if(favoriteProducts.some(p =>(p.productName === product.productName))){
-       setClicked(true);
-      }
-      else{
-        setClicked(false) 
-      }
-    }, [favoriteProducts,product.productName]);
+    if (favoriteProducts.some(p => (p.productName === product.productName))) {
+      setClicked(true);
+    }
+    else {
+      setClicked(false)
+    }
+  }, [favoriteProducts, product.productName]);
 
-  const handleClick = () => {
+  useEffect(() => {
+    if (productsInCart.some(p => (p.productDto.productName === product.productName))) {
+      setCartClicked(true);
+    }
+    else {
+      setCartClicked(false)
+    }
+  }, [productsInCart, product.productName]);
+
+  const handleFavoriteClick = () => {
     if (clicked === false) {
       setClicked(true)
       dispatch(
@@ -81,6 +96,15 @@ const ProductPage = () => {
     }
 
   };
+
+  const handleClickCart = () => {
+    if (cartClicked === false) {
+      setCartClicked(true)
+      dispatch(
+        addProductToCart(product.productName, 1)
+      );
+    }
+  }
   return (
     <Container>
       <Wrapper>
@@ -93,18 +117,27 @@ const ProductPage = () => {
           <Grid container spacing={1}>
             <Price>$ {product.productPrice}</Price>
           </Grid>
-          <Grid container spacing={1}>
-            <Grid item xs="auto">
-              <div>
-                <Button variant="outlined" onClick={handleClick} startIcon={clicked ?  <FavoriteIcon sx={{ color: red[500] }}/> : <FavoriteBorderIcon /> } >ADD TO FAVORITES
-                </Button>
-              </div>
-            </Grid>
-            <Grid item xs="auto">
-              <div>
-                <Button variant="outlined" onClick={handleClick}>ADD TO CART</Button>
-              </div>
-            </Grid>
+          <Grid container direction={'column'} spacing={24}>
+            {clicked !== true && (
+              <Grid item md={6} >
+                <Button onClick={() => handleFavoriteClick()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<FavoriteBorderIcon />}> {'Add to Favorites'}</Button>
+              </Grid>
+            )}
+            {clicked === true && (
+              <Grid item  md={6} >
+                <Button onClick={() => handleFavoriteClick()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<FavoriteIcon sx={{ color: red[500] }} />}> {'Added to Favorites'}</Button>
+              </Grid>
+            )}
+            {cartClicked !== true && (
+              <Grid  item md={6} >
+                <Button onClick={() => handleClickCart()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon />}> {'Add to Cart'}</Button>
+              </Grid>
+            )}
+            {cartClicked === true && (
+              <Grid item md={6} >
+                <Button variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5", color: '#FFFFFF' }} startIcon={<ShoppingCartIcon />}> {'Prod. in Cart'}</Button>
+              </Grid>
+            )}
           </Grid>
         </InfoContainer>
 
