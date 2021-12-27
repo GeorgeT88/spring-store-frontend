@@ -9,6 +9,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { updateProductToCart } from '../redux/actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
+import Button from '@material-ui/core/Button';
+import ClearIcon from '@mui/icons-material/Clear';
+import { removeProductFromCart } from '../redux/actions/cartActions';
 
 
 const Img = styled('img')({
@@ -32,7 +35,11 @@ const CartPage = () => {
     console.log('update', quantity);
   }
 
-
+  const handleClickRemoveProductFromCart = (productName) => {
+    dispatch(
+      removeProductFromCart(productName,1)
+    );
+  };
 
 
   return (
@@ -113,12 +120,13 @@ const CartPage = () => {
 
                       })}
 
-
+                      
                     </Select>
                   </Typography>
-                  <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                    Remove
-                  </Typography>
+                  <Grid   >
+                    <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                    </Button>
+                  </Grid>
                 </Grid>
               </Grid>
               <Grid item>

@@ -4,12 +4,12 @@ import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setProduct } from "../redux/actions/productActions";
-import IconButton from '@material-ui/core/IconButton';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import ButtonBase from '@mui/material/ButtonBase';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { removeProductFromCart } from '../redux/actions/cartActions';
+import Button from '@material-ui/core/Button';
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const Img = styled('img')({
@@ -32,7 +32,7 @@ const Cart = (product) => {
 
   }
 
-  const handleClick = () => {
+  const handleClickRemoveProductFromCart = () => {
     dispatch(
       removeProductFromCart(productDto.productName,1)
     );
@@ -61,9 +61,10 @@ const Cart = (product) => {
               <Typography variant="body2" color="text.secondary">
                 Product price: {productDto.productPrice}
               </Typography>
-              <IconButton onClick={() => handleClick()}>
-                <DeleteIcon fontSize="small" />
-              </IconButton>
+              <Grid   >
+                    <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                    </Button>
+                  </Grid>
             </Grid>
           </Grid>
         </Grid>

@@ -11,6 +11,8 @@ import Grid from '@mui/material/Grid';
 import ButtonBase from '@mui/material/ButtonBase';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
+import Button from '@material-ui/core/Button';
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const Img = styled('img')({
@@ -21,7 +23,7 @@ const Img = styled('img')({
 });
 
 const FavoriteProduct = (product) => {
-  
+
   const dispatch = useDispatch();
   let history = useHistory();
   const { productPhotoLink, productName, productPrice } = product;
@@ -33,7 +35,7 @@ const FavoriteProduct = (product) => {
 
   }
 
-  const handleClick = () => {
+  const handleClickRemoveProductFromFavorites = () => {
     dispatch(
       removeProductFromFavorites(product.productName)
     );
@@ -62,12 +64,10 @@ const FavoriteProduct = (product) => {
               <Typography variant="body2" color="text.secondary">
                 Product price: {productPrice}
               </Typography>
-              <IconButton color="default" onClick={() => history.push('/cartPage')} >
-                <ShoppingCartIcon fontSize="small" />
-              </IconButton>
-              <IconButton onClick={() => handleClick()}>
-                <DeleteIcon fontSize="small" />
-              </IconButton>
+              <Grid   >
+                <Button onClick={() => handleClickRemoveProductFromFavorites()} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
