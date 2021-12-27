@@ -307,7 +307,13 @@ export default function NavBar() {
 
                   </Box>
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+                    {favoriteProducts.length === 0 && (
 
+                      <Typography variant="h6" style={{ color: 'black' }} align="center">
+                        {'Favorite Product List is empty!'}
+                      </Typography>
+
+                    )}
 
                     {favoriteProducts !== null && (
 

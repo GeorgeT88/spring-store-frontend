@@ -40,10 +40,11 @@ const CartPage = () => {
 
     <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
 
-      <Typography display="flex" justifyContent="center" gutterBottom variant="h5" >
-        Cart
-      </Typography>
-      
+      {productsInCart.length !== 0 && (
+        <Typography display="flex" justifyContent="center" gutterBottom variant="h5" >
+          Cart
+        </Typography>
+      )}
 
       {productsInCart.length !== 0 && (
 
