@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,6 +16,8 @@ import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
 import { useDispatch } from 'react-redux';
 import { signUp } from "../../src/redux/actions/authActions";
 import { useHistory } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 
 
@@ -48,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -58,22 +61,56 @@ function SignUp() {
   let history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    deliveryAddress: "",
-    password: "",
+
+
+  const validationSchema = yup.object({
+
+    firstName: yup.string().required("First Name is required!")
+      .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
+      .min(4, 'First Name has to be be atleast 4 characters long!')
+      .max(16, 'First Name can not contain more than 16 characters!'),
+    lastName: yup.string().required("Last Name is required!")
+      .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
+      .min(3, 'Last Name has to be be atleast 3 characters long!')
+      .max(16, 'Last Name can not contain more than 16 characters!'),
+    email: yup.string().required("Email is required!")
+    .matches('^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$', "Invalid Email!")
+    .min(8, 'Email has to be be atleast 8 characters long!')
+    .max(56, 'Email can not contain more than 56 characters!'),
+    phoneNumber: yup.string().required("Phone Number is required!")
+    .matches('^(?=(?:[07]){2})(?=[0-9]{10}).*', "Invalid Phone Number!")
+    .min(10, 'Phone Number has to be be atleast 10 digits long!')
+    .max(24, 'Phone Number can not contain more than 24 digits!'),
+    deliveryAddress: yup.string().required("Delivery Address is required!")
+      .matches('^[a-zA-Z0-9 ]+$', "Only characters and digits are allowed in this field")
+      .min(8, 'Delivery Address has to be be atleast 8 characters!')
+      .max(300, 'Delivery Address can not contain more than 300 characters!'),
+    password: yup.string().required("Password is required!")
+      .min(8, 'Password has to be be atleast 8 characters long!')
+      .max(56, 'Password can not contain max 56 characters!'),
+  })
+
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      deliveryAddress: "",
+      password: ""
+    },
+    onSubmit: (values) => {
+      console.log(JSON.stringify(values))
+      dispatch(signUp(values.firstName, values.lastName, values.email, values.phoneNumber, values.deliveryAddress, values.password));
+      history.push('/signIn');
+    },
+    validationSchema: validationSchema
+
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("USER: ", user);
-    dispatch(signUp(user.firstName,user.lastName,user.email,user.phoneNumber,user.deliveryAddress,user.password));
-    setUser({ firstName: "",lastName: "", email: "", phoneNumber: "", deliveryAddress: "", password: "" });
-    history.push('/signIn');
-  };
+
+
 
   useEffect(() => {
     dispatch(appBarFalse());
@@ -91,89 +128,101 @@ function SignUp() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <p></p>
+        <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
                 name="firstName"
                 variant="outlined"
-                required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="First Name*"
                 autoFocus
-                value={user.firstName}
-                onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                helperText={formik.touched.firstName && formik.errors.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
-                required
+
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label="Last Name*"
                 name="lastName"
                 autoComplete="lname"
-                value={user.lastName}
-                onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                helperText={formik.touched.lastName && formik.errors.lastName}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email Address*"
                 name="email"
                 autoComplete="email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+
                 fullWidth
                 id="phoneNumber"
-                label="Phone Number"
+                label="Phone Number*"
                 name="phoneNumber"
                 autoComplete="phoneNumber"
-                value={user.phoneNumber}
-                onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}
+                value={formik.values.phoneNumber}
+                onChange={formik.handleChange}
+                error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+
                 fullWidth
                 id="deliveryAddress"
-                label="Delivery Address"
+                label="Delivery Address*"
                 name="deliveryAddress"
                 autoComplete="deliveryAddress"
-                value={user.deliveryAddress}
-                onChange={(e) => setUser({ ...user, deliveryAddress: e.target.value })}
+                value={formik.values.deliveryAddress}
+                onChange={formik.handleChange}
+                error={formik.touched.deliveryAddress && Boolean(formik.errors.deliveryAddress)}
+                helperText={formik.touched.deliveryAddress && formik.errors.deliveryAddress}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+
                 fullWidth
                 name="password"
-                label="Password"
+                label="Password*"
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
             <Grid item xs={12}>
@@ -189,7 +238,6 @@ function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSubmit}
           >
             Sign Up
           </Button>
