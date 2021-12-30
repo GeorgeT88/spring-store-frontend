@@ -74,13 +74,13 @@ function SignUp() {
       .min(3, 'Last Name has to be be atleast 3 characters long!')
       .max(16, 'Last Name can not contain more than 16 characters!'),
     email: yup.string().required("Email is required!")
-    .matches('^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$', "Invalid Email!")
-    .min(8, 'Email has to be be atleast 8 characters long!')
-    .max(56, 'Email can not contain more than 56 characters!'),
+      .matches('^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$', "Invalid Email!")
+      .min(8, 'Email has to be be atleast 8 characters long!')
+      .max(56, 'Email can not contain more than 56 characters!'),
     phoneNumber: yup.string().required("Phone Number is required!")
-    .matches('^(?=(?:[07]){2})(?=[0-9]{10}).*', "Invalid Phone Number!")
-    .min(10, 'Phone Number has to be be atleast 10 digits long!')
-    .max(24, 'Phone Number can not contain more than 24 digits!'),
+      .matches('^(?=(?:[07]){2})(?=[0-9]{10}).*', "Invalid Phone Number!")
+      .min(10, 'Phone Number has to be be atleast 10 digits long!')
+      .max(24, 'Phone Number can not contain more than 24 digits!'),
     deliveryAddress: yup.string().required("Delivery Address is required!")
       .matches('^[a-zA-Z0-9 ]+$', "Only characters and digits are allowed in this field")
       .min(8, 'Delivery Address has to be be atleast 8 characters!')
@@ -88,6 +88,10 @@ function SignUp() {
     password: yup.string().required("Password is required!")
       .min(8, 'Password has to be be atleast 8 characters long!')
       .max(56, 'Password can not contain max 56 characters!'),
+    confirmPassword: yup.string().when("password", {
+      is: (val) => (val && val.length > 0 ? true : false),
+      then: yup.string().oneOf([yup.ref("password")], "Password does not match!")
+    }),
   })
 
 
@@ -98,7 +102,8 @@ function SignUp() {
       email: "",
       phoneNumber: "",
       deliveryAddress: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     },
     onSubmit: (values) => {
       console.log(JSON.stringify(values))
@@ -167,7 +172,6 @@ function SignUp() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-
                 fullWidth
                 id="email"
                 label="Email Address*"
@@ -223,6 +227,22 @@ function SignUp() {
                 onChange={formik.handleChange}
                 error={formik.touched.password && Boolean(formik.errors.password)}
                 helperText={formik.touched.password && formik.errors.password}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password*"
+                type="password"
+                id="confirmPassword"
+                autoComplete="current-confirmPassword"
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
               />
             </Grid>
             <Grid item xs={12}>
