@@ -33,12 +33,20 @@ export const signIn = (email, password) => async (dispatch) => {
     
     try {
         await axios.post('http://localhost:8762/login', { email, password })
-            .then((token) => {
-                localStorage.setItem("token", token.headers.authorization)
-                dispatch({ type: SIGN_IN, token: token.headers.authorization });
-
+            .then((response) => {
+                console.log('RESPONSEE:', response);
+                localStorage.setItem("token", response.headers.authorization)
+                dispatch({
+                     type: SIGN_IN,
+                     token: response.headers.authorization,
+                     err:null
+                     });
             })
     } catch (e) {
+        dispatch({
+            type: SIGN_IN,
+            err: e.message
+            });
         console.log("Token setup failed!")
     }
 
@@ -58,7 +66,8 @@ export const signIn = (email, password) => async (dispatch) => {
                 email: response.data.email,
                 phoneNumber: response.data.phoneNumber,
                 deliveryAddress: response.data.deliveryAddress,
-                favoriteProductList: response.data.favoriteProductList
+                favoriteProductList: response.data.favoriteProductList,
+                err: null
             });
         })
     }
@@ -94,7 +103,8 @@ export const loadUser = () => {
                     email: response.data.email,
                     phoneNumber: response.data.phoneNumber,
                     deliveryAddress: response.data.deliveryAddress,
-                    favoriteProductList: response.data.favoriteProductList
+                    favoriteProductList: response.data.favoriteProductList,
+                    err:null
                 });
             })
         } else return null;
@@ -109,7 +119,8 @@ const initialState = {
     email: null,
     phoneNumber: null,
     deliveryAddress: null,
-    favoriteProductList: []
+    favoriteProductList: [],
+    err: null
 };
 
 
@@ -128,7 +139,8 @@ const authActions = (state = initialState, action) => {
                 email: action.email,
                 phoneNumber: action.phoneNumber,
                 deliveryAddress: action.deliveryAddress,
-                favoriteProductList: action.favoriteProductList
+                favoriteProductList: action.favoriteProductList,
+                err: action.err
             };
         case SIGN_OUT:
             localStorage.removeItem("token");
@@ -141,7 +153,9 @@ const authActions = (state = initialState, action) => {
                 email: null,
                 phoneNumber: null,
                 deliveryAddress: null,
-                favoriteProductList: []
+                favoriteProductList: [],
+                err: null
+
             };
         default:
             return state;
