@@ -10,6 +10,9 @@ import FavoriteProductPage from './components/FavoriteProductPage';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadUser } from './redux/actions/authActions';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"
+
 // Create context object
 import {
   BrowserRouter as Router,
@@ -30,6 +33,7 @@ function App() {
   return (
   
     <Router>
+    <ToastContainer/>
     <div className="App">
     <NavBar/>   
         <Switch>

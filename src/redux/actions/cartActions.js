@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import {toast} from "react-toastify";
 
 const GET_CART = "GET_CART";
 const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
@@ -51,6 +52,7 @@ export const addProductToCart = (product,size) => {
                     productsInCartList: response.data.productsInCartList,
                     total: response.data.total  
                 });
+                toast.success("Product Added To Cart!",{ position: "top-right"})
             })
         } else return null;
     };
@@ -77,6 +79,7 @@ export const updateProductToCart = (product,size) => {
                     productsInCartList: response.data.productsInCartList,
                     total: response.data.total        
                 });
+                toast.info("Product Quantity updated!",{ position: "top-right"})
             })
         } else return null;
     };
@@ -101,6 +104,7 @@ export const removeProductFromCart = (product,size) => {
                     productsInCartList: response.data.productsInCartList,
                     total: response.data.total        
                 });
+                toast.error("Product Removed from Cart!",{ position: "top-right"})
             })
         } else return null;
     };
