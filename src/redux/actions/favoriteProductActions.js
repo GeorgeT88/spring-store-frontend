@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import {toast} from "react-toastify";
 
 const PRODUCT_FAVORITES = "PRODUCT_FAVORITES";
 
@@ -25,6 +26,7 @@ export const addProductToFavorites = (product) => {
                     id: response.data.id,
                     productList: response.data.favoriteProductList,
                 });
+                toast.success("Product Added To Favorites!",{ position: "top-right"})
             })
         } else return null;
     };
@@ -48,6 +50,7 @@ export const removeProductFromFavorites = (product) => {
                     id: response.data.id,
                     productList: response.data.favoriteProductList,          
                 });
+                toast.error("Product removed from Favorites!",{ position: "top-right"})
             })
         } else return null;
     };

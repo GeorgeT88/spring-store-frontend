@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import {toast} from "react-toastify";
 
 const SIGN_IN = "SIGN_IN";
 const SIGN_UP = "SIGN_UP";
@@ -18,10 +19,13 @@ export const signUp = (firstName, lastName, email, phoneNumber, deliveryAddress,
                 phoneNumber,
                 deliveryAddress,
                 password
-            })
+            }
+           
+            )
             .catch((error) => {
                 console.log(error.response);
             });
+            toast.success("Succesfully signed Up! Please confirm your Email!",{ position: "top-right"})
     };
 };
 

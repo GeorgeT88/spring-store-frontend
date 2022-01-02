@@ -11,7 +11,6 @@ const CART_SIGN_OUT = "CART_SIGN_OUT";
 
 export const getCartByUserEmail = () => async (dispatch) => { 
         const token = localStorage.getItem('token');
-        console.log("CART...TOKEN",token);
         if (token) {
             const user = jwtDecode(token);
           await axios.get(`http://localhost:8762/cart/getCartByEmail?email=${user.sub}`, {
