@@ -22,6 +22,7 @@ import FavoriteProduct from './FavoriteProduct';
 import Cart from './Cart';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
+import { getAllProducts } from "../redux/actions/productsActions";
 
 
 
@@ -174,6 +175,7 @@ export default function NavBar() {
   };
 
   const handleBackToMainPage = () => {
+    dispatch(getAllProducts());  
     history.push('/');
   }
 

@@ -39,10 +39,9 @@ export default function SearchProductBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("PRODUCT TEST: ", product);
     dispatch(getProductByProductName(product));
+    history.push('/');
     setProduct('');
-    history.push('/signIn');
   };
 
   return (

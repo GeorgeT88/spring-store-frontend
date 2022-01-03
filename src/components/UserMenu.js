@@ -11,6 +11,7 @@ import { signOutProductFavorites } from "../redux/actions/favoriteProductActions
 import { signOutCart } from "../redux/actions/cartActions";
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
+import { getAllProducts } from "../redux/actions/productsActions";
 
 
 
@@ -58,9 +59,11 @@ export default function UserMenu() {
 
     const handleLogout = () => {
         history.push('/');
+        dispatch(getAllProducts());  
         dispatch(signOut());
         dispatch(signOutProductFavorites());    
-        dispatch(signOutCart());          
+        dispatch(signOutCart()); 
+              
     }
 
     const handleUserSettings = (e) => {
