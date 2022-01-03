@@ -29,14 +29,32 @@ export const getAllProductsByCategory = (category) => async (dispatch) => {
 }
 
 export const getProductByProductName = (productName) => async (dispatch) => {
-  const response = await axios.get(`http://localhost:8762/product/getProductByProductName?productName=${productName}`)
-  let tmpArray = []
-  tmpArray.push(response.data)
-  dispatch({
-    type: PRODUCTBYPRODUCTNAME,
-    category: 'No Category',
-    products: tmpArray
-  })
+
+
+  try {
+    const response = await axios.get(`http://localhost:8762/product/getProductByProductName?productName=${productName}`)
+    let tmpArray = []
+    tmpArray.push(response.data)
+    dispatch({
+      type: PRODUCTBYPRODUCTNAME,
+      category: 'No Category',
+      products: tmpArray
+    })
+} catch (e) {
+    dispatch({
+      type: PRODUCTBYPRODUCTNAME,
+      category: 'No Category',
+      products: []
+        });
+}
+
+
+
+
+
+
+
+
 }
 
 const initialState = {

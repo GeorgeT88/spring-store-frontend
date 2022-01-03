@@ -5,7 +5,7 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { getProductByProductName } from "../redux/actions/productsActions";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 
@@ -35,12 +35,21 @@ export default function SearchProductBar() {
   const dispatch = useDispatch();
   let history = useHistory();
   const [product, setProduct] = useState('');
+  const products = useSelector((state) => state).products.products;
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(getProductByProductName(product));
-    history.push('/');
+    
+console.log("OASDA:,", products);
+    if (products.length !== 0) {
+      history.push('/');
+    
+    }else{
+      history.push('/productNotFoundPage');
+    }
+
     setProduct('');
   };
 
