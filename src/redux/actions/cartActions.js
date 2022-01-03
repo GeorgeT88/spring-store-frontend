@@ -130,7 +130,6 @@ const cartActions = (state = initialState, action) => {
         case GET_CART:
         case ADD_PRODUCT_TO_CART:    
         case REMOVE_PRODUCT_FROM_CART:
-            console.log("ACTION CART....",action )
             return {
                 ...initialState,
                 id: action.id,

@@ -2,6 +2,7 @@ import axios from "axios";
 
 const ALLPRODUCTSBYCATEGORY = "ALLPRODUCTSBYCATEGORY";
 const ALLPRODUCTS = "ALLPRODUCTS";
+const PRODUCTBYPRODUCTNAME = "PRODUCTBYPRODUCTNAME";
 
 
 
@@ -27,9 +28,18 @@ export const getAllProductsByCategory = (category) => async (dispatch) => {
   })
 }
 
+export const getProductByProductName = (productName) => async (dispatch) => {
+  const response = await axios.get(`http://localhost:8762/product/getProductByProductName?productName=${productName}`)
+  dispatch({
+    type: PRODUCTBYPRODUCTNAME,
+    category: '',
+    products: response.data
+  })
+}
+
 const initialState = {
   category: 'All Products',
-  products: [],
+  products: []
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -37,13 +47,11 @@ export default (state = initialState, action) => {
 
   switch (action.type) {
     case ALLPRODUCTS:
-      return {
-        ...initialState,
-        category: action.category,
-        products: action.products
-      }
     case ALLPRODUCTSBYCATEGORY:
+    case PRODUCTBYPRODUCTNAME:
+      console.log("GET prod, ",initialState)
       return {
+       
         ...initialState,
         category: action.category,
         products: action.products
@@ -51,4 +59,5 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
+
 };
