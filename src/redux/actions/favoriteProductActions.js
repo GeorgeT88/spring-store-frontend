@@ -14,7 +14,7 @@ export const addProductToFavorites = (product) => {
 
         if (token) {
             const user = jwtDecode(token);
-            axios.put(`http://localhost:8762/user/addProductToUserFavorites/${user.sub}/${product}`,{},
+            axios.put(`https://spring-store-zuul-service.herokuapp.com/user/addProductToUserFavorites/${user.sub}/${product}`,{},
              {
                 headers: {
                     'Content-type': 'application/json',
@@ -38,7 +38,7 @@ export const removeProductFromFavorites = (product) => {
         const token = getState().auth.token;
         if (token) {
             const user = jwtDecode(token);
-            axios.put(`http://localhost:8762/user/removeProductFromUserFavorites/${user.sub}/${product}`,{},
+            axios.put(`https://spring-store-zuul-service.herokuapp.com/user/removeProductFromUserFavorites/${user.sub}/${product}`,{},
              {
                 headers: {
                     'Content-type': 'application/json',
@@ -63,7 +63,7 @@ export const getAllProductsFromUserFavorites = () => {
         console.log('TKKKNNNN',token);
         if (token) {
             const user = jwtDecode(token);
-            axios.get(`http://localhost:8762/user/getAllProductsFromUserFavorites/${user.sub}`,
+            axios.get(`https://spring-store-zuul-service.herokuapp.com/user/getAllProductsFromUserFavorites/${user.sub}`,
              {
                 headers: {
                     'Content-type': 'application/json',

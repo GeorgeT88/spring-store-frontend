@@ -93,7 +93,8 @@ export const loadUser = () => {
         const token = getState().auth.token;
         if (token) {
             const user = jwtDecode(token);
-            axios.get(`http://localhost:8762/user/getUserByEmail?email=${user.sub}`, {
+          //  axios.get(`http://localhost:8762/user/getUserByEmail?email=${user.sub}`, {
+            axios.get(`https://spring-store-zuul-service.herokuapp.com/user/getUserByEmail?email=${user.sub}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': localStorage.getItem('token')

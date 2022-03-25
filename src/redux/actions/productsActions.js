@@ -9,7 +9,7 @@ const PRODUCTBYPRODUCTNAME = "PRODUCTBYPRODUCTNAME";
 export const getAllProducts = () => async (dispatch) => {
 
 
-  const response = await axios.get('http://localhost:8762/product/getAllProducts')
+  const response = await axios.get('https://spring-store-zuul-service.herokuapp.com/product/getAllProducts')
 
   dispatch({
     type: ALLPRODUCTS,
@@ -20,7 +20,7 @@ export const getAllProducts = () => async (dispatch) => {
 
 
 export const getAllProductsByCategory = (category) => async (dispatch) => {
-  const response = await axios.get(`http://localhost:8762/product/getByProductCategory/${category}`)
+  const response = await axios.get(`https://spring-store-zuul-service.herokuapp.com/product/getByProductCategory/${category}`)
   dispatch({
     type: ALLPRODUCTSBYCATEGORY,
     category: category,
@@ -32,7 +32,8 @@ export const getProductByProductName = (productName) => async (dispatch) => {
 
 
   try {
-    const response = await axios.get(`http://localhost:8762/product/getProductByProductName?productName=${productName}`)
+   // const response = await axios.get(`http://localhost:8762/product/getProductByProductName?productName=${productName}`)
+   const response = await axios.get(`https://spring-store-zuul-service.herokuapp.com/product/getProductByProductName?productName=${productName}`)
     let tmpArray = []
     tmpArray.push(response.data)
     dispatch({
