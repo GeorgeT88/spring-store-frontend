@@ -12,7 +12,7 @@ const SIGN_OUT = "SIGN_OUT";
 export const signUp = (firstName, lastName, email, phoneNumber, deliveryAddress, password) => {
     return () => {
         axios
-            .post('http://localhost:8762/user/addUser', {
+            .post('https://spring-store-zuul-service.herokuapp.com/user/addUser', {
                 firstName,
                 lastName,
                 email,
@@ -36,7 +36,7 @@ export const signUp = (firstName, lastName, email, phoneNumber, deliveryAddress,
 export const signIn = (email, password) => async (dispatch) => {
     
     try {
-        await axios.post('http://localhost:8762/login', { email, password })
+        await axios.post('https://spring-store-zuul-service.herokuapp.com/login', { email, password })
             .then((response) => {
                 console.log('RESPONSEE:', response);
                 localStorage.setItem("token", response.headers.authorization)
@@ -55,7 +55,7 @@ export const signIn = (email, password) => async (dispatch) => {
     }
 
     try {
-        await axios.get(`http://localhost:8762/user/getUserByEmail?email=${email}`, {
+        await axios.get(`https://spring-store-zuul-service.herokuapp.com/user/getUserByEmail?email=${email}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token')
