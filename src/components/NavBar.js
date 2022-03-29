@@ -175,7 +175,7 @@ export default function NavBar() {
   };
 
   const handleBackToMainPage = () => {
-    dispatch(getAllProducts());  
+    //dispatch(getAllProducts());  
     history.push('/');
   }
 
