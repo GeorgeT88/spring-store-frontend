@@ -13,7 +13,7 @@ export const getCartByUserEmail = () => async (dispatch) => {
         const token = localStorage.getItem('token');
         if (token) {
             const user = jwtDecode(token);
-          await axios.get(`http://localhost:8762/cart/getCartByEmail?email=${user.sub}`, {
+          await axios.get(`https://spring-store-zuul-service.herokuapp.com/cart/getCartByEmail?email=${user.sub}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': localStorage.getItem('token')
@@ -38,7 +38,7 @@ export const addProductToCart = (product,size) => {
 
         if (token) {
             const user = jwtDecode(token);
-            axios.put(`http://localhost:8762/cart/addProductToCart/${user.sub}/${product}/${size}`,{},
+            axios.put(`https://spring-store-zuul-service.herokuapp.com/cart/addProductToCart/${user.sub}/${product}/${size}`,{},
              {         
                 headers: {
                     'Content-type': 'application/json',
@@ -65,7 +65,7 @@ export const updateProductToCart = (product,size) => {
         console.log('log',size);
         if (token) {
             const user = jwtDecode(token);
-            axios.put(`http://localhost:8762/cart/updateProductToCart/${user.sub}/${product}/${size}`,{},
+            axios.put(`https://spring-store-zuul-service.herokuapp.com/cart/updateProductToCart/${user.sub}/${product}/${size}`,{},
              {
                 headers: {
                     'Content-type': 'application/json',
@@ -90,7 +90,7 @@ export const removeProductFromCart = (product,size) => {
         const token = getState().auth.token;
         if (token) {
             const user = jwtDecode(token);
-            axios.put(`http://localhost:8762/cart/removeProductFromCart/${user.sub}/${product}/${size}`,{},
+            axios.put(`https://spring-store-zuul-service.herokuapp.com/cart/removeProductFromCart/${user.sub}/${product}/${size}`,{},
              {
                 headers: {
                     'Content-type': 'application/json',
