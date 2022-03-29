@@ -78,7 +78,7 @@ function ProductCatalog() {
   if(category ==='All Products'){
       dispatch(getAllProducts());
     }
-  }, []);
+  }, [dispatch,category]);
 
   useEffect(() => {
     setCurrentPage(1);
