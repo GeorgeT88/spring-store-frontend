@@ -271,7 +271,7 @@ export default function NavBar() {
           <Button className={classes.button} variant="contained" color="primary" disableElevation disableRipple disableFocusRipple>
             <Typography className={classes.title} variant="h6" noWrap onClick={handleBackToMainPage}  >
 
-              Spring Store App
+              Springwebstore
             </Typography>
           </Button>
           <SearchProductBar />
