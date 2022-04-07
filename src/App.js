@@ -22,7 +22,7 @@ import {
   Route,
 } from "react-router-dom";
 
-ReactGA.initialize('G-P3FJJYK7MC');  // Insert tracking_id from Google Analytics here
+ReactGA.initialize('G-91VTXFMWXB');  // Insert tracking_id from Google Analytics here
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App() {
