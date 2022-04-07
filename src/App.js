@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { loadUser } from './redux/actions/authActions';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
+import ReactGA from 'react-ga';
 
 // Create context object
 import {
@@ -21,8 +22,11 @@ import {
   Route,
 } from "react-router-dom";
 
+ReactGA.initialize('G-P3FJJYK7MC');  // Insert tracking_id from Google Analytics here
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App() {
+
 
   const dispatch = useDispatch();
 
