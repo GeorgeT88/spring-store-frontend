@@ -346,10 +346,8 @@ export default function NavBar() {
 
 
               <Badge
-                badgeContent={productsInCart.reduce(
-                  function (tot, productDto) { return tot + productDto.quantity; }, 0)
-                }
-                color="secondary"
+            //    badgeContent={productsInCart.reduce(function (tot, productDto) { return tot + productDto.quantity; }, 0)}
+            //    color="secondary"
               >
 
                 <ShoppingCartIcon
