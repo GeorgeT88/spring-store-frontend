@@ -10,6 +10,7 @@ const SIGN_OUT = "SIGN_OUT";
 
 
 export const signUp = (firstName, lastName, email, phoneNumber, deliveryAddress, password) => {
+    //In order to extract urls, you could take this aproach https://stackoverflow.com/questions/49706241/reactjs-read-a-properties-file
     return () => {
         axios
             .post('https://spring-store-zuul-service.herokuapp.com/user/addUser', {
