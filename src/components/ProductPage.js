@@ -1,60 +1,72 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { red } from '@mui/material/colors';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
-import Container from '@mui/material/Container';
+import Typography from '@mui/material/Container';
 import { addProductToCart } from '../../src/redux/actions/cartActions';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ImageGallery from 'react-image-gallery';
+import { Link } from "@mui/material";
+import { Carousel } from 'react-carousel-minimal';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
-const Wrapper = styled.div`
-  padding: 55px;
-  display: flex;
 
-`;
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-const ImgContainer = styled.div`
-  flex: 1;
-`;
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-const Image = styled.img`
-  box-shadow: 5px 2px 8px grey;
-  border-radius: 10px;
-  width: 100%;
-  height: 74vh;
-  object-fit: cover;
+import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
 
-`;
+import { Redirect } from 'react-router-dom';
+import { signIn } from "../../src/redux/actions/authActions";
+import { getAllProductsFromUserFavorites } from "../../src/redux/actions/favoriteProductActions";
+import { getCartByUserEmail } from "../../src/redux/actions/cartActions";
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
-const InfoContainer = styled.div`
-  flex: 1;
-  padding: 0px 50px;
+import Paper from '@mui/material/Paper';
+import * as Space from "react-spaces";
+import ButtonBase from '@mui/material/ButtonBase';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { updateProductToCart } from '../redux/actions/cartActions';
 
-`;
 
-const Title = styled.h1`
-  font-weight: 200;
-`;
+import ClearIcon from '@mui/icons-material/Clear';
+import { removeProductFromCart } from '../redux/actions/cartActions';
 
-const Desc = styled.p`
-  margin: 20px 0px;
-`;
-
-const Price = styled.span`
-  font-weight: 100;
-  font-size: 40px;
-  padding-bottom: 20px;
-`;
-
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(9),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'left',
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(-1.5, 2.5, 2),
+  },
+}));
 
 
 const ProductPage = () => {
+  const classes = useStyles();
 
   const dispatch = useDispatch();
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
@@ -105,44 +117,153 @@ const ProductPage = () => {
       );
     }
   }
+
+  const data = [
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+    },
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+
+    },
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+
+    },
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+
+    },
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+
+    },
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+
+    },
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+
+    },
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+
+    },
+    {
+      image: "https://source.unsplash.com/featured/?{chair yellow}",
+
+    }
+  ];
+
+  const captionStyle = {
+    fontSize: '2em',
+    fontWeight: 'bold',
+  }
+  const slideNumberStyle = {
+    fontSize: '20px',
+    fontWeight: 'bold',
+  }
+
+
   return (
-    <Container>
-      <Wrapper>
-        <ImgContainer>
-          <Image src={product.productPhotoLink} />
-        </ImgContainer>
-        <InfoContainer>
-          <Title>{product.productName}</Title>
-          <Desc>{product.productDescription}</Desc>
-          <Grid container spacing={1}>
-            <Price>$ {product.productPrice}</Price>
-          </Grid>
-          <Grid container direction={'column'} spacing={24}>
-            {clicked !== true && (
-              <Grid item md={6} >
-                <Button onClick={() => handleFavoriteClick()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<FavoriteBorderIcon />}> {'Add to Favorites'}</Button>
-              </Grid>
-            )}
-            {clicked === true && (
-              <Grid item  md={6} >
-                <Button onClick={() => handleFavoriteClick()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<FavoriteIcon sx={{ color: red[500] }} />}> {'Added to Favorites'}</Button>
-              </Grid>
-            )}
-            {cartClicked !== true && (
-              <Grid  item md={6} >
-                <Button onClick={() => handleClickCart()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon />}> {'Add to Cart'}</Button>
-              </Grid>
+
+
+
+
+    <Grid sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
+
+      <Carousel
+        data={data}
+        time={2000}
+        width="850px"
+        height="500px"
+        captionStyle={captionStyle}
+        radius="10px"
+        slideNumber={true}
+        slideNumberStyle={slideNumberStyle}
+        captionPosition="bottom"
+        automatic={false}
+        dots={true}
+        pauseIconColor="white"
+        pauseIconSize="40px"
+        slideBackgroundColor="darkgrey"
+        slideImageFit="cover"
+        thumbnails={true}
+        thumbnailWidth="100px"
+        style={{
+          textAlign: "center",
+          maxWidth: "850px",
+          maxHeight: "500px",
+          margin: "40px auto",
+        }}
+      />
+
+
+
+
+      <Container component="main" maxWidth="md">
+        <CssBaseline />
+        <div className={classes.paper}>
+
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="left"
+            justify="center"
+            style={{ minHeight: '3vh' }}
+          >
+            <Grid item xs={12}
+            >
+
+
+
+              <Typography component="h2" variant="h4">
+               {product.productName}
+              </Typography>
+              <Typography component="h3" variant="h4">
+                Description: {product.productDescription}
+              </Typography>
+              <Typography component="h3" variant="h4">
+                Price: {product.productPrice}
+              </Typography>
+
+            </Grid>
+            <Grid item xs={12}>
+              {clicked !== true && (
+
+                <Button onClick={() => handleFavoriteClick()} className={classes.submit} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<FavoriteBorderIcon />}> {'Add to Favorites'}</Button>
+
+              )}
+              {clicked === true && (
+
+                <Button onClick={() => handleFavoriteClick()} className={classes.submit} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<FavoriteIcon sx={{ color: red[500] }} />}> {'Added to Favorites'}</Button>
+
+              )}
+              {cartClicked !== true && (
+            
+                <Button onClick={() => handleClickCart()} className={classes.submit}  variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon />}> {'Add to Cart'}</Button>
+             
             )}
             {cartClicked === true && (
-              <Grid item md={6} >
-                <Button variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5", color: '#FFFFFF' }} startIcon={<ShoppingCartIcon />}> {'Prod. in Cart'}</Button>
-              </Grid>
+         
+                <Button className={classes.submit}  variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5", color: '#FFFFFF' }} startIcon={<ShoppingCartIcon />}> {'Prod. in Cart'}</Button>
+       
             )}
+            </Grid>
           </Grid>
-        </InfoContainer>
 
-      </Wrapper>
-    </Container>
+
+        </div>
+      </Container>
+    </Grid>
+
+
+
+
+
+
   );
 };
 
