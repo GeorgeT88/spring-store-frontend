@@ -243,6 +243,7 @@ export default function NavBar() {
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      MenuListProps={{ onMouseLeave: handleMobileMenuClose }}
     >
       <MenuItem onClick={() => history.push('/favoriteProductPage')}>
         <IconButton aria-label="show 4 new mails" color="inherit" onClick={() => history.push('/favoriteProductPage')}>
