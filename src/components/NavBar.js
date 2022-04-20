@@ -130,7 +130,7 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
   let history = useHistory();
-
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   function handleClickDropDownProductFavorites(event) {
     if (anchorElDropDownProductFavorites !== event.currentTarget) {
@@ -204,6 +204,8 @@ export default function NavBar() {
     }
   }
 
+  
+ 
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
@@ -239,20 +241,21 @@ export default function NavBar() {
       id={mobileMenuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      //  open={isMobileMenuOpen}
+      open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
+      <MenuItem onClick={() => history.push('/favoriteProductPage')}>
+        <IconButton aria-label="show 4 new mails" color="inherit" onClick={() => history.push('/favoriteProductPage')}>
           <Badge badgeContent={favoriteProducts?.length} color="secondary">
             <FavoriteIcon />
           </Badge>
         </IconButton>
         <p>Favorites</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={() => history.push('/cartPage')}>
         <IconButton aria-label="show 11 new notifications" color="inherit" onClick={() => history.push('/cartPage')} >
-          <Badge badgeContent={11} color="secondary">
+          <Badge badgeContent={productsInCart.reduce(
+                  function (tot, productDto) { return tot + productDto.quantity; }, 0)} color="secondary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
