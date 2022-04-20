@@ -120,38 +120,38 @@ const ProductPage = () => {
 
   const data = [
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair yellow}",
     },
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair pink}",
 
     },
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair green}",
 
     },
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair blue}",
 
     },
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair silver}",
 
     },
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair purple}",
 
     },
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair orange}",
 
     },
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair azure}",
 
     },
     {
-      image: "https://source.unsplash.com/featured/?{chair yellow}",
+      image: "https://source.unsplash.com/featured/720x480/?{chair brown}",
 
     }
   ];
