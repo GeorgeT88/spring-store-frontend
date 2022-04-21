@@ -8,6 +8,7 @@ import ProductPage from './components/ProductPage';
 import CartPage from './components/CartPage';
 import FavoriteProductPage from './components/FavoriteProductPage';
 import ProductNotFoundPage from './components/ProductNotFoundPage';
+import CheckoutPage from './components/CheckoutPage';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadUser } from './redux/actions/authActions';
@@ -50,6 +51,7 @@ function App() {
           <Route path = "/cartPage"><CartPage/></Route>   
           <Route path = "/favoriteProductPage"><FavoriteProductPage/></Route>   
           <Route path = "/productNotFoundPage"><ProductNotFoundPage/></Route>   
+          <Route path = "/checkoutPage"><CheckoutPage/></Route>   
         </Switch>
         </div>
     </Router>  
