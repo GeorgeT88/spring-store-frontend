@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,8 +13,8 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
+import OrderAddressPage from './OrderAddressPage';
+import OrderPaymentPage from './OrderPaymentPage';
 import Review from './Review';
 
 function Copyright() {
@@ -29,14 +30,18 @@ function Copyright() {
   );
 }
 
+
+
+
+
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <OrderAddressPage />;
     case 1:
-      return <PaymentForm />;
+      return <OrderPaymentPage />;
     case 2:
       return <Review />;
     default:
@@ -47,15 +52,11 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function Checkout() {
-  const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
 
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+
+  const orderStep = useSelector((state) => state.orderStep.orderStep);
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -65,7 +66,7 @@ export default function Checkout() {
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper activeStep={orderStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -73,7 +74,7 @@ export default function Checkout() {
             ))}
           </Stepper>
           <React.Fragment>
-            {activeStep === steps.length ? (
+            {orderStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
@@ -86,22 +87,7 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                      Back
-                    </Button>
-                  )}
-
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 3, ml: 1 }}
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
-                </Box>
+                {getStepContent(orderStep)}
               </React.Fragment>
             )}
           </React.Fragment>
