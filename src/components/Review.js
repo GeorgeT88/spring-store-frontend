@@ -4,30 +4,21 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import { useDispatch, useSelector } from 'react-redux';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox'
+import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
+import { signUp } from "../redux/actions/authActions";
+import { useHistory } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import { setOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
+import { setOrderStep } from "../redux/actions/orderStepActions";;
 
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
+
 
 const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 const payments = [
@@ -38,6 +29,19 @@ const payments = [
 ];
 
 export default function Review() {
+
+  const products = useSelector((state) => state).products.products;
+  const dispatch = useDispatch();
+
+  const handleBackOrderStep = () => {
+    dispatch(setOrderStep(1)); 
+
+  }
+  const handlekOrderStep = () => {
+    dispatch(setOrderStep(3)); 
+
+  }
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -45,9 +49,9 @@ export default function Review() {
       </Typography>
       <List disablePadding>
         {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+          <ListItem key={product.productName} sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={product.productName} secondary={product.productDescription} />
+            <Typography variant="body2">{product.productPrice}</Typography>
           </ListItem>
         ))}
 
@@ -82,7 +86,21 @@ export default function Review() {
               </React.Fragment>
             ))}
           </Grid>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button sx={{ mt: 3, ml: 1 }} onClick={handleBackOrderStep}>
+            Back
+          </Button>
+          <Button
+            onClick={handlekOrderStep}
+            type="submit"
+            variant="contained"
+            sx={{ mt: 3, ml: 1 }} >
+            checkout
+          </Button>
+        </Box>
         </Grid>
+
+
       </Grid>
     </React.Fragment>
   );

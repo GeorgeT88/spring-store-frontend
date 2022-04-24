@@ -15,7 +15,9 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import OrderAddressPage from './OrderAddressPage';
 import OrderPaymentPage from './OrderPaymentPage';
+import { setOrderStep } from "../redux/actions/orderStepActions";
 import Review from './Review';
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -52,11 +54,12 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function Checkout() {
-
-
-
+  let history = useHistory();
   const orderStep = useSelector((state) => state.orderStep.orderStep);
 
+  const handleBackToMainPage = () => {
+    history.push(`/`);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -74,7 +77,7 @@ export default function Checkout() {
             ))}
           </Stepper>
           <React.Fragment>
-            {orderStep === steps.length ? (
+            {orderStep === 3 ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
@@ -84,6 +87,12 @@ export default function Checkout() {
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <Link href="#" variant="body2" onClick={() => handleBackToMainPage()}
+                 >
+                    {'Go back to the main page'}
+                  </Link>
+                </Box>
               </React.Fragment>
             ) : (
               <React.Fragment>
