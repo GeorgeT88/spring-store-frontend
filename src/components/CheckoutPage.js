@@ -16,6 +16,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import OrderAddressPage from './OrderAddressPage';
 import OrderPaymentPage from './OrderPaymentPage';
 import { setOrderStep } from "../redux/actions/orderStepActions";
+import { clearOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
+import { clearOrderAddress } from "../redux/actions/orderAddressActions";
 import Review from './Review';
 import { useHistory } from 'react-router-dom';
 
@@ -54,10 +56,15 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function Checkout() {
+  const dispatch = useDispatch();
   let history = useHistory();
   const orderStep = useSelector((state) => state.orderStep.orderStep);
 
   const handleBackToMainPage = () => {
+    dispatch(setOrderStep(0));
+    dispatch(clearOrderCreditCardInfo());
+    dispatch(clearOrderAddress());
+    
     history.push(`/`);
   }
 
