@@ -30,30 +30,29 @@ export const getCartByUserEmail = () => async (dispatch) => {
     };
 };
 
-export const addProductToCart = (product, size) => {
-    return (dispatch, getState) => {
+export const addProductToCart = (product, size) => async (dispatch, getState) => {
 
-        const token = getState().auth.token;
+    const token = getState().auth.token;
 
-        if (token) {
-            const user = jwtDecode(token);
-            axios.put(process.env.REACT_APP_ADD_PRODUCT_TO_CART + user.sub + "/" + product + "/" + size, {},
-                {
-                    headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': localStorage.getItem('token')
-                    }
-                }).then((response) => {
-                    dispatch({
-                        type: ADD_PRODUCT_TO_CART,
-                        id: response.data.id,
-                        productsInCartList: response.data.productsInCartList,
-                        total: response.data.total
-                    });
-                    toast.success("Product Added To Cart!", { position: "top-right" })
-                })
-        } else return null;
-    };
+    if (token) {
+        const user = jwtDecode(token);
+        const response = await axios.put(process.env.REACT_APP_ADD_PRODUCT_TO_CART + user.sub + "/" + product + "/" + size, {},
+            {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                }
+            })
+        dispatch({
+            type: ADD_PRODUCT_TO_CART,
+            id: response.data.id,
+            productsInCartList: response.data.productsInCartList,
+            total: response.data.total
+        });
+        toast.success("Product Added To Cart!", { position: "top-right" })
+
+    } else return null;
+
 };
 
 
