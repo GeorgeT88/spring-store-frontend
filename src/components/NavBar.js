@@ -22,7 +22,11 @@ import FavoriteProduct from './FavoriteProduct';
 import Cart from './Cart';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
-import { getAllProducts } from "../redux/actions/productsActions";
+
+
+
+
+
 
 
 
@@ -116,6 +120,8 @@ export default function NavBar() {
   const dispatch = useDispatch();
 
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
+
+
 
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
@@ -217,6 +223,8 @@ export default function NavBar() {
 
     prevOpen.current = open;
   }, [open]);
+
+
 
 
   const menuId = 'primary-search-account-menu';

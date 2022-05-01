@@ -25,7 +25,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     
     case SET_ORDER_STEP:
-      console.log(JSON.stringify(state))
       return {
         ...initialState,
         orderStep: action.orderStep,

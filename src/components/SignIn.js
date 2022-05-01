@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,8 +16,6 @@ import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signIn } from "../../src/redux/actions/authActions";
-import { getAllProductsFromUserFavorites } from "../../src/redux/actions/favoriteProductActions";
-import { getCartByUserEmail } from "../../src/redux/actions/cartActions";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -63,12 +61,6 @@ function SignIn() {
   const classes = useStyles();
   const auth = useSelector(state => state.auth)
 
-
-
-
-
-
-
   const validationSchema = yup.object({
     email: yup.string().required("Email is required!")
       .matches('^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$', "Invalid Email!")
@@ -79,7 +71,6 @@ function SignIn() {
       .max(56, 'Password can not contain max 56 characters!'),
   })
 
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -89,21 +80,9 @@ function SignIn() {
       console.log(JSON.stringify(values))
 
       dispatch(signIn(values.email, values.password));
-      setTimeout(() => {
-        dispatch(getAllProductsFromUserFavorites());
-      }, 1000)
-      setTimeout(() => {
-        dispatch(getCartByUserEmail());
-      }, 2000)
     },
     validationSchema: validationSchema
-
   });
-
-
-
-
-
 
   useEffect(() => {
     dispatch(appBarFalse());
@@ -112,17 +91,7 @@ function SignIn() {
     }
   }, [dispatch]);
 
-
-
-
-
-
-
-
   if (auth.id) return <Redirect to="/" />
-
-
-
 
   return (
     <Container component="main" maxWidth="xs">

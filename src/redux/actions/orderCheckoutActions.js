@@ -1,167 +1,106 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
-const SIGN_IN = "SIGN_IN";
-const SIGN_UP = "SIGN_UP";
-const USER_LOADED = "USER_LOADED";
-const SIGN_OUT = "SIGN_OUT";
-
-
-
-export const signUp = (firstName, lastName, email, phoneNumber, deliveryAddress, password) => {
-    //In order to extract urls, you could take this aproach https://stackoverflow.com/questions/49706241/reactjs-read-a-properties-file
-    return () => {
-        axios
-            .post('https://spring-store-zuul-service.herokuapp.com/user/addUser', {
-                firstName,
-                lastName,
-                email,
-                phoneNumber,
-                deliveryAddress,
-                password
-            }
-           
-            )
-            .catch((error) => {
-                console.log(error.response);
-            });
-            toast.success("Succesfully signed Up! Please confirm your Email!",{ position: "top-right"})
-    };
-};
+const CREATE_NEW_ORDER = "CREATE_NEW_ORDER";
 
 
 
 
-
-export const signIn = (email, password) => async (dispatch) => {
-    
-    try {
-        await axios.post('https://spring-store-zuul-service.herokuapp.com/login', { email, password })
-            .then((response) => {
-                console.log('RESPONSEE:', response);
-                localStorage.setItem("token", response.headers.authorization)
-                dispatch({
-                     type: SIGN_IN,
-                     token: response.headers.authorization,
-                     err:null
-                     });
-            })
-    } catch (e) {
-        dispatch({
-            type: SIGN_IN,
-            err: e.message
-            });
-        console.log("Token setup failed!")
-    }
-
-    try {
-        await axios.get(`https://spring-store-zuul-service.herokuapp.com/user/getUserByEmail?email=${email}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token')
-            }
-        }).then((response) => {
-            dispatch({
-                type: SIGN_IN,
-                token: localStorage.getItem('token'),
-                id: response.data.id,
-                firstName: response.data.firstName,
-                lastName: response.data.lastName,
-                email: response.data.email,
-                phoneNumber: response.data.phoneNumber,
-                deliveryAddress: response.data.deliveryAddress,
-                favoriteProductList: response.data.favoriteProductList,
-                err: null
-            });
-        })
-    }
-    catch (e) {
-        console.log("Login failed!")
-    }
-}
-
-export const signOut = () => {
-    return (dispatch) => {
-        dispatch({
-            type: SIGN_OUT,
-        });
-    };
-};
-
-export const loadUser = () => {
+export const createNewOrder = (firstName, lastName, setAddressLine1, setAddressLine2, city, state, zipPostalCode, country, nameOnCard, cardNumber, expiryDate, cvv, status, productList, user, total) => {
     return (dispatch, getState) => {
         const token = getState().auth.token;
+
         if (token) {
-            const user = jwtDecode(token);
-          //  axios.get(`http://localhost:8762/user/getUserByEmail?email=${user.sub}`, {
-            axios.get(`https://spring-store-zuul-service.herokuapp.com/user/getUserByEmail?email=${user.sub}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
-                }
-            }).then((response) => {
-                dispatch({
-                    type: USER_LOADED,
-                    id: response.data.id,
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    email: response.data.email,
-                    phoneNumber: response.data.phoneNumber,
-                    deliveryAddress: response.data.deliveryAddress,
-                    favoriteProductList: response.data.favoriteProductList,
-                    err:null
-                });
-            })
+            const emailUser = jwtDecode(token);
+            axios
+                .post(`localhost:8762/order/createNewOrder/getUserByEmail?email=${emailUser.sub}`, {
+                    firstName,
+                    lastName,
+                    setAddressLine1,
+                    setAddressLine2,
+                    city,
+                    state,
+                    zipPostalCode,
+                    country,
+                    nameOnCard,
+                    cardNumber,
+                    expiryDate,
+                    cvv,
+                    status,
+                    productList,
+                    user,
+                    total
+                }).then((response) => {
+                    dispatch({
+                        type: CREATE_NEW_ORDER,
+                        firstName: response.data.firstName,
+                        lastName: response.data.lastName,
+                        setAddressLine1: response.data.setAddressLine1,
+                        setAddressLine2: response.data.setAddressLine2,
+                        city: response.data.city,
+                        state: response.data.state,
+                        zipPostalCode: response.data.zipPostalCode,
+                        country: response.data.country,
+                        nameOnCard: response.data.nameOnCard,
+                        cardNumber: response.data.cardNumber,
+                        expiryDate: response.data.expiryDate,
+                        cvv: response.data.cvv,
+                        status: response.data.status,
+                        productList: response.data.productList,
+                        user: response.data.user,
+                        total: response.data.total
+                    });
+                    toast.success("Succesfully created new order!", { position: "top-right" })
+                })
         } else return null;
     };
 };
 
 const initialState = {
     token: localStorage.getItem("token"),
-    id: null,
+    type: CREATE_NEW_ORDER,
     firstName: null,
     lastName: null,
-    email: null,
-    phoneNumber: null,
-    deliveryAddress: null,
-    favoriteProductList: [],
-    err: null
+    setAddressLine1: null,
+    setAddressLine2: null,
+    city: null,
+    state: null,
+    zipPostalCode: null,
+    country: null,
+    nameOnCard: null,
+    cardNumber: null,
+    expiryDate: null,
+    cvv: null,
+    status: null,
+    productList: null,
+    user: null,
+    total: null
 };
 
 
 
 const authActions = (state = initialState, action) => {
     switch (action.type) {
-        case SIGN_IN:
-        case SIGN_UP:
-        case USER_LOADED:
+        case CREATE_NEW_ORDER:
             return {
                 ...initialState,
                 token: localStorage.getItem('token'),
-                id: action.id,
                 firstName: action.firstName,
                 lastName: action.lastName,
-                email: action.email,
-                phoneNumber: action.phoneNumber,
-                deliveryAddress: action.deliveryAddress,
-                favoriteProductList: action.favoriteProductList,
-                err: action.err
-            };
-        case SIGN_OUT:
-            localStorage.removeItem("token");
-
-            return {
-                token: null,
-                id: null,
-                firstName: null,
-                lastName: null,
-                email: null,
-                phoneNumber: null,
-                deliveryAddress: null,
-                favoriteProductList: [],
-                err: null
-
+                setAddressLine1: action.setAddressLine1,
+                setAddressLine2: action.setAddressLine2,
+                city: action.city,
+                state: action.state,
+                zipPostalCode: action.zipPostalCode,
+                country: action.country,
+                nameOnCard: action.nameOnCard,
+                expiryDate: action.expiryDate,
+                cvv: action.cvv,
+                status: action.status,
+                productList: action.productList,
+                user: action.user,
+                total: action.total
             };
         default:
             return state;

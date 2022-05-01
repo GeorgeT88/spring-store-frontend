@@ -9,7 +9,7 @@ const PRODUCTBYPRODUCTNAME = "PRODUCTBYPRODUCTNAME";
 export const getAllProducts = () => async (dispatch) => {
 
 
-  const response = await axios.get('https://spring-store-zuul-service.herokuapp.com/product/getAllProducts')
+  const response = await axios.get(process.env.REACT_APP_GET_ALL_PRODUCTS)
 
   dispatch({
     type: ALLPRODUCTS,
@@ -20,7 +20,7 @@ export const getAllProducts = () => async (dispatch) => {
 
 
 export const getAllProductsByCategory = (category) => async (dispatch) => {
-  const response = await axios.get(`https://spring-store-zuul-service.herokuapp.com/product/getByProductCategory/${category}`)
+  const response = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_PRODUCT_CATEGORY + category)
   dispatch({
     type: ALLPRODUCTSBYCATEGORY,
     category: category,
@@ -29,11 +29,8 @@ export const getAllProductsByCategory = (category) => async (dispatch) => {
 }
 
 export const getProductByProductName = (productName) => async (dispatch) => {
-
-
   try {
-   // const response = await axios.get(`http://localhost:8762/product/getProductByProductName?productName=${productName}`)
-   const response = await axios.get(`https://spring-store-zuul-service.herokuapp.com/product/getProductByProductName?productName=${productName}`)
+   const response = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_PRODUCT_NAME + productName)
     let tmpArray = []
     tmpArray.push(response.data)
     dispatch({
@@ -50,12 +47,6 @@ export const getProductByProductName = (productName) => async (dispatch) => {
 }
 
 
-
-
-
-
-
-
 }
 
 const initialState = {
@@ -63,8 +54,7 @@ const initialState = {
   products: []
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (state = initialState, action) => {
+const productActions = (state = initialState, action) => {
 
   switch (action.type) {
     case ALLPRODUCTS:
@@ -72,7 +62,6 @@ export default (state = initialState, action) => {
     case PRODUCTBYPRODUCTNAME:
 
       return {
-
         ...initialState,
         category: action.category,
         products: action.products
@@ -82,3 +71,4 @@ export default (state = initialState, action) => {
   }
 
 };
+export default productActions;

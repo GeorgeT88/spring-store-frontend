@@ -15,6 +15,7 @@ import { getAllProducts } from "../redux/actions/productsActions";
 
 
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -74,11 +75,13 @@ function ProductCatalog() {
   const products = useSelector((state) => state).products.products;
   const category = useSelector((state) => state).products.category;
 
+
+
   useEffect(() => {
-  if(category ==='All Products'){
+    if (category === 'All Products') {
       dispatch(getAllProducts());
     }
-  }, [dispatch,category]);
+  }, [dispatch, category]);
 
   useEffect(() => {
     setCurrentPage(1);

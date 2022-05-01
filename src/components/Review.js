@@ -20,24 +20,21 @@ import { setOrderStep } from "../redux/actions/orderStepActions";;
 
 
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+
 
 export default function Review() {
 
-  const products = useSelector((state) => state).products.products;
   const dispatch = useDispatch();
+  const products = useSelector((state) => state).products.products;
+  const orderAddress = useSelector((state) => state).orderAddress;
+  const orderCreditCardInfo = useSelector((state) => state).orderCreditCardInfo;
 
   const handleBackOrderStep = () => {
     dispatch(setOrderStep(1)); 
 
   }
   const handlekOrderStep = () => {
+    
     dispatch(setOrderStep(3)); 
 
   }
@@ -67,24 +64,22 @@ export default function Review() {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>{orderAddress.firstName} {orderAddress.lastName}</Typography>
+          <Typography gutterBottom>{orderAddress.adressLine1}, {orderAddress.adressLine2}</Typography>
+          <Typography gutterBottom>{orderAddress.city}, {orderAddress.state}</Typography>
+          <Typography gutterBottom>{orderAddress.zipPostalCode}, {orderAddress.country}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Payment details
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
+       
+          <Typography gutterBottom>Card type: Test-Visa</Typography>
+          <Typography gutterBottom>Card holder: {orderCreditCardInfo.nameOnCard}</Typography>
+          <Typography gutterBottom>Card number: {orderCreditCardInfo.cardNumber}</Typography>
+          <Typography gutterBottom>Expiry date: {orderCreditCardInfo.expiryDate}</Typography>
+         
           </Grid>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button sx={{ mt: 3, ml: 1 }} onClick={handleBackOrderStep}>
