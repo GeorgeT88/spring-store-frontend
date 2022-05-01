@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import ClearIcon from '@mui/icons-material/Clear';
 import { removeProductFromCart } from '../redux/actions/cartActions';
 import { useHistory } from 'react-router-dom';
+import { setOrderStep } from "../redux/actions/orderStepActions";
 
 
 const Img = styled('img')({
@@ -44,6 +45,7 @@ const CartPage = () => {
   };
 
   const handlekOrderStep = () =>{
+    dispatch(setOrderStep(0));
     history.push(`/checkoutPage`);
   }
 

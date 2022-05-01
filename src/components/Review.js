@@ -25,17 +25,18 @@ import { setOrderStep } from "../redux/actions/orderStepActions";;
 export default function Review() {
 
   const dispatch = useDispatch();
-  const products = useSelector((state) => state).products.products;
+  const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const orderAddress = useSelector((state) => state).orderAddress;
   const orderCreditCardInfo = useSelector((state) => state).orderCreditCardInfo;
+  const cart = useSelector((state) => state.cart);
 
   const handleBackOrderStep = () => {
-    dispatch(setOrderStep(1)); 
+    dispatch(setOrderStep(1));
 
   }
   const handlekOrderStep = () => {
-    
-    dispatch(setOrderStep(3)); 
+
+    dispatch(setOrderStep(3));
 
   }
 
@@ -45,17 +46,17 @@ export default function Review() {
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.productName} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.productName} secondary={product.productDescription} />
-            <Typography variant="body2">{product.productPrice}</Typography>
+        {productsInCart.map((product) => (
+          <ListItem key={product.productDto.productName} sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={product.productDto.productName} secondary={product.productDto.productDescription} />
+            <Typography variant="body2">{product.productDto.productPrice}</Typography>
           </ListItem>
         ))}
 
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
+            ${cart.total}
           </Typography>
         </ListItem>
       </List>
@@ -74,26 +75,26 @@ export default function Review() {
             Payment details
           </Typography>
           <Grid container>
-       
-          <Typography gutterBottom>Card type: Test-Visa</Typography>
-          <Typography gutterBottom>Card holder: {orderCreditCardInfo.nameOnCard}</Typography>
-          <Typography gutterBottom>Card number: {orderCreditCardInfo.cardNumber}</Typography>
-          <Typography gutterBottom>Expiry date: {orderCreditCardInfo.expiryDate}</Typography>
-         
+
+            <Typography gutterBottom>Card type: Test-Visa</Typography>
+            <Typography gutterBottom>Card holder: {orderCreditCardInfo.nameOnCard}</Typography>
+            <Typography gutterBottom>Card number: {orderCreditCardInfo.cardNumber}</Typography>
+            <Typography gutterBottom>Expiry date: {orderCreditCardInfo.expiryDate}</Typography>
+
           </Grid>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button sx={{ mt: 3, ml: 1 }} onClick={handleBackOrderStep}>
-            Back
-          </Button>
-          <Button
-            onClick={handlekOrderStep}
-            type="submit"   
-            sx={{ mt: 3, ml: 1 }} 
-            variant = "primary"   
-            style={{ backgroundColor: "#3f51b5" ,color: '#FFFFFF' }}>
-            order
-          </Button>
-        </Box>
+            <Button sx={{ mt: 3, ml: 1 }} onClick={handleBackOrderStep}>
+              Back
+            </Button>
+            <Button
+              onClick={handlekOrderStep}
+              type="submit"
+              sx={{ mt: 3, ml: 1 }}
+              variant="primary"
+              style={{ backgroundColor: "#3f51b5", color: '#FFFFFF' }}>
+              order
+            </Button>
+          </Box>
         </Grid>
 
 

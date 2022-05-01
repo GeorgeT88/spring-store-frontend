@@ -82,13 +82,7 @@ const OrderAddressPage = () => {
 
   });
 
-  useEffect(() => {
-    dispatch(appBarFalse());
-    return () => {
-      dispatch(appBarTrue());
-    }
 
-  }, [dispatch]);
 
   return (
 
