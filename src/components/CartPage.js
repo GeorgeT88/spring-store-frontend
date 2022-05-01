@@ -7,11 +7,13 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
 import { updateProductToCart } from '../redux/actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import ClearIcon from '@mui/icons-material/Clear';
 import { removeProductFromCart } from '../redux/actions/cartActions';
+import { useHistory } from 'react-router-dom';
 
 
 const Img = styled('img')({
@@ -24,7 +26,7 @@ const Img = styled('img')({
 
 
 const CartPage = () => {
-
+  let history = useHistory();
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -37,10 +39,13 @@ const CartPage = () => {
 
   const handleClickRemoveProductFromCart = (productName) => {
     dispatch(
-      removeProductFromCart(productName,1)
+      removeProductFromCart(productName, 1)
     );
   };
 
+  const handlekOrderStep = () =>{
+    history.push(`/checkoutPage`);
+  }
 
   return (
 
@@ -120,7 +125,7 @@ const CartPage = () => {
 
                       })}
 
-                      
+
                     </Select>
                   </Typography>
                   <Grid   >
@@ -138,8 +143,21 @@ const CartPage = () => {
               </Grid>
             </Grid>
           </Grid>
+         
         </Paper>
+        
       ))}
+      <p></p>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button     
+            onClick={handlekOrderStep}
+            type="submit"
+           
+            sx={{ mt: 3, ml: 1 }} 
+            variant="primary"   style={{ backgroundColor: "#3f51b5" ,color: '#FFFFFF' }}>
+            order
+          </Button>
+        </Box>
     </Paper>
 
 

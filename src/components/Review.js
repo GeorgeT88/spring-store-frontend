@@ -87,10 +87,11 @@ export default function Review() {
           </Button>
           <Button
             onClick={handlekOrderStep}
-            type="submit"
-            variant="contained"
-            sx={{ mt: 3, ml: 1 }} >
-            checkout
+            type="submit"   
+            sx={{ mt: 3, ml: 1 }} 
+            variant = "primary"   
+            style={{ backgroundColor: "#3f51b5" ,color: '#FFFFFF' }}>
+            order
           </Button>
         </Box>
         </Grid>

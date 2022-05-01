@@ -37,11 +37,11 @@ const OrderAddressPage = () => {
     addressLine1: yup.string().required("Delivery Address 1 is required!")
       .matches('^[a-zA-Z0-9 ]+$', "Only characters and digits are allowed in this field")
       .min(8, 'Delivery Address has to be be atleast 8 characters!')
-      .max(300, 'Delivery Address 1 can not contain more than 300 characters!'), 
+      .max(300, 'Delivery Address 1 can not contain more than 300 characters!'),
     addressLine2: yup.string().notRequired("Delivery Address 2 is not required!")
       .matches('^[a-zA-Z0-9 ]+$', "Only characters and digits are allowed in this field")
       .min(8, 'Delivery Address has to be be atleast 8 characters!')
-      .max(300, 'Delivery Address 2 can not contain more than 300 characters!'), 
+      .max(300, 'Delivery Address 2 can not contain more than 300 characters!'),
     city: yup.string().required("City is required!")
       .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
       .min(3, 'City has to be be atleast 3 characters long!')
@@ -49,12 +49,12 @@ const OrderAddressPage = () => {
     state: yup.string().required("State is required!")
       .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
       .min(3, 'State has to be be atleast 3 characters long!')
-      .max(25, 'State not contain more than 25 characters!'),  
-      zipPostalCode: yup.string().required("Zip/Postal Code is required!")
+      .max(25, 'State not contain more than 25 characters!'),
+    zipPostalCode: yup.string().required("Zip/Postal Code is required!")
       .matches('^[a-zA-Z0-9 ]+$', "Only characters and digits are allowed in this field")
       .min(2, 'Zip/Postal Code has to be be atleast 2 characters!')
-      .max(60, 'Zip/Postal Code can not contain more than 60 characters!'), 
-      country: yup.string().required("Country is required!")
+      .max(60, 'Zip/Postal Code can not contain more than 60 characters!'),
+    country: yup.string().required("Country is required!")
       .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
       .min(3, 'Country has to be be atleast 3 characters long!')
       .max(25, 'Country not contain more than 25 characters!')
@@ -91,7 +91,7 @@ const OrderAddressPage = () => {
   }, [dispatch]);
 
   return (
-    
+
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Shipping address
@@ -209,18 +209,19 @@ const OrderAddressPage = () => {
               error={formik.touched.country && Boolean(formik.errors.country)}
               helperText={formik.touched.country && formik.errors.country}
             />
-          </Grid> 
-        </Grid>        
-        <React.Fragment>            
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button  
-                type="submit"
-                variant="contained"
-                sx={{ mt: 3, ml: 1 }} >
-                Next
-              </Button>
-            </Box>
-          </React.Fragment>
+          </Grid>
+        </Grid>
+        <React.Fragment>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              type="submit"
+              sx={{ mt: 3, ml: 1 }}
+              variant="primary"
+              style={{ backgroundColor: "#3f51b5", color: '#FFFFFF' }}>
+              Next
+            </Button>
+          </Box>
+        </React.Fragment>
       </form>
     </React.Fragment>
   );

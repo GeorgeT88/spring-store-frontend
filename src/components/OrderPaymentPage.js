@@ -149,8 +149,11 @@ const OrderPaymentPage = () => {
           </Button>
           <Button
             type="submit"
-            variant="contained"
-            sx={{ mt: 3, ml: 1 }} >
+          
+            sx={{ mt: 3, ml: 1 }}
+            variant = "primary"   
+            style={{ backgroundColor: "#3f51b5" ,color: '#FFFFFF' }}>
+           
             Next
           </Button>
         </Box>
