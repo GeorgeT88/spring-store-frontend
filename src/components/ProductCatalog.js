@@ -18,10 +18,10 @@ import { getAllProducts } from "../redux/actions/productsActions";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link to='/' color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.springwebstore.com/">
+        springwebstore.com
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

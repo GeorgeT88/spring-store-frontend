@@ -1,7 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import {toast} from "react-toastify";
-import { getCartByUserEmail } from "./cartActions";
+import { toast } from "react-toastify";
 
 
 const PRODUCT_FAVORITES = "PRODUCT_FAVORITES";
@@ -16,20 +15,20 @@ export const addProductToFavorites = (product) => {
 
         if (token) {
             const user = jwtDecode(token);
-            axios.put(process.env.REACT_APP_ADD_PRODUCT_TO_USER_FAVORITES + user.sub +"/"+ product,{},
-             {
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
-                }
-            }).then((response) => {
-                dispatch({
-                    type: PRODUCT_FAVORITES,
-                    id: response.data.id,
-                    productList: response.data.favoriteProductList,
-                });
-                toast.success("Product Added To Favorites!",{ position: "top-right"})
-            })
+            axios.put(process.env.REACT_APP_ADD_PRODUCT_TO_USER_FAVORITES + user.sub + "/" + product, {},
+                {
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': localStorage.getItem('token')
+                    }
+                }).then((response) => {
+                    dispatch({
+                        type: PRODUCT_FAVORITES,
+                        id: response.data.id,
+                        productList: response.data.favoriteProductList,
+                    });
+                    toast.success("Product Added To Favorites!", { position: "top-right" })
+                })
         } else return null;
     };
 };
@@ -40,20 +39,20 @@ export const removeProductFromFavorites = (product) => {
         const token = getState().auth.token;
         if (token) {
             const user = jwtDecode(token);
-            axios.put(process.env.REACT_APP_REMOVE_PRODUCT_FROM_USER_FAVORITES + user.sub + "/" + product,{},
-             {
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
-                }
-            }).then((response) => {
-                dispatch({
-                    type: PRODUCT_FAVORITES,
-                    id: response.data.id,
-                    productList: response.data.favoriteProductList,          
-                });
-                toast.error("Product removed from Favorites!",{ position: "top-right"})
-            })
+            axios.put(process.env.REACT_APP_REMOVE_PRODUCT_FROM_USER_FAVORITES + user.sub + "/" + product, {},
+                {
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': localStorage.getItem('token')
+                    }
+                }).then((response) => {
+                    dispatch({
+                        type: PRODUCT_FAVORITES,
+                        id: response.data.id,
+                        productList: response.data.favoriteProductList,
+                    });
+                    toast.error("Product removed from Favorites!", { position: "top-right" })
+                })
         } else return null;
     };
 };
@@ -62,24 +61,24 @@ export const getAllProductsFromUserFavorites = () => {
     return (dispatch, getState) => {
 
         const token = getState().auth.token;
-        console.log('TKKKNNNN',token);
+        console.log('TKKKNNNN', token);
         if (token) {
             const user = jwtDecode(token);
             axios.get(process.env.REACT_APP_GET_ALL_PRODUCTS_FROM_USER_FAVORITES + user.sub,
-             {
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
-                }
-            }).then((response) => {
+                {
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': localStorage.getItem('token')
+                    }
+                }).then((response) => {
 
-                console.log('initial fav prod',response.data);
-                dispatch({
-                    type: PRODUCT_FAVORITES,
-                    id: response.data.id,
-                    productList: response.data,
-                });
-            })
+                    console.log('initial fav prod', response.data);
+                    dispatch({
+                        type: PRODUCT_FAVORITES,
+                        id: response.data.id,
+                        productList: response.data,
+                    });
+                })
         } else return null;
     };
 };
@@ -107,11 +106,11 @@ const favoriteProductActions = (state = initialState, action) => {
                 id: action.id,
                 productList: action.productList,
             };
-            case PRODUCT_FAVORITES_SIGN_OUT:   
-                return {
-                    id: null,
-                    productList: []
-                };    
+        case PRODUCT_FAVORITES_SIGN_OUT:
+            return {
+                id: null,
+                productList: []
+            };
         default:
             return state;
     }

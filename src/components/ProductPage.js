@@ -1,7 +1,5 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Box from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -12,41 +10,13 @@ import Typography from '@mui/material/Container';
 import { addProductToCart } from '../../src/redux/actions/cartActions';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import ImageGallery from 'react-image-gallery';
-import { Link } from "@mui/material";
 import { Carousel } from 'react-carousel-minimal';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-
-
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
 
-import { Redirect } from 'react-router-dom';
-import { signIn } from "../../src/redux/actions/authActions";
-import { getAllProductsFromUserFavorites } from "../../src/redux/actions/favoriteProductActions";
-import { getCartByUserEmail } from "../../src/redux/actions/cartActions";
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-
-import Paper from '@mui/material/Paper';
-import * as Space from "react-spaces";
-import ButtonBase from '@mui/material/ButtonBase';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import { updateProductToCart } from '../redux/actions/cartActions';
-
-
-import ClearIcon from '@mui/icons-material/Clear';
-import { removeProductFromCart } from '../redux/actions/cartActions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

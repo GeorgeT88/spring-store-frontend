@@ -35,6 +35,7 @@ export const createNewOrder = (firstName, lastName, addressLine1, addressLine2, 
             })
         dispatch({
             type: CREATE_NEW_ORDER,
+            uuid: response.data.uuid,
             firstName: response.data.firstName,
             lastName: response.data.lastName,
             addressLine1: response.data.addressLine1,
@@ -56,6 +57,7 @@ export const createNewOrder = (firstName, lastName, addressLine1, addressLine2, 
 };
 
 const initialState = {
+    uuid: null,
     firstName: null,
     lastName: null,
     addressLine1: null,
@@ -77,6 +79,7 @@ const authActions = (state = initialState, action) => {
         case CREATE_NEW_ORDER:
             return {
                 ...initialState,
+                uuid: action.uuid,
                 firstName: action.firstName,
                 lastName: action.lastName,
                 setAddressLine1: action.setAddressLine1,

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
@@ -12,23 +11,15 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import OrderAddressPage from './OrderAddressPage';
 import OrderPaymentPage from './OrderPaymentPage';
-import { setOrderStep } from "../redux/actions/orderStepActions";
-import { getOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
-import { clearOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
-import { getOrderAddress } from "../redux/actions/orderAddressActions";
-import { clearOrderAddress } from "../redux/actions/orderAddressActions";
-import { createNewOrder } from "../redux/actions/orderCheckoutActions";
 import OrderReviewPage from './OrderReviewPage';
 import OrderCheckoutPage from './OrderCheckoutPage';
-
-import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.springwebstore.com/">
+        springwebstore.com
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

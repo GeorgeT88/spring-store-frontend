@@ -5,17 +5,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import { useDispatch, useSelector } from 'react-redux';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox'
-import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
-import { signUp } from "../redux/actions/authActions";
-import { useHistory } from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { setOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
 import { setOrderStep } from "../redux/actions/orderStepActions";
 import { createNewOrder } from "../redux/actions/orderCheckoutActions";
 
@@ -31,7 +22,7 @@ export default function OrderReviewPage() {
   const orderCreditCardInfo = useSelector((state) => state).orderCreditCardInfo;
   const cart = useSelector((state) => state.cart);
 
-  
+
 
   const handleBackOrderStep = () => {
     dispatch(setOrderStep(1));
@@ -51,7 +42,7 @@ export default function OrderReviewPage() {
       <List disablePadding>
         {productsInCart.map((product) => (
           <ListItem key={product.productDto.productName} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.productDto.productName  + "   x " + product.quantity} secondary={product.productDto.productDescription} />
+            <ListItemText primary={product.productDto.productName + "   x " + product.quantity} secondary={product.productDto.productDescription} />
             <Typography variant="body2">{product.productTotalPrice}</Typography>
           </ListItem>
         ))}

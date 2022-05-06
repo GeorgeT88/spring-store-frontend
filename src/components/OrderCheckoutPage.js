@@ -13,9 +13,10 @@ import { useHistory } from 'react-router-dom';
 const theme = createTheme();
 
 export default function OrderCheckoutPage() {
+
   const dispatch = useDispatch();
   let history = useHistory();
-  const orderStep = useSelector((state) => state.orderStep.orderStep);
+  const orderUUID = useSelector((state) => state.orderCheckout.uuid);
 
 
   const handleBackToMainPage = () => {
@@ -30,24 +31,24 @@ export default function OrderCheckoutPage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-          <React.Fragment>         
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is {orderStep}. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <Link href="#" variant="body2" onClick={() => handleBackToMainPage()}
-                 >
-                    {'Go back to the main page'}
-                  </Link>
-                </Box>
-              </React.Fragment>
-          </React.Fragment>   
+      <React.Fragment>
+        <React.Fragment>
+          <Typography variant="h5" gutterBottom>
+            Thank you for your order.
+          </Typography>
+          <Typography variant="subtitle1">
+            Your order ID is: <strong>{orderUUID}</strong>. We have emailed your order
+            confirmation, and will send you an update when your order has
+            shipped.
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Link href="#" variant="body2" onClick={() => handleBackToMainPage()}
+            >
+              {'Go back to the main page'}
+            </Link>
+          </Box>
+        </React.Fragment>
+      </React.Fragment>
     </ThemeProvider>
   );
 }

@@ -6,6 +6,7 @@ import authReducer from "./actions/authActions";
 import cartReducer from "./actions/cartActions";
 import orderAddressReducer from "./actions/orderAddressActions";
 import orderStepReducer from "./actions/orderStepActions";
+import orderCheckoutReducer from "./actions/orderCheckoutActions";
 import orderCreditCardInfoReducer from "./actions/orderCreditCardInfoActions";
 import storage from 'redux-persist/lib/storage';
 import { createStore, applyMiddleware } from 'redux'
@@ -21,6 +22,7 @@ const reducers = combineReducers({
     secondaryAppBar:appBarReducer,
     orderAddress:orderAddressReducer,
     orderStep:orderStepReducer,
+    orderCheckout:orderCheckoutReducer,
     orderCreditCardInfo:orderCreditCardInfoReducer,
     cart:cartReducer,
     auth:authReducer,

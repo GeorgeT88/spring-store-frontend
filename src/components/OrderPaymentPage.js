@@ -1,15 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox'
 import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
-import { signUp } from "../redux/actions/authActions";
-import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { setOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
@@ -17,7 +15,6 @@ import { setOrderStep } from "../redux/actions/orderStepActions";;
 
 const OrderPaymentPage = () => {
 
-  const orderStep = useSelector((state) => state.orderStep.orderStep);
   const dispatch = useDispatch();
 
 
@@ -67,7 +64,7 @@ const OrderPaymentPage = () => {
   }, [dispatch]);
 
   const handleBackOrderStep = () => {
-    dispatch(setOrderStep(0)); 
+    dispatch(setOrderStep(0));
 
   }
 
@@ -138,7 +135,7 @@ const OrderPaymentPage = () => {
               //variant="outlined"
               fullWidth
               id="cvv"
-              label="CVV*"          
+              label="CVV*"
               autoFocus
               value={999}
               //value={formik.values.cvv}
@@ -161,11 +158,11 @@ const OrderPaymentPage = () => {
           </Button>
           <Button
             type="submit"
-          
+
             sx={{ mt: 3, ml: 1 }}
-            variant = "primary"   
-            style={{ backgroundColor: "#3f51b5" ,color: '#FFFFFF' }}>
-           
+            variant="primary"
+            style={{ backgroundColor: "#3f51b5", color: '#FFFFFF' }}>
+
             Next
           </Button>
         </Box>
@@ -174,4 +171,4 @@ const OrderPaymentPage = () => {
     </React.Fragment>
   );
 }
-  export default OrderPaymentPage;
+export default OrderPaymentPage;
