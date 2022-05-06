@@ -80,9 +80,9 @@ export default function OrderReviewPage() {
           <Grid container>
 
             <Typography gutterBottom>Card type: Test-Visa</Typography>
-            <Typography gutterBottom>Card holder: {orderCreditCardInfo.nameOnCard}</Typography>
-            <Typography gutterBottom>Card number: {orderCreditCardInfo.cardNumber}</Typography>
-            <Typography gutterBottom>Expiry date: {orderCreditCardInfo.expiryDate}</Typography>
+            <Typography gutterBottom>Card holder: Test Name</Typography>
+            <Typography gutterBottom>Card number: 1111-2222-3333-4444</Typography>
+            <Typography gutterBottom>Expiry date: 01/27</Typography>
 
           </Grid>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
