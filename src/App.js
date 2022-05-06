@@ -7,7 +7,7 @@ import NavBar from './components/NavBar';
 import ProductPage from './components/ProductPage';
 import CartPage from './components/CartPage';
 import OrderSelectPage from './components/OrderSelectPage';
-import FavoriteProductPage from './components/FavoriteProductPage';
+import FavoriteProductListPage from './components/FavoriteProductListPage';
 import ProductNotFoundPage from './components/ProductNotFoundPage';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -49,7 +49,7 @@ function App() {
           <Route path = "/userSettings"><UserSettings/></Route>
           <Route path = "/productPage"><ProductPage/></Route>    
           <Route path = "/cartPage"><CartPage/></Route>   
-          <Route path = "/favoriteProductPage"><FavoriteProductPage/></Route>   
+          <Route path = "/favoriteProductListPage"><FavoriteProductListPage/></Route>   
           <Route path = "/productNotFoundPage"><ProductNotFoundPage/></Route>   
           <Route path = "/orderSelectPage"><OrderSelectPage/></Route>   
         </Switch>

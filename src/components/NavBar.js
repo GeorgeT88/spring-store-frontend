@@ -186,7 +186,7 @@ export default function NavBar() {
   }
 
   const handleGoToFavoriteProductPage = () => {
-    history.push('/FavoriteProductPage');
+    history.push('/favoriteProductListPage');
   }
 
   const handleGoToCartPage = () => {
@@ -253,8 +253,8 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
       MenuListProps={{ onMouseLeave: handleMobileMenuClose }}
     >
-      <MenuItem onClick={() => history.push('/favoriteProductPage')}>
-        <IconButton aria-label="show 4 new mails" color="inherit" onClick={() => history.push('/favoriteProductPage')}>
+      <MenuItem onClick={() => history.push('/favoriteProductListPage')}>
+        <IconButton aria-label="show 4 new mails" color="inherit" onClick={() => history.push('/favoriteProductListPage')}>
           <Badge badgeContent={favoriteProducts?.length} color="secondary">
             <FavoriteIcon />
           </Badge>
