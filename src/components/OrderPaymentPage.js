@@ -23,22 +23,22 @@ const OrderPaymentPage = () => {
 
   const validationSchema = yup.object({
 
-    nameOnCard: yup.string().required("Name on card is required!")
-      .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
-      .min(3, 'Name on card has to be be atleast 3 characters long!')
-      .max(16, 'Name on card can not contain more than 32 characters!'),
-    cardNumber: yup.string().required("Card number is required!")
-      .matches('^[0-9]+$', "Only digits are allowed in this field")
-      .min(3, 'Card Number has to be be atleast 3 digits long!')
-      .max(16, 'Card Number can not contain more than 32 digits!'),
-    expiryDate: yup.string().required("Expiry date is required!")
-      .matches('^[0-9 ]+$', "Only  digits are allowed in this field")
-      .min(10, 'Expiry date has to be be atleast 10 digits!')
-      .max(32, 'Expiry date can not contain more than 32 digits!'),
-    cvv: yup.string().required("ccv is required!")
-      .matches('^[0-9 ]+$', "Only digits are allowed in this field")
-      .min(8, 'ccv has to be be atleast 8 digits!')
-      .max(300, 'ccv can not contain more than 300 digits!'),
+    // nameOnCard: yup.string().required("Name on card is required!")
+    //   .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
+    //   .min(3, 'Name on card has to be be atleast 3 characters long!')
+    //   .max(16, 'Name on card can not contain more than 32 characters!'),
+    // cardNumber: yup.string().required("Card number is required!")
+    //   .matches('^[0-9]+$', "Only digits are allowed in this field")
+    //   .min(3, 'Card Number has to be be atleast 3 digits long!')
+    //   .max(16, 'Card Number can not contain more than 32 digits!'),
+    // expiryDate: yup.string().required("Expiry date is required!")
+    //   .matches('^[0-9 ]+$', "Only  digits are allowed in this field")
+    //   .min(10, 'Expiry date has to be be atleast 10 digits!')
+    //   .max(32, 'Expiry date can not contain more than 32 digits!'),
+    // cvv: yup.string().required("ccv is required!")
+    //   .matches('^[0-9 ]+$', "Only digits are allowed in this field")
+    //   .min(8, 'ccv has to be be atleast 8 digits!')
+    //   .max(300, 'ccv can not contain more than 300 digits!'),
   })
 
 
@@ -81,13 +81,16 @@ const OrderPaymentPage = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <TextField
+              disabled
               name="nameOnCard"
-              variant="outlined"
+              variant="filled"
+              //variant="outlined"
               fullWidth
               id="nameOnCard"
               label="Name on card*"
               autoFocus
-              value={formik.values.nameOnCard}
+              value={"Test Name"}
+              //value={formik.values.nameOnCard}
               onChange={formik.handleChange}
               error={formik.touched.nameOnCard && Boolean(formik.errors.nameOnCard)}
               helperText={formik.touched.nameOnCard && formik.errors.nameOnCard}
@@ -95,13 +98,16 @@ const OrderPaymentPage = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              disabled
               name="cardNumber"
-              variant="outlined"
+              variant="filled"
+              //variant="outlined"
               fullWidth
               id="cardNumber"
               label="Card number*"
               autoFocus
-              value={formik.values.cardNumber}
+              value={"1111-2222-3333-4444"}
+              //value={formik.values.cardNumber}
               onChange={formik.handleChange}
               error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
               helperText={formik.touched.cardNumber && formik.errors.cardNumber}
@@ -109,13 +115,16 @@ const OrderPaymentPage = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              disabled
               name="expiryDate"
-              variant="outlined"
+              variant="filled"
+              //variant="outlined"
               fullWidth
               id="expiryDate"
               label="Expiry date*"
               autoFocus
-              value={formik.values.expiryDate}
+              value={"01/27"}
+              //value={formik.values.expiryDate}
               onChange={formik.handleChange}
               error={formik.touched.expiryDate && Boolean(formik.errors.expiryDate)}
               helperText={formik.touched.expiryDate && formik.errors.expiryDate}
@@ -123,13 +132,16 @@ const OrderPaymentPage = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              disabled
               name="cvv"
-              variant="outlined"
+              variant="filled"
+              //variant="outlined"
               fullWidth
               id="cvv"
-              label="CVV*"
+              label="CVV*"          
               autoFocus
-              value={formik.values.cvv}
+              value={999}
+              //value={formik.values.cvv}
               onChange={formik.handleChange}
               error={formik.touched.cvv && Boolean(formik.errors.cvv)}
               helperText={formik.touched.cvv && formik.errors.cvv}

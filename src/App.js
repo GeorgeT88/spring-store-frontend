@@ -6,7 +6,7 @@ import UserSettings from './components/UserSettings';
 import NavBar from './components/NavBar';
 import ProductPage from './components/ProductPage';
 import CartPage from './components/CartPage';
-import CheckoutPage from './components/CheckoutPage';
+import OrderSelectPage from './components/OrderSelectPage';
 import FavoriteProductPage from './components/FavoriteProductPage';
 import ProductNotFoundPage from './components/ProductNotFoundPage';
 import React, { useEffect } from 'react';
@@ -51,7 +51,7 @@ function App() {
           <Route path = "/cartPage"><CartPage/></Route>   
           <Route path = "/favoriteProductPage"><FavoriteProductPage/></Route>   
           <Route path = "/productNotFoundPage"><ProductNotFoundPage/></Route>   
-          <Route path = "/checkoutPage"><CheckoutPage/></Route>   
+          <Route path = "/orderSelectPage"><OrderSelectPage/></Route>   
         </Switch>
         </div>
     </Router>  

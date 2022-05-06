@@ -13,9 +13,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import OrderAddressPage from './OrderAddressPage';
 import OrderPaymentPage from './OrderPaymentPage';
 import { setOrderStep } from "../redux/actions/orderStepActions";
+import { getOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
 import { clearOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
+import { getOrderAddress } from "../redux/actions/orderAddressActions";
 import { clearOrderAddress } from "../redux/actions/orderAddressActions";
-import Review from './Review';
+import { createNewOrder } from "../redux/actions/orderCheckoutActions";
+import OrderReviewPage from './OrderReviewPage';
+import OrderCheckoutPage from './OrderCheckoutPage';
+
 import { useHistory } from 'react-router-dom';
 
 function Copyright() {
@@ -44,7 +49,9 @@ function getStepContent(step) {
     case 1:
       return <OrderPaymentPage />;
     case 2:
-      return <Review />;
+      return <OrderReviewPage />;
+    case 3:
+      return <OrderCheckoutPage />;
     default:
       throw new Error('Unknown step');
   }
@@ -52,18 +59,9 @@ function getStepContent(step) {
 
 const theme = createTheme();
 
-export default function Checkout() {
-  const dispatch = useDispatch();
-  let history = useHistory();
-  const orderStep = useSelector((state) => state.orderStep.orderStep);
+export default function OrderSelectPage() {
 
-  const handleBackToMainPage = () => {
-    dispatch(setOrderStep(0));
-    dispatch(clearOrderCreditCardInfo());
-    dispatch(clearOrderAddress());
-    
-    history.push(`/`);
-  }
+  const orderStep = useSelector((state) => state.orderStep.orderStep);
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,28 +79,9 @@ export default function Checkout() {
             ))}
           </Stepper>
           <React.Fragment>
-            {orderStep === 3 ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is {orderStep}. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <Link href="#" variant="body2" onClick={() => handleBackToMainPage()}
-                 >
-                    {'Go back to the main page'}
-                  </Link>
-                </Box>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {getStepContent(orderStep)}
-              </React.Fragment>
-            )}
+            <React.Fragment>
+              {getStepContent(orderStep)}
+            </React.Fragment>
           </React.Fragment>
         </Paper>
         <Copyright />

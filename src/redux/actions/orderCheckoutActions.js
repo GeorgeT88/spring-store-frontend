@@ -7,63 +7,59 @@ const CREATE_NEW_ORDER = "CREATE_NEW_ORDER";
 
 
 
-export const createNewOrder = (firstName, lastName, setAddressLine1, setAddressLine2, city, state, zipPostalCode, country, nameOnCard, cardNumber, expiryDate, cvv, status, productList, user, total) => {
-    return (dispatch, getState) => {
-        const token = getState().auth.token;
+export const createNewOrder = (firstName, lastName, addressLine1, addressLine2, city, state, zipPostalCode, country, nameOnCard, cardNumber, expiryDate, cvv) => async (dispatch, getState) => {
 
-        if (token) {
-            const emailUser = jwtDecode(token);
-            axios
-                .post(`localhost:8762/order/createNewOrder/getUserByEmail?email=${emailUser.sub}`, {
-                    firstName,
-                    lastName,
-                    setAddressLine1,
-                    setAddressLine2,
-                    city,
-                    state,
-                    zipPostalCode,
-                    country,
-                    nameOnCard,
-                    cardNumber,
-                    expiryDate,
-                    cvv,
-                    status,
-                    productList,
-                    user,
-                    total
-                }).then((response) => {
-                    dispatch({
-                        type: CREATE_NEW_ORDER,
-                        firstName: response.data.firstName,
-                        lastName: response.data.lastName,
-                        setAddressLine1: response.data.setAddressLine1,
-                        setAddressLine2: response.data.setAddressLine2,
-                        city: response.data.city,
-                        state: response.data.state,
-                        zipPostalCode: response.data.zipPostalCode,
-                        country: response.data.country,
-                        nameOnCard: response.data.nameOnCard,
-                        cardNumber: response.data.cardNumber,
-                        expiryDate: response.data.expiryDate,
-                        cvv: response.data.cvv,
-                        status: response.data.status,
-                        productList: response.data.productList,
-                        user: response.data.user,
-                        total: response.data.total
-                    });
-                    toast.success("Succesfully created new order!", { position: "top-right" })
-                })
-        } else return null;
-    };
+    const token = getState().auth.token;
+
+    if (token) {
+        const emailUser = jwtDecode(token);
+        const response = await axios
+            .post(`http://localhost:8762/order/createNewOrder?email=${emailUser.sub}`, {
+                firstName,
+                lastName,
+                addressLine1,
+                addressLine2,
+                city,
+                state,
+                zipPostalCode,
+                country,
+                nameOnCard,
+                cardNumber,
+                expiryDate,
+                cvv
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                }
+            })
+        dispatch({
+            type: CREATE_NEW_ORDER,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            addressLine1: response.data.addressLine1,
+            addressLine2: response.data.addressLine2,
+            city: response.data.city,
+            state: response.data.state,
+            zipPostalCode: response.data.zipPostalCode,
+            country: response.data.country,
+            nameOnCard: response.data.nameOnCard,
+            cardNumber: response.data.cardNumber,
+            expiryDate: response.data.expiryDate,
+            cvv: response.data.cvv
+
+        });
+        toast.success("Succesfully created new order!", { position: "top-right" })
+
+    } else return null;
+
 };
 
 const initialState = {
-    token: localStorage.getItem("token"),
-    type: CREATE_NEW_ORDER,
     firstName: null,
     lastName: null,
-    setAddressLine1: null,
-    setAddressLine2: null,
+    addressLine1: null,
+    addressLine2: null,
     city: null,
     state: null,
     zipPostalCode: null,
@@ -71,11 +67,7 @@ const initialState = {
     nameOnCard: null,
     cardNumber: null,
     expiryDate: null,
-    cvv: null,
-    status: null,
-    productList: null,
-    user: null,
-    total: null
+    cvv: null
 };
 
 
@@ -85,7 +77,6 @@ const authActions = (state = initialState, action) => {
         case CREATE_NEW_ORDER:
             return {
                 ...initialState,
-                token: localStorage.getItem('token'),
                 firstName: action.firstName,
                 lastName: action.lastName,
                 setAddressLine1: action.setAddressLine1,
@@ -96,11 +87,7 @@ const authActions = (state = initialState, action) => {
                 country: action.country,
                 nameOnCard: action.nameOnCard,
                 expiryDate: action.expiryDate,
-                cvv: action.cvv,
-                status: action.status,
-                productList: action.productList,
-                user: action.user,
-                total: action.total
+                cvv: action.cvv
             };
         default:
             return state;

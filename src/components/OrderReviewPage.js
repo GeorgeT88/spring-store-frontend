@@ -16,13 +16,14 @@ import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { setOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
-import { setOrderStep } from "../redux/actions/orderStepActions";;
+import { setOrderStep } from "../redux/actions/orderStepActions";
+import { createNewOrder } from "../redux/actions/orderCheckoutActions";
 
 
 
 
 
-export default function Review() {
+export default function OrderReviewPage() {
 
   const dispatch = useDispatch();
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
@@ -30,12 +31,14 @@ export default function Review() {
   const orderCreditCardInfo = useSelector((state) => state).orderCreditCardInfo;
   const cart = useSelector((state) => state.cart);
 
+  
+
   const handleBackOrderStep = () => {
     dispatch(setOrderStep(1));
 
   }
   const handlekOrderStep = () => {
-
+    dispatch(createNewOrder(orderAddress.firstName, orderAddress.lastName, orderAddress.addressLine1, orderAddress.addressLine2, orderAddress.city, orderAddress.state, orderAddress.zipPostalCode, orderAddress.country, orderCreditCardInfo.nameOnCard, orderCreditCardInfo.cardNumber, orderCreditCardInfo.expiryDate, orderCreditCardInfo.cvv));
     dispatch(setOrderStep(3));
 
   }

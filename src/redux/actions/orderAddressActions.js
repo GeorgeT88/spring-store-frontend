@@ -2,14 +2,13 @@ const SET_ORDER_ADDRESS = "SET_ORDER_ADDRESS";
 const GET_ORDER_ADDRESS = "GET_ORDER_ADDRESS";
 const CLEAR_ORDER_ADDRESS = "CLEAR_ORDER_ADDRESS";
 
-export const setOrderAddress = (firstName,lastName,adressLine1,adressLine2,city,state,zipPostalCode,country) => (
+export const setOrderAddress = (firstName,lastName,addressLine1 ,addressLine2,city,state,zipPostalCode,country) => (
   {
-    
     type: SET_ORDER_ADDRESS,
     firstName: firstName,
     lastName: lastName,
-    adressLine1: adressLine1,
-    adressLine2: adressLine2,
+    addressLine1: addressLine1,
+    addressLine2: addressLine2,
     city: city,
     state: state,
     zipPostalCode: zipPostalCode,
@@ -31,8 +30,8 @@ export const clearOrderAddress = () => (
 const initialState = {
   firstName: null,
   lastName: null,
-  adressLine1: null,
-  adressLine2: null,
+  addressLine1: null,
+  addressLine2: null,
   city: null,
   state: null,
   zipPostalCode: null,
@@ -49,8 +48,8 @@ export default (state = initialState, action) => {
         ...initialState,
         firstName: action.firstName,
         lastName: action.lastName,
-        adressLine1: action.adressLine1,
-        adressLine2: action.adressLine2,
+        addressLine1: action.addressLine1,
+        addressLine2: action.addressLine2,
         city: action.city,
         state: action.state,
         zipPostalCode: action.zipPostalCode,

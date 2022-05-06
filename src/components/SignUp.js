@@ -157,7 +157,6 @@ function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
-
                 fullWidth
                 id="lastName"
                 label="Last Name*"

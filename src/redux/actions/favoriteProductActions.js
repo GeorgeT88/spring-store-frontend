@@ -84,34 +84,6 @@ export const getAllProductsFromUserFavorites = () => {
     };
 };
 
-// TODO testing
-//export const getExample = () => {
-//     return async (dispatch, getState) => {
-//         const token = getState().auth.token;
-//         console.log('TKKKNNNN',token);
-//         if (token) {
-//             const user = jwtDecode(token);
-//             const response = await axios.get(`https://spring-store-zuul-service.herokuapp.com/user/getAllProductsFromUserFavorites/${user.sub}`,
-//             {
-//                 headers: {
-//                     'Content-type': 'application/json',
-//                     'Authorization': localStorage.getItem('token')
-//                 }
-//             })
-//             console.log('initial fav prod',response.data);
-//                 dispatch({
-//                     type: PRODUCT_FAVORITES,
-//                     id: response.data.id,
-//                     productList: response.data,
-//                 });
-
-//             await dispatch(getCartByUserEmail());
-//         }
-//     }
-// }
-
-
-
 export const signOutProductFavorites = () => {
     return (dispatch) => {
         dispatch({

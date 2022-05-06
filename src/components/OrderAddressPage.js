@@ -1,15 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
-import { signUp } from "../redux/actions/authActions";
-import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { setOrderAddress } from "../redux/actions/orderAddressActions";
@@ -19,7 +14,6 @@ import { setOrderStep } from "../redux/actions/orderStepActions";
 
 const OrderAddressPage = () => {
 
-  const orderStep = useSelector((state) => state.orderStep.orderStep);
   const dispatch = useDispatch();
 
 
@@ -28,35 +22,35 @@ const OrderAddressPage = () => {
 
     firstName: yup.string().required("First Name is required!")
       .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
-      .min(3, 'First Name has to be be atleast 3 characters long!')
+      .min(0, 'First Name has to be be atleast 3 characters long!')
       .max(16, 'First Name can not contain more than 16 characters!'),
     lastName: yup.string().required("Last Name is required!")
       .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
-      .min(3, 'Last Name has to be be atleast 3 characters long!')
+      .min(0, 'Last Name has to be be atleast 3 characters long!')
       .max(16, 'Last Name can not contain more than 16 characters!'),
     addressLine1: yup.string().required("Delivery Address 1 is required!")
       .matches('^[a-zA-Z0-9 ]+$', "Only characters and digits are allowed in this field")
-      .min(8, 'Delivery Address has to be be atleast 8 characters!')
+      .min(0, 'Delivery Address has to be be atleast 8 characters!')
       .max(300, 'Delivery Address 1 can not contain more than 300 characters!'),
     addressLine2: yup.string().notRequired("Delivery Address 2 is not required!")
       .matches('^[a-zA-Z0-9 ]+$', "Only characters and digits are allowed in this field")
-      .min(8, 'Delivery Address has to be be atleast 8 characters!')
+      .min(0, 'Delivery Address has to be be atleast 8 characters!')
       .max(300, 'Delivery Address 2 can not contain more than 300 characters!'),
     city: yup.string().required("City is required!")
       .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
-      .min(3, 'City has to be be atleast 3 characters long!')
+      .min(0, 'City has to be be atleast 3 characters long!')
       .max(25, 'City can not contain more than 25 characters!'),
     state: yup.string().required("State is required!")
       .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
-      .min(3, 'State has to be be atleast 3 characters long!')
+      .min(0, 'State has to be be atleast 3 characters long!')
       .max(25, 'State not contain more than 25 characters!'),
     zipPostalCode: yup.string().required("Zip/Postal Code is required!")
       .matches('^[a-zA-Z0-9 ]+$', "Only characters and digits are allowed in this field")
-      .min(2, 'Zip/Postal Code has to be be atleast 2 characters!')
+      .min(0, 'Zip/Postal Code has to be be atleast 2 characters!')
       .max(60, 'Zip/Postal Code can not contain more than 60 characters!'),
     country: yup.string().required("Country is required!")
       .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
-      .min(3, 'Country has to be be atleast 3 characters long!')
+      .min(0, 'Country has to be be atleast 3 characters long!')
       .max(25, 'Country not contain more than 25 characters!')
   })
 
@@ -73,7 +67,6 @@ const OrderAddressPage = () => {
       country: ""
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values))
       dispatch(setOrderAddress(values.firstName, values.lastName, values.addressLine1, values.addressLine2, values.city, values.state, values.zipPostalCode, values.country));
       dispatch(setOrderStep(1));
 
