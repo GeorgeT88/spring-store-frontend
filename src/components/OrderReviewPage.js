@@ -51,8 +51,8 @@ export default function OrderReviewPage() {
       <List disablePadding>
         {productsInCart.map((product) => (
           <ListItem key={product.productDto.productName} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.productDto.productName} secondary={product.productDto.productDescription} />
-            <Typography variant="body2">{product.productDto.productPrice}</Typography>
+            <ListItemText primary={product.productDto.productName  + "   x " + product.quantity} secondary={product.productDto.productDescription} />
+            <Typography variant="body2">{product.productTotalPrice}</Typography>
           </ListItem>
         ))}
 
