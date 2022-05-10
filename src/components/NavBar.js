@@ -125,6 +125,8 @@ export default function NavBar() {
 
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
+  const loggedIn = useSelector((state) => state.loggedIn);
 
 
 
@@ -180,8 +182,7 @@ export default function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleBackToMainPage = () => {
-    //dispatch(getAllProducts());  
+  const handleBackToMainPage = () => {  
     history.push('/');
   }
 
@@ -210,8 +211,8 @@ export default function NavBar() {
     }
   }
 
-  
- 
+
+
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
@@ -235,7 +236,6 @@ export default function NavBar() {
       id={menuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      //  open={isMenuOpen}
       onClose={handleMenuClose}
     >
     </Menu>
@@ -255,16 +255,24 @@ export default function NavBar() {
     >
       <MenuItem onClick={() => history.push('/favoriteProductListPage')}>
         <IconButton aria-label="show 4 new mails" color="inherit" onClick={() => history.push('/favoriteProductListPage')}>
-          <Badge badgeContent={favoriteProducts?.length} color="secondary">
-            <FavoriteIcon />
-          </Badge>
+
+          {loggedIn === true ?
+            <Badge badgeContent={favoriteProducts?.length} color="secondary">
+              <FavoriteIcon />
+            </Badge>
+            :
+            <Badge badgeContent={favoriteLocalProducts?.length} color="secondary">
+              <FavoriteIcon />
+            </Badge>
+          }
+
         </IconButton>
         <p>Favorites</p>
       </MenuItem>
       <MenuItem onClick={() => history.push('/cartPage')}>
         <IconButton aria-label="show 11 new notifications" color="inherit" onClick={() => history.push('/cartPage')} >
           <Badge badgeContent={productsInCart.reduce(
-                  function (tot, productDto) { return tot + productDto.quantity; }, 0)} color="secondary">
+            function (tot, productDto) { return tot + productDto.quantity; }, 0)} color="secondary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -290,66 +298,92 @@ export default function NavBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show favorite products" color="inherit" onClick={handleClickDropDownProductFavorites}>
-              <Badge badgeContent={favoriteProducts?.length} color="secondary">
-                <FavoriteIcon
-                  aria-owns={anchorElDropDownProductFavorites ? "simple-dropdown" : undefined}
-                  aria-haspopup="true"
 
-                // onMouseOver={handleClickDropDown}
-                />
-                <Menu
-                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                  transformOrigin={{ vertical: "top", horizontal: "left" }}
-                  id="simple-dropdown"
-                  anchorEl={anchorElDropDownProductFavorites}
-                  open={Boolean(anchorElDropDownProductFavorites)}
-                  onClose={handleCloseDropDownProductFavorites}
-                  MenuListProps={{ onMouseLeave: handleCloseDropDownProductFavorites }}
-                  getContentAnchorEl={null}
-                  disableAutoFocusItem={true}
+
+              {loggedIn === true ?
+                <Badge
+                  badgeContent={favoriteProducts?.length}
+                  color="secondary">
+                  <FavoriteIcon
+                    aria-owns={anchorElDropDownProductFavorites ? "simple-dropdown" : undefined}
+                    aria-haspopup="true"
+                  />
+                </Badge>
+                :
+                <Badge
+                  badgeContent={favoriteLocalProducts?.length}
+                  color="secondary">
+                  <FavoriteIcon
+                    aria-owns={anchorElDropDownProductFavorites ? "simple-dropdown" : undefined}
+                    aria-haspopup="true"
+                  />
+                </Badge>
+              }
+              <Menu
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                transformOrigin={{ vertical: "top", horizontal: "left" }}
+                id="simple-dropdown"
+                anchorEl={anchorElDropDownProductFavorites}
+                open={Boolean(anchorElDropDownProductFavorites)}
+                onClose={handleCloseDropDownProductFavorites}
+                MenuListProps={{ onMouseLeave: handleCloseDropDownProductFavorites }}
+                getContentAnchorEl={null}
+                disableAutoFocusItem={true}
+              >
+                <Box
+                  display="flex"
+                  width={400} height={40}
+                  bgcolor="primary.main"
+                  alignItems="center"
+                  justifyContent="center"
                 >
-                  <Box
-                    display="flex"
-                    width={400} height={40}
-                    bgcolor="primary.main"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Typography variant="h6" style={{ color: 'white' }} align="center">
-                      {'Favorite Products'}
-                    </Typography>
+                  <Typography variant="h6" style={{ color: 'white' }} align="center">
+                    {'Favorite Products'}
+                  </Typography>
 
-                  </Box>
+                </Box>
+                {loggedIn === true ?
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
                     {favoriteProducts.length === 0 && (
-
                       <Typography variant="h6" style={{ color: 'black' }} align="center">
                         {'Favorite Product List is empty!'}
                       </Typography>
-
                     )}
-
                     {favoriteProducts !== null && (
-
                       favoriteProducts.slice(0, 3).map((favoriteProduct) => (
                         <FavoriteProduct key={favoriteProduct.id} {...favoriteProduct} />
                       ))
+
                     )}
-
-
                   </MenuList>
-                  <Box onClick={handleGoToFavoriteProductPage}
-                    display="flex"
-                    width={400} height={40}
-                    bgcolor="primary.main"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Link href="#" style={{ color: 'white' }} underline="hover" > {'View All Favorite Products >>>>'}</Link>
-                  </Box>
-                </Menu>
+                  :
+                  <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+                    {favoriteLocalProducts.length === 0 && (
+                      <Typography variant="h6" style={{ color: 'black' }} align="center">
+                        {'Favorite Product List is empty!'}
+                      </Typography>
+                    )}
+                    {favoriteLocalProducts !== null && (
+                      favoriteLocalProducts.slice(0, 3).map((favoriteProduct) => (
+                        <FavoriteProduct key={favoriteProduct.id} {...favoriteProduct} />
+                      ))
+                    )}
+                  </MenuList>
+                }
 
-              </Badge>
+
+                <Box onClick={handleGoToFavoriteProductPage}
+                  display="flex"
+                  width={400} height={40}
+                  bgcolor="primary.main"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Link href="#" style={{ color: 'white' }} underline="hover" > {'View All Favorite Products >>>>'}</Link>
+                </Box>
+              </Menu>
+
+
             </IconButton>
 
             <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleClickDropDownProductInCart}>
@@ -507,6 +541,6 @@ export default function NavBar() {
       </Grid>
       {renderMobileMenu}
       {renderMenu}
-    </div >
+    </div>
   );
 }

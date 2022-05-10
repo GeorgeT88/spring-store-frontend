@@ -12,6 +12,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { addProductToCart } from '../redux/actions/cartActions';
 import { removeProductFromFavorites } from '../redux/actions/favoriteProductActions';
+import { removeProductfromFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
 
 
 const Img = styled('img')({
@@ -27,7 +28,9 @@ const FavoriteProductPage = (product) => {
 
   const dispatch = useDispatch();
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const loggedIn = useSelector((state) => state.loggedIn);
   const [cartClicked, setCartClicked] = useState(false);
+
 
 
   useEffect(() => {
@@ -55,9 +58,15 @@ const FavoriteProductPage = (product) => {
 
 
   const handleClickRemoveProductFromFavorites = (product) => {
-    dispatch(
-      removeProductFromFavorites(product.productName)
-    );
+    if (loggedIn === true) {
+      dispatch(
+        removeProductFromFavorites(product.productName)
+      );
+    } else {
+      dispatch(
+        removeProductfromFavoritesLocal(product)
+      );
+    }
   };
 
 
@@ -81,15 +90,15 @@ const FavoriteProductPage = (product) => {
               </Typography>
 
               {cartClicked !== true && (
-                  <Grid  >
-                    <Button onClick={() => handleClickCart()} variant="primary"   style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon /> }> {'Add to Cart'}</Button>
-                  </Grid>
-                )}
-                {cartClicked === true && (
-                  <Grid  >
-                    <Button onClick={() => handleClickCart()} variant="primary"   style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5" ,color: '#FFFFFF' }} startIcon={<ShoppingCartIcon /> }> {'Prod. in Cart'}</Button>
-                  </Grid>
-                )}
+                <Grid  >
+                  <Button onClick={() => handleClickCart()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon />}> {'Add to Cart'}</Button>
+                </Grid>
+              )}
+              {cartClicked === true && (
+                <Grid  >
+                  <Button onClick={() => handleClickCart()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5", color: '#FFFFFF' }} startIcon={<ShoppingCartIcon />}> {'Prod. in Cart'}</Button>
+                </Grid>
+              )}
 
 
               <Grid   >

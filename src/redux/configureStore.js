@@ -8,11 +8,13 @@ import orderAddressReducer from "./actions/orderAddressActions";
 import orderStepReducer from "./actions/orderStepActions";
 import orderCheckoutReducer from "./actions/orderCheckoutActions";
 import orderCreditCardInfoReducer from "./actions/orderCreditCardInfoActions";
+import loggedInReducer from "./actions/loggedInActions";
 import storage from 'redux-persist/lib/storage';
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist' 
 import thunk from 'redux-thunk';
 import favoriteProductReducer from './actions/favoriteProductActions';
+import favoriteLocalProductReducer from './actions/favoriteLocalProductActions';
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 
@@ -27,6 +29,8 @@ const reducers = combineReducers({
     cart:cartReducer,
     auth:authReducer,
     favoriteProduct: favoriteProductReducer,
+    favoriteLocalProduct: favoriteLocalProductReducer,
+    loggedIn: loggedInReducer,
 });
 
 const persistConfig = {

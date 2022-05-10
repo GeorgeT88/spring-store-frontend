@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -15,6 +15,8 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { addProductToFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
+import { removeProductfromFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
 
 
 
@@ -40,20 +42,32 @@ const ProductPage = () => {
 
   const dispatch = useDispatch();
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const product = useSelector((state) => state.product);
+  const loggedIn = useSelector((state) => state.loggedIn);
   const [clicked, setClicked] = useState(false)
-  const [cartClicked, setCartClicked] = useState(false)
-
-
+  const [cartClicked, setCartClicked] = useState(false);
+  
   useEffect(() => {
-    if (favoriteProducts.some(p => (p.productName === product.productName))) {
-      setClicked(true);
+    if (loggedIn === true) {
+      if (favoriteProducts.some(p => (p.productName === product.productName))) {
+        setClicked(true);
+      }
+      else {
+        setClicked(false)
+      }
     }
     else {
-      setClicked(false)
+      if (favoriteLocalProducts.some(p => (p.productName === product.productName))) {
+        setClicked(true);
+      }
+      else {
+        setClicked(false)
+      }
     }
-  }, [favoriteProducts, product.productName]);
+  }, [loggedIn, favoriteLocalProducts, favoriteProducts, product.productName]);
+
 
   useEffect(() => {
     if (productsInCart.some(p => (p.productDto.productName === product.productName))) {
@@ -65,19 +79,32 @@ const ProductPage = () => {
   }, [productsInCart, product.productName]);
 
   const handleFavoriteClick = () => {
-    if (clicked === false) {
-      setClicked(true)
-      dispatch(
-        addProductToFavorites(product.productName)
-      );
+    if (loggedIn === true) {
+      if (clicked === false) {
+        setClicked(true)
+        dispatch(
+          addProductToFavorites(product.productName)
+        );
+      } else {
+        setClicked(false)
+        dispatch(
+          removeProductFromFavorites(product.productName)
+        );
+      }
     } else {
-      setClicked(false)
-      dispatch(
-        removeProductFromFavorites(product.productName)
-      );
+      if (clicked === false) {
+        setClicked(true)
+        dispatch(
+          addProductToFavoritesLocal(product)
+        );
+      } else {
+        setClicked(false)
+        dispatch(
+          removeProductfromFavoritesLocal(product)
+        );
+      }
     }
-
-  };
+  }
 
   const handleClickCart = () => {
     if (cartClicked === false) {
@@ -190,7 +217,7 @@ const ProductPage = () => {
 
 
               <Typography component="h2" variant="h4">
-               {product.productName}
+                {product.productName}
               </Typography>
               <Typography component="h3" variant="h4">
                 Description: {product.productDescription}
@@ -212,15 +239,15 @@ const ProductPage = () => {
 
               )}
               {cartClicked !== true && (
-            
-                <Button onClick={() => handleClickCart()} className={classes.submit}  variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon />}> {'Add to Cart'}</Button>
-             
-            )}
-            {cartClicked === true && (
-         
-                <Button className={classes.submit}  variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5", color: '#FFFFFF' }} startIcon={<ShoppingCartIcon />}> {'Prod. in Cart'}</Button>
-       
-            )}
+
+                <Button onClick={() => handleClickCart()} className={classes.submit} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon />}> {'Add to Cart'}</Button>
+
+              )}
+              {cartClicked === true && (
+
+                <Button className={classes.submit} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5", color: '#FFFFFF' }} startIcon={<ShoppingCartIcon />}> {'Prod. in Cart'}</Button>
+
+              )}
             </Grid>
           </Grid>
 

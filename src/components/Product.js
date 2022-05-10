@@ -18,6 +18,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { addProductToCart } from '../../src/redux/actions/cartActions';
+import { addProductToFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
+import { removeProductfromFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
+
+
 
 
 import Button from '@material-ui/core/Button';
@@ -98,7 +102,10 @@ const Product = (product) => {
   const classes = useStyles();
   const { productPhotoLink, productName, productDescription, productPrice } = product;
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const loggedIn = useSelector((state) => state.loggedIn);
+
   const [clicked, setClicked] = useState(false)
   const [cartClicked, setCartClicked] = useState(false)
 
@@ -111,41 +118,64 @@ const Product = (product) => {
 
   useEffect(() => {
 
-    if (productsInCart.length !==0 && productsInCart.some(p => (p.productDto.productName === product.productName))) {
+    if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.productName === product.productName))) {
       setCartClicked(true);
     }
     else {
       setCartClicked(false)
-    }  
-}, [productsInCart, product.productName]);
+    }
+  }, [productsInCart, product.productName]);
 
 
 
 
   useEffect(() => {
-    if (favoriteProducts.some(p => (p.productName === product.productName))) {
-      setClicked(true);
+    if (loggedIn === true) {
+      if (favoriteProducts.some(p => (p.productName === product.productName))) {
+        setClicked(true);
+      }
+      else {
+        setClicked(false)
+      }
     }
     else {
-      setClicked(false)
+      if (favoriteLocalProducts.some(p => (p.productName === product.productName))) {
+        setClicked(true);
+      }
+      else {
+        setClicked(false)
+      }
     }
-  }, [favoriteProducts, product.productName]);
+  }, [loggedIn, favoriteLocalProducts, favoriteProducts, product.productName]);
 
 
   const handleClick = () => {
-    if (clicked === false) {
-      setClicked(true)
-      dispatch(
-        addProductToFavorites(product.productName)
-      );
+    if (loggedIn === true) {
+      if (clicked === false) {
+        setClicked(true)
+        dispatch(
+          addProductToFavorites(product.productName)
+        );
+      } else {
+        setClicked(false)
+        dispatch(
+          removeProductFromFavorites(product.productName)
+        );
+      }
     } else {
-      setClicked(false)
-      dispatch(
-        removeProductFromFavorites(product.productName)
-      );
+      if (clicked === false) {
+        setClicked(true)
+        dispatch(
+          addProductToFavoritesLocal(product)
+        );
+      } else {
+        setClicked(false)
+        dispatch(
+          removeProductfromFavoritesLocal(product)
+        );
+      }
     }
-
-  };
+  }
 
   const handleClickCart = () => {
     if (cartClicked === false) {
@@ -153,7 +183,7 @@ const Product = (product) => {
       dispatch(
         addProductToCart(product.productName, 1)
       );
-    } 
+    }
   }
   return (
 
@@ -190,19 +220,19 @@ const Product = (product) => {
 
                 {cartClicked !== true && (
                   <Grid  >
-                    <Button onClick={() => handleClickCart()} variant="primary"   style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon /> }> {'Add to Cart'}</Button>
+                    <Button onClick={() => handleClickCart()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon />}> {'Add to Cart'}</Button>
                   </Grid>
                 )}
                 {cartClicked === true && (
                   <Grid  >
-                    <Button onClick={() => handleClickCart()} variant="primary"   style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5" ,color: '#FFFFFF' }} startIcon={<ShoppingCartIcon /> }> {'Prod. in Cart'}</Button>
+                    <Button onClick={() => handleClickCart()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5", color: '#FFFFFF' }} startIcon={<ShoppingCartIcon />}> {'Prod. in Cart'}</Button>
                   </Grid>
                 )}
 
 
                 {clicked === true && (
-                  <IconButton   color="default" onClick={() => handleClick()}  >
-                    <FavoriteIcon   style={{ color: red[500] }} />
+                  <IconButton color="default" onClick={() => handleClick()}  >
+                    <FavoriteIcon style={{ color: red[500] }} />
                   </IconButton>
                 )}
                 {clicked !== true && (

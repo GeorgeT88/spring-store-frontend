@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { setProduct } from "../redux/actions/productActions";
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -10,6 +10,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
 import Button from '@material-ui/core/Button';
 import ClearIcon from '@mui/icons-material/Clear';
+import { removeProductfromFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
 
 
 const Img = styled('img')({
@@ -24,6 +25,7 @@ const FavoriteProduct = (product) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const { productPhotoLink, productName, productPrice } = product;
+  const loggedIn = useSelector((state) => state.loggedIn);
 
 
   const handleProductPage = () => {
@@ -33,9 +35,15 @@ const FavoriteProduct = (product) => {
   }
 
   const handleClickRemoveProductFromFavorites = () => {
-    dispatch(
-      removeProductFromFavorites(product.productName)
-    );
+    if (loggedIn === true) {
+      dispatch(
+        removeProductFromFavorites(product.productName)
+      );
+    } else {
+      dispatch(
+        removeProductfromFavoritesLocal(product)
+      );
+    }
   };
 
 

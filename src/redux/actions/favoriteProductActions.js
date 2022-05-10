@@ -7,31 +7,35 @@ const PRODUCT_FAVORITES = "PRODUCT_FAVORITES";
 
 const PRODUCT_FAVORITES_SIGN_OUT = "PRODUCT_FAVORITES_SIGN_OUT";
 
+const PRODUCT_FAVORITES_LOCAL = "PRODUCT_FAVORITES_LOCAL";
 
-export const addProductToFavorites = (product) => {
-    return (dispatch, getState) => {
 
-        const token = getState().auth.token;
+export const addProductToFavorites = (product) => async (dispatch, getState) => {
 
-        if (token) {
-            const user = jwtDecode(token);
-            axios.put(process.env.REACT_APP_ADD_PRODUCT_TO_USER_FAVORITES + user.sub + "/" + product, {},
-                {
-                    headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': localStorage.getItem('token')
-                    }
-                }).then((response) => {
-                    dispatch({
-                        type: PRODUCT_FAVORITES,
-                        id: response.data.id,
-                        productList: response.data.favoriteProductList,
-                    });
-                    toast.success("Product Added To Favorites!", { position: "top-right" })
-                })
-        } else return null;
-    };
+
+    const token = getState().auth.token;
+
+    if (token) {
+        const user = jwtDecode(token);
+        const response = await axios.put(process.env.REACT_APP_ADD_PRODUCT_TO_USER_FAVORITES + user.sub + "/" + product, {},
+            {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                }
+            })
+        dispatch({
+            type: PRODUCT_FAVORITES,
+            id: response.data.id,
+            productList: response.data.favoriteProductList,
+        });
+        toast.success("Product Added To Favorites!", { position: "top-right" })
+
+    } else {
+        return null;
+    }
 };
+
 
 export const removeProductFromFavorites = (product) => {
     return (dispatch, getState) => {
@@ -53,7 +57,10 @@ export const removeProductFromFavorites = (product) => {
                     });
                     toast.error("Product removed from Favorites!", { position: "top-right" })
                 })
-        } else return null;
+        } else {
+            return null;
+        }
+
     };
 };
 
@@ -105,6 +112,11 @@ const favoriteProductActions = (state = initialState, action) => {
                 ...initialState,
                 id: action.id,
                 productList: action.productList,
+            };
+        case PRODUCT_FAVORITES_LOCAL:
+            return {
+                ...initialState,
+                productList: [...state.productList, action.product]
             };
         case PRODUCT_FAVORITES_SIGN_OUT:
             return {
