@@ -120,13 +120,13 @@ export default function NavBar() {
   const dispatch = useDispatch();
 
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
-
-
-
-  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
-  const productsInCart = useSelector((state) => state.cart.productsInCartList);
-  const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const loggedIn = useSelector((state) => state.loggedIn);
+  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
+  const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const productsInCartLocal = useSelector((state) => state.cartLocal.products);
+
+
 
 
 
@@ -182,7 +182,7 @@ export default function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleBackToMainPage = () => {  
+  const handleBackToMainPage = () => {
     history.push('/');
   }
 
@@ -271,10 +271,17 @@ export default function NavBar() {
       </MenuItem>
       <MenuItem onClick={() => history.push('/cartPage')}>
         <IconButton aria-label="show 11 new notifications" color="inherit" onClick={() => history.push('/cartPage')} >
-          <Badge badgeContent={productsInCart.reduce(
-            function (tot, productDto) { return tot + productDto.quantity; }, 0)} color="secondary">
-            <ShoppingCartIcon />
-          </Badge>
+          {loggedIn === true ?
+            <Badge badgeContent={productsInCart.reduce(
+              function (tot, productDto) { return tot + productDto.quantity; }, 0)} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+            :
+            <Badge badgeContent={productsInCartLocal.reduce(
+              function (tot, product) { return tot + product.quantity; }, 0)} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          }
         </IconButton>
         <p>In Cart</p>
       </MenuItem>
@@ -388,82 +395,103 @@ export default function NavBar() {
 
             <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleClickDropDownProductInCart}>
 
-
-
-
-              <Badge
-                badgeContent={productsInCart.reduce(
-                  function (tot, productDto) { return tot + productDto.quantity; }, 0)
-                }
-                color="secondary"
-              >
-
-                <ShoppingCartIcon
-                  aria-owns={anchorElDropDownProductInCart ? "simple-dropdown" : undefined}
-                  aria-haspopup="true"
-
-                // onMouseOver={handleClickDropDown}
-                />
-                <Menu
-                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                  transformOrigin={{ vertical: "top", horizontal: "left" }}
-                  id="simple-dropdown"
-                  anchorEl={anchorElDropDownProductInCart}
-                  open={Boolean(anchorElDropDownProductInCart)}
-                  onClose={handleCloseDropDownProductInCart}
-                  MenuListProps={{ onMouseLeave: handleCloseDropDownProductInCart }}
-                  getContentAnchorEl={null}
-                  disableAutoFocusItem={true}
+              {loggedIn === true ?
+                <Badge
+                  badgeContent={productsInCart.reduce(
+                    function (tot, productDto) { return tot + productDto.quantity; }, 0)
+                  }
+                  color="secondary"
                 >
-                  <Box
-                    display="flex"
-                    width={400} height={40}
-                    bgcolor="primary.main"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Typography variant="h6" style={{ color: 'white' }} align="center">
-                      {'Cart'}
-                    </Typography>
+                  <ShoppingCartIcon
+                    aria-owns={anchorElDropDownProductInCart ? "simple-dropdown" : undefined}
+                    aria-haspopup="true"
+                  />
+                </Badge>
+                :
+                <Badge
+                  badgeContent={productsInCartLocal.reduce(
+                    function (tot, product) { return tot + product.quantity; }, 0)
+                  }
+                  color="secondary"
+                >
+                  <ShoppingCartIcon
+                    aria-owns={anchorElDropDownProductInCart ? "simple-dropdown" : undefined}
+                    aria-haspopup="true"
+                  />
+                </Badge>
 
-                  </Box>
+              }
 
+              <Menu
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                transformOrigin={{ vertical: "top", horizontal: "left" }}
+                id="simple-dropdown"
+                anchorEl={anchorElDropDownProductInCart}
+                open={Boolean(anchorElDropDownProductInCart)}
+                onClose={handleCloseDropDownProductInCart}
+                MenuListProps={{ onMouseLeave: handleCloseDropDownProductInCart }}
+                getContentAnchorEl={null}
+                disableAutoFocusItem={true}
+              >
+                <Box
+                  display="flex"
+                  width={400} height={40}
+                  bgcolor="primary.main"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Typography variant="h6" style={{ color: 'white' }} align="center">
+                    {'Cart'}
+                  </Typography>
+
+                </Box>
+
+                {loggedIn === true ?
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
-
-
-
                     {productsInCart.length === 0 && (
-
                       <Typography variant="h6" style={{ color: 'black' }} align="center">
                         {'Cart is empty!'}
                       </Typography>
 
                     )}
-
-
                     {productsInCart.length !== 0 && (
-
                       productsInCart.slice(0, 3).map((productInCart) => (
                         <Cart key={productInCart.productDto.id} {...productInCart} />
                       ))
                     )}
-
-
-
-
-
                   </MenuList>
-                  <Box onClick={handleGoToCartPage}
-                    display="flex"
-                    width={400} height={40}
-                    bgcolor="primary.main"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Link href="#" style={{ color: 'white' }} underline="hover" > {'View All Products In Cart >>>>'}</Link>
-                  </Box>
-                </Menu>
-              </Badge>
+                  :
+                  <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+                    {productsInCartLocal.length === 0 && (
+                      <Typography variant="h6" style={{ color: 'black' }} align="center">
+                        {'Cart is empty!'}
+                      </Typography>
+
+                    )}
+                    {productsInCartLocal.length !== 0 && (
+                      productsInCartLocal.slice(0, 3).map((productsInCartLocal) => (
+                        <Cart key={productsInCartLocal.id} {...productsInCartLocal} />
+                      ))
+                    )}
+                  </MenuList>
+
+                }
+
+
+                <Box onClick={handleGoToCartPage}
+                  display="flex"
+                  width={400} height={40}
+                  bgcolor="primary.main"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Link href="#" style={{ color: 'white' }} underline="hover" > {'View All Products In Cart >>>>'}</Link>
+                </Box>
+              </Menu>
+
+
+
+
             </IconButton>
             <UserMenu />
 

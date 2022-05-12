@@ -18,6 +18,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { addProductToFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { removeProductFromFavorites } from '../../src/redux/actions/favoriteProductActions';
 import { addProductToCart } from '../../src/redux/actions/cartActions';
+import { addProductToLocalCart } from '../../src/redux/actions/cartLocalActions';
 import { addProductToFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
 import { removeProductfromFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
 
@@ -104,6 +105,8 @@ const Product = (product) => {
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const productsInCartLocal = useSelector((state) => state.cartLocal.products);
+
   const loggedIn = useSelector((state) => state.loggedIn);
 
   const [clicked, setClicked] = useState(false)
@@ -117,15 +120,23 @@ const Product = (product) => {
   }
 
   useEffect(() => {
-
-    if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.productName === product.productName))) {
-      setCartClicked(true);
+    if (loggedIn === true) {
+      if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.productName === product.productName))) {
+        setCartClicked(true);
+      }
+      else {
+        setCartClicked(false);
+      }
     }
     else {
-      setCartClicked(false)
+      if (productsInCartLocal.length !== 0 && productsInCartLocal.some(p => (p.productName === product.productName))) {
+        setCartClicked(true);
+      }
+      else {
+        setCartClicked(false);
+      }
     }
-  }, [productsInCart, product.productName]);
-
+  }, [loggedIn, productsInCart, productsInCartLocal, product.productName]);
 
 
 
@@ -178,13 +189,23 @@ const Product = (product) => {
   }
 
   const handleClickCart = () => {
-    if (cartClicked === false) {
-      setCartClicked(true)
-      dispatch(
-        addProductToCart(product.productName, 1)
-      );
+    if (loggedIn === true) {
+      if (cartClicked === false) {
+        setCartClicked(true)
+        dispatch(
+          addProductToCart(product.productName, 1)
+        );
+      }
+    } else {
+      if (cartClicked === false) {
+        setCartClicked(true)
+        dispatch(
+          addProductToLocalCart(product, 1)
+        );
+      }
     }
   }
+
   return (
 
 

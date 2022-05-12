@@ -4,6 +4,7 @@ import productReducer from "./actions/productActions";
 import appBarReducer from "./actions/secondaryAppBar";
 import authReducer from "./actions/authActions";
 import cartReducer from "./actions/cartActions";
+import cartLocalReducer from "./actions/cartLocalActions";
 import orderAddressReducer from "./actions/orderAddressActions";
 import orderStepReducer from "./actions/orderStepActions";
 import orderCheckoutReducer from "./actions/orderCheckoutActions";
@@ -27,6 +28,7 @@ const reducers = combineReducers({
     orderCheckout:orderCheckoutReducer,
     orderCreditCardInfo:orderCreditCardInfoReducer,
     cart:cartReducer,
+    cartLocal:cartLocalReducer,
     auth:authReducer,
     favoriteProduct: favoriteProductReducer,
     favoriteLocalProduct: favoriteLocalProductReducer,
