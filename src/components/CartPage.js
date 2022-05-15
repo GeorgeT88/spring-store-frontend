@@ -9,12 +9,15 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import { updateProductToCart } from '../redux/actions/cartActions';
+import { updateProductToLocalCart } from '../redux/actions/cartLocalActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import ClearIcon from '@mui/icons-material/Clear';
 import { removeProductFromCart } from '../redux/actions/cartActions';
+import { removeProductfromLocalCart } from '../redux/actions/cartLocalActions';
 import { useHistory } from 'react-router-dom';
 import { setOrderStep } from "../redux/actions/orderStepActions";
+
 
 
 const Img = styled('img')({
@@ -35,14 +38,24 @@ const CartPage = () => {
   const dispatch = useDispatch();
 
   const handleProductQuantity = (productName, quantity) => {
-    dispatch(updateProductToCart(productName, quantity));
-    console.log('update', quantity);
+    if (token) {
+      dispatch(updateProductToCart(productName, quantity));
+    } else {
+      dispatch(updateProductToLocalCart(productName, quantity));
+    }
   }
 
   const handleClickRemoveProductFromCart = (productName) => {
-    dispatch(
-      removeProductFromCart(productName, 1)
-    );
+
+    if (token) {
+      dispatch(
+        removeProductFromCart(productName, 1)
+      );
+    } else {
+      dispatch(
+        removeProductfromLocalCart(productName)
+      );
+    }
   };
 
   const handlekOrderStep = () => {
@@ -190,21 +203,21 @@ const CartPage = () => {
                       value={product.quantity - 1}
                     >
                       {[...Array(product.productStock !== 0 && product.productStock)].map((e, i) => {
-                        return <MenuItem value={i} onClick={() => handleProductQuantity(product.productName, i + 1)}>
+                        return <MenuItem value={i} onClick={() => handleProductQuantity(product, i + 1)}>
                           {i + 1}
                         </MenuItem>
                       })}
                     </Select>
                   </Typography>
                   <Grid   >
-                    <Button onClick={() => handleClickRemoveProductFromCart(product.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                    <Button onClick={() => handleClickRemoveProductFromCart(product)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                     </Button>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item>
                 <Typography variant="subtitle1" component="div">
-                  Product price : {product.productTotalPrice}
+                  Product price : {product.productPrice * product.quantity}
                 </Typography>
               </Grid>
               <Grid >

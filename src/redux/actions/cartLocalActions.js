@@ -18,13 +18,14 @@ export const addProductToLocalCart = (product, quantity) => async (dispatch) => 
     toast.success("Product Added To Local Cart!", { position: "top-right" })
 }
 
-export const updateProductToLocalCart = (product, size) => (
-    {
+export const updateProductToLocalCart = (product, quantity) => async (dispatch) => {
+    dispatch({
         type: UPDATE_PRODUCT_TO_LOCAL_CART,
-        size: size,
-        product: product
-    }
-)
+        product: Object.assign({}, product, { quantity: quantity })
+    })
+    toast.info("Product Quantity Local updated!", { position: "top-right" })
+}
+
 export const removeProductfromLocalCart = (product) => async (dispatch) => {
     dispatch({
         type: REMOVE_PRODUCT_FROM_LOCAL_CART,
@@ -34,8 +35,7 @@ export const removeProductfromLocalCart = (product) => async (dispatch) => {
 }
 
 const initialState = {
-    products: [],
-    total: 10
+    products: []
 }
 
 const cartLocalActions = (state = initialState, action) => {
@@ -48,12 +48,15 @@ const cartLocalActions = (state = initialState, action) => {
                 total: action.total
             }
         case UPDATE_PRODUCT_TO_LOCAL_CART:
-            return {
-                ...initialState,
-                products: [...state.products, action.product],
-                total: action.total
 
+            const index = state.products.findIndex(product => product.productName === action.product.productName); //finding index of the item
+            const newArray = [...state.products]; //making a new array
+            newArray[index].quantity = action.product.quantity//changing value in the new array
+            return {
+                ...initialState, //copying the orignal state
+                products: newArray, //reassingning todos to new array
             }
+
         case REMOVE_PRODUCT_FROM_LOCAL_CART:
             return {
                 ...initialState,
