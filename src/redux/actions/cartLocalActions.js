@@ -35,7 +35,8 @@ export const removeProductfromLocalCart = (product) => async (dispatch) => {
 }
 
 const initialState = {
-    products: []
+    products: [],
+    total: 0
 }
 
 const cartLocalActions = (state = initialState, action) => {
@@ -45,7 +46,7 @@ const cartLocalActions = (state = initialState, action) => {
             return {
                 ...initialState,
                 products: [...state.products, action.product],
-                total: action.total
+                total: state.total + action.product.productPrice
             }
         case UPDATE_PRODUCT_TO_LOCAL_CART:
 
@@ -55,13 +56,17 @@ const cartLocalActions = (state = initialState, action) => {
             return {
                 ...initialState, //copying the orignal state
                 products: newArray, //reassingning todos to new array
+                total: (newArray.reduce((a,v) =>  a = a + v.productPrice *  v.quantity, 0 ))
+
             }
 
         case REMOVE_PRODUCT_FROM_LOCAL_CART:
+
+            const newRemovedDataArray = state.products.filter((product) => product.productName !== action.product.productName)
             return {
                 ...initialState,
-                products: state.products.filter((product) => product.productName !== action.product.productName),
-                total: action.total
+                products: newRemovedDataArray,
+                total:(newRemovedDataArray.reduce((a,v) =>  a = a + v.productPrice *  v.quantity, 0 ))
             }
         default:
             return state;

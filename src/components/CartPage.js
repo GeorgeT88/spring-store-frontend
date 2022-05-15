@@ -34,6 +34,7 @@ const CartPage = () => {
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const cart = useSelector((state) => state.cart);
+  const cartLocal = useSelector((state) => state.cartLocal);
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
 
@@ -163,7 +164,7 @@ const CartPage = () => {
 
       {productsInCartLocal.length !== 0 && (
         <Typography display="flex" justifyContent="flex-end" gutterBottom variant="h6" component="div">
-          Total : {cart.total}
+          Total : {cartLocal.total}
         </Typography>
       )}
       {productsInCartLocal.length === 0 && (
