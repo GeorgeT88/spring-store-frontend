@@ -8,6 +8,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
+import FormControl from "@material-ui/core/FormControl";
 import { updateProductToCart } from '../redux/actions/cartActions';
 import { updateProductToLocalCart } from '../redux/actions/cartLocalActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +27,7 @@ const Img = styled('img')({
   maxWidth: '100%',
   maxHeight: '100%',
 });
+
 
 
 
@@ -105,7 +107,7 @@ const CartPage = () => {
                       Product Price: {product.productDto.productPrice}
                     </Typography>
                   </Grid>
-                  <Grid item>
+                  <FormControl sx={{ m: 1, minWidth: 120 }} variant="standard">
                     <Typography sx={{ cursor: 'pointer' }} variant="body2">
                       Products  :
                       <Select
@@ -114,6 +116,7 @@ const CartPage = () => {
                           width: 57
                         }}
                         value={product.quantity - 1}
+                        MenuProps={{ PaperProps: { sx: { maxHeight: 220 } } }}
                       >
                         {[...Array(product.productDto.productStock !== 0 && product.productDto.productStock)].map((e, i) => {
                           return <MenuItem value={i} onClick={() => handleProductQuantity(product.productDto.productName, i + 1)}>
@@ -126,7 +129,7 @@ const CartPage = () => {
                       <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                       </Button>
                     </Grid>
-                  </Grid>
+                  </FormControl>
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1" component="div">
@@ -193,7 +196,7 @@ const CartPage = () => {
                     Product Price: {product.productPrice}
                   </Typography>
                 </Grid>
-                <Grid item>
+                <FormControl sx={{ m: 1, minWidth: 120 }} variant="standard">
                   <Typography sx={{ cursor: 'pointer' }} variant="body2">
                     Products  :
                     <Select
@@ -202,6 +205,7 @@ const CartPage = () => {
                         width: 57
                       }}
                       value={product.quantity - 1}
+                      MenuProps={{ PaperProps: { sx: { maxHeight: 220 } } }}
                     >
                       {[...Array(product.productStock !== 0 && product.productStock)].map((e, i) => {
                         return <MenuItem value={i} onClick={() => handleProductQuantity(product, i + 1)}>
@@ -214,7 +218,7 @@ const CartPage = () => {
                     <Button onClick={() => handleClickRemoveProductFromCart(product)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                     </Button>
                   </Grid>
-                </Grid>
+                </FormControl>
               </Grid>
               <Grid item>
                 <Typography variant="subtitle1" component="div">
@@ -227,7 +231,8 @@ const CartPage = () => {
           </Grid>
         </Paper>
 
-      ))}
+      ))
+      }
       <p></p>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
