@@ -29,12 +29,13 @@ const Img = styled('img')({
 const CartPage = () => {
   let history = useHistory();
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const cart = useSelector((state) => state.cart);
+  const token = localStorage.getItem('token');
   const dispatch = useDispatch();
 
   const handleProductQuantity = (productName, quantity) => {
     dispatch(updateProductToCart(productName, quantity));
-
     console.log('update', quantity);
   }
 
@@ -49,54 +50,133 @@ const CartPage = () => {
     history.push(`/orderSelectPage`);
   }
 
-  return (
+  if (token) {
+    return (
+      <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
 
+        {productsInCart.length !== 0 && (
+          <Typography display="flex" justifyContent="center" gutterBottom variant="h5" >
+            Cart
+          </Typography>
+        )}
 
+        {productsInCart.length !== 0 && (
+          <Typography display="flex" justifyContent="flex-end" gutterBottom variant="h6" component="div">
+            Total : {cart.total}
+          </Typography>
+        )}
+        {productsInCart.length === 0 && (
+          <Typography display="flex" justifyContent="center" gutterBottom variant="h6" component="div">
+            Cart is Empty!
+          </Typography>
+        )}
+        {productsInCart.length !== 0 && productsInCart.map((product) => (
+          <Paper sx={{ p: 2, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              <Grid item>
+                <ButtonBase sx={{ width: 128, height: 128 }}>
+                  <Img alt="complex" src={product.productDto.productPhotoLink} />
+                </ButtonBase>
+              </Grid>
+              <Grid item xs={12} sm container>
+                <Grid item xs container direction="column" spacing={2}>
+                  <Grid item xs>
+                    <Typography gutterBottom variant="subtitle1" component="div">
+                      {product.productDto.productName}
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      {product.productDto.productDescription}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Product Price: {product.productDto.productPrice}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography sx={{ cursor: 'pointer' }} variant="body2">
+                      Products  :
+                      <Select
+                        sx={{
+                          height: 30,
+                          width: 57
+                        }}
+                        value={product.quantity - 1}
+                      >
+                        {[...Array(product.productDto.productStock !== 0 && product.productDto.productStock)].map((e, i) => {
+                          return <MenuItem value={i} onClick={() => handleProductQuantity(product.productDto.productName, i + 1)}>
+                            {i + 1}
+                          </MenuItem>
+                        })}
+                      </Select>
+                    </Typography>
+                    <Grid   >
+                      <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle1" component="div">
+                    Product price : {product.productTotalPrice}
+                  </Typography>
+                </Grid>
+                <Grid >
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+
+        ))}
+        <p></p>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            onClick={handlekOrderStep}
+            type="submit"
+
+            sx={{ mt: 3, ml: 1 }}
+            variant="primary" style={{ backgroundColor: "#3f51b5", color: '#FFFFFF' }}>
+            order
+          </Button>
+        </Box>
+      </Paper>
+    );
+  } else return (
     <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
 
-      {productsInCart.length !== 0 && (
+      {productsInCartLocal.length !== 0 && (
         <Typography display="flex" justifyContent="center" gutterBottom variant="h5" >
           Cart
         </Typography>
       )}
 
-      {productsInCart.length !== 0 && (
-
+      {productsInCartLocal.length !== 0 && (
         <Typography display="flex" justifyContent="flex-end" gutterBottom variant="h6" component="div">
           Total : {cart.total}
         </Typography>
       )}
-      {productsInCart.length === 0 && (
-
+      {productsInCartLocal.length === 0 && (
         <Typography display="flex" justifyContent="center" gutterBottom variant="h6" component="div">
           Cart is Empty!
         </Typography>
       )}
-
-
-
-      {productsInCart.length !== 0 && productsInCart.map((product) => (
-
-
-
+      {productsInCartLocal.length !== 0 && productsInCartLocal.map((product) => (
         <Paper sx={{ p: 2, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase sx={{ width: 128, height: 128 }}>
-                <Img alt="complex" src={product.productDto.productPhotoLink} />
+                <Img alt="complex" src={product.productPhotoLink} />
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
                   <Typography gutterBottom variant="subtitle1" component="div">
-                    {product.productDto.productName}
+                    {product.productName}
                   </Typography>
                   <Typography variant="body2" gutterBottom>
-                    {product.productDto.productDescription}
+                    {product.productDescription}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Product Price: {product.productDto.productPrice}
+                    Product Price: {product.productPrice}
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -107,31 +187,17 @@ const CartPage = () => {
                         height: 30,
                         width: 57
                       }}
-
-                      value={
-
-                        product.quantity - 1}
+                      value={product.quantity - 1}
                     >
-
-                      {[...Array(product.productDto.productStock !== 0 && product.productDto.productStock)].map((e, i) => {
-
-
-                        return <MenuItem value={i} onClick={() => handleProductQuantity(product.productDto.productName, i + 1)}>
-
+                      {[...Array(product.productStock !== 0 && product.productStock)].map((e, i) => {
+                        return <MenuItem value={i} onClick={() => handleProductQuantity(product.productName, i + 1)}>
                           {i + 1}
-
                         </MenuItem>
-
-
-
-
                       })}
-
-
                     </Select>
                   </Typography>
                   <Grid   >
-                    <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                    <Button onClick={() => handleClickRemoveProductFromCart(product.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                     </Button>
                   </Grid>
                 </Grid>
@@ -145,7 +211,6 @@ const CartPage = () => {
               </Grid>
             </Grid>
           </Grid>
-
         </Paper>
 
       ))}
@@ -161,9 +226,6 @@ const CartPage = () => {
         </Button>
       </Box>
     </Paper>
-
-
-
   );
 }
 

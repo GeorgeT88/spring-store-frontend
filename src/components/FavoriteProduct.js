@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
@@ -25,7 +25,7 @@ const FavoriteProduct = (product) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const { productPhotoLink, productName, productPrice } = product;
-  const loggedIn = useSelector((state) => state.loggedIn);
+  const token = localStorage.getItem('token');
 
 
   const handleProductPage = () => {
@@ -35,7 +35,7 @@ const FavoriteProduct = (product) => {
   }
 
   const handleClickRemoveProductFromFavorites = () => {
-    if (loggedIn === true) {
+    if (token) {
       dispatch(
         removeProductFromFavorites(product.productName)
       );

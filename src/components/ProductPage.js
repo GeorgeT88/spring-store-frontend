@@ -36,21 +36,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const ProductPage = () => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const product = useSelector((state) => state.product);
-  const loggedIn = useSelector((state) => state.loggedIn);
+  const token = localStorage.getItem('token');
   const [clicked, setClicked] = useState(false)
   const [cartClicked, setCartClicked] = useState(false);
-  
+
   useEffect(() => {
-    if (loggedIn === true) {
+    if (token) {
       if (favoriteProducts.some(p => (p.productName === product.productName))) {
         setClicked(true);
       }
@@ -66,7 +64,7 @@ const ProductPage = () => {
         setClicked(false)
       }
     }
-  }, [loggedIn, favoriteLocalProducts, favoriteProducts, product.productName]);
+  }, [token, favoriteLocalProducts, favoriteProducts, product.productName]);
 
 
   useEffect(() => {
@@ -79,7 +77,7 @@ const ProductPage = () => {
   }, [productsInCart, product.productName]);
 
   const handleFavoriteClick = () => {
-    if (loggedIn === true) {
+    if (token) {
       if (clicked === false) {
         setClicked(true)
         dispatch(
@@ -164,10 +162,6 @@ const ProductPage = () => {
 
 
   return (
-
-
-
-
     <Grid sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
 
       <Carousel
@@ -213,9 +207,6 @@ const ProductPage = () => {
           >
             <Grid item xs={12}
             >
-
-
-
               <Typography component="h2" variant="h4">
                 {product.productName}
               </Typography>
@@ -250,17 +241,9 @@ const ProductPage = () => {
               )}
             </Grid>
           </Grid>
-
-
         </div>
       </Container>
     </Grid>
-
-
-
-
-
-
   );
 };
 

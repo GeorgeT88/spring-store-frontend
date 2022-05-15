@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { getCartByUserEmail } from "../actions/cartActions";
 import { getAllProductsFromUserFavorites } from "../actions/favoriteProductActions";
 
+
+
 const SIGN_IN = "SIGN_IN";
 const SIGN_UP = "SIGN_UP";
 const USER_LOADED = "USER_LOADED";
@@ -92,8 +94,6 @@ export const signIn = (email, password) => async (dispatch) => {
     catch (e) {
         console.log("Login failed!")
     }
-
-
 }
 
 export const signOut = () => {

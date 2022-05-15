@@ -9,7 +9,6 @@ import orderAddressReducer from "./actions/orderAddressActions";
 import orderStepReducer from "./actions/orderStepActions";
 import orderCheckoutReducer from "./actions/orderCheckoutActions";
 import orderCreditCardInfoReducer from "./actions/orderCreditCardInfoActions";
-import loggedInReducer from "./actions/loggedInActions";
 import storage from 'redux-persist/lib/storage';
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist' 
@@ -32,7 +31,6 @@ const reducers = combineReducers({
     auth:authReducer,
     favoriteProduct: favoriteProductReducer,
     favoriteLocalProduct: favoriteLocalProductReducer,
-    loggedIn: loggedInReducer,
 });
 
 const persistConfig = {

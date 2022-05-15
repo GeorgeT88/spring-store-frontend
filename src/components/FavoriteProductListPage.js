@@ -12,14 +12,14 @@ const FavoriteProductListPage = () => {
 
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
-  const loggedIn = useSelector((state) => state.loggedIn);
+  const token = localStorage.getItem('token');
 
 
 
 
 
 
-  if (loggedIn === true) {
+  if (token) {
     return (
       <Paper sx={{ p: 5, margin: 'auto', maxWidth: 1000, flexGrow: 1 }}>
 

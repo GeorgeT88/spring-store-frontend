@@ -106,9 +106,7 @@ const Product = (product) => {
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const productsInCartLocal = useSelector((state) => state.cartLocal.products);
-
-  const loggedIn = useSelector((state) => state.loggedIn);
-
+  const token = localStorage.getItem('token');
   const [clicked, setClicked] = useState(false)
   const [cartClicked, setCartClicked] = useState(false)
 
@@ -116,11 +114,10 @@ const Product = (product) => {
   const handleProductPage = () => {
     dispatch(setProduct(product));
     history.push(`/productPage`);
-
   }
 
   useEffect(() => {
-    if (loggedIn === true) {
+    if (token) {
       if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.productName === product.productName))) {
         setCartClicked(true);
       }
@@ -136,12 +133,10 @@ const Product = (product) => {
         setCartClicked(false);
       }
     }
-  }, [loggedIn, productsInCart, productsInCartLocal, product.productName]);
-
-
+  }, [token, productsInCart, productsInCartLocal, product.productName]);
 
   useEffect(() => {
-    if (loggedIn === true) {
+    if (token) {
       if (favoriteProducts.some(p => (p.productName === product.productName))) {
         setClicked(true);
       }
@@ -157,11 +152,11 @@ const Product = (product) => {
         setClicked(false)
       }
     }
-  }, [loggedIn, favoriteLocalProducts, favoriteProducts, product.productName]);
+  }, [token, favoriteLocalProducts, favoriteProducts, product.productName]);
 
 
   const handleClick = () => {
-    if (loggedIn === true) {
+    if (token) {
       if (clicked === false) {
         setClicked(true)
         dispatch(
@@ -189,7 +184,7 @@ const Product = (product) => {
   }
 
   const handleClickCart = () => {
-    if (loggedIn === true) {
+    if (token) {
       if (cartClicked === false) {
         setCartClicked(true)
         dispatch(
@@ -207,12 +202,7 @@ const Product = (product) => {
   }
 
   return (
-
-
-
-
     <Grid item xs={12} sm={6} md={4}>
-
       <NoSsr>
         <MuiThemeProvider theme={customTheme}>
           <ThemeProvider theme={customTheme}>
@@ -234,11 +224,6 @@ const Product = (product) => {
                 </Typography>
               </CardContent>
               <CardActions>
-
-
-
-
-
                 {cartClicked !== true && (
                   <Grid  >
                     <Button onClick={() => handleClickCart()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#eeeeee" }} startIcon={<AddShoppingCartIcon />}> {'Add to Cart'}</Button>
@@ -249,8 +234,6 @@ const Product = (product) => {
                     <Button onClick={() => handleClickCart()} variant="primary" style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px', backgroundColor: "#3f51b5", color: '#FFFFFF' }} startIcon={<ShoppingCartIcon />}> {'Prod. in Cart'}</Button>
                   </Grid>
                 )}
-
-
                 {clicked === true && (
                   <IconButton color="default" onClick={() => handleClick()}  >
                     <FavoriteIcon style={{ color: red[500] }} />
@@ -261,19 +244,12 @@ const Product = (product) => {
                     <FavoriteBorderIcon />
                   </IconButton>
                 )}
-
-
-
               </CardActions>
             </StyledCard>
           </ThemeProvider>
         </MuiThemeProvider>
       </NoSsr>
-
     </Grid>
-
-
-
   )
 }
 

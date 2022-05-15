@@ -28,7 +28,7 @@ const FavoriteProductPage = (product) => {
 
   const dispatch = useDispatch();
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
-  const loggedIn = useSelector((state) => state.loggedIn);
+  const token = localStorage.getItem('token');
   const [cartClicked, setCartClicked] = useState(false);
 
 
@@ -58,7 +58,7 @@ const FavoriteProductPage = (product) => {
 
 
   const handleClickRemoveProductFromFavorites = (product) => {
-    if (loggedIn === true) {
+    if (token) {
       dispatch(
         removeProductFromFavorites(product.productName)
       );

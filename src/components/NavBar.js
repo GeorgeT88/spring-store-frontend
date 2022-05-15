@@ -23,20 +23,6 @@ import Cart from './Cart';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -120,12 +106,11 @@ export default function NavBar() {
   const dispatch = useDispatch();
 
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
-  const loggedIn = useSelector((state) => state.loggedIn);
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const productsInCartLocal = useSelector((state) => state.cartLocal.products);
-
+  const token = localStorage.getItem('token');
 
 
 
@@ -256,7 +241,7 @@ export default function NavBar() {
       <MenuItem onClick={() => history.push('/favoriteProductListPage')}>
         <IconButton aria-label="show 4 new mails" color="inherit" onClick={() => history.push('/favoriteProductListPage')}>
 
-          {loggedIn === true ?
+          {token ?
             <Badge badgeContent={favoriteProducts?.length} color="secondary">
               <FavoriteIcon />
             </Badge>
@@ -271,7 +256,7 @@ export default function NavBar() {
       </MenuItem>
       <MenuItem onClick={() => history.push('/cartPage')}>
         <IconButton aria-label="show 11 new notifications" color="inherit" onClick={() => history.push('/cartPage')} >
-          {loggedIn === true ?
+          {token ?
             <Badge badgeContent={productsInCart.reduce(
               function (tot, productDto) { return tot + productDto.quantity; }, 0)} color="secondary">
               <ShoppingCartIcon />
@@ -307,7 +292,7 @@ export default function NavBar() {
             <IconButton aria-label="show favorite products" color="inherit" onClick={handleClickDropDownProductFavorites}>
 
 
-              {loggedIn === true ?
+              {token ?
                 <Badge
                   badgeContent={favoriteProducts?.length}
                   color="secondary">
@@ -349,7 +334,7 @@ export default function NavBar() {
                   </Typography>
 
                 </Box>
-                {loggedIn === true ?
+                {token ?
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
                     {favoriteProducts.length === 0 && (
                       <Typography variant="h6" style={{ color: 'black' }} align="center">
@@ -395,7 +380,7 @@ export default function NavBar() {
 
             <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleClickDropDownProductInCart}>
 
-              {loggedIn === true ?
+              {token ?
                 <Badge
                   badgeContent={productsInCart.reduce(
                     function (tot, productDto) { return tot + productDto.quantity; }, 0)
@@ -446,7 +431,7 @@ export default function NavBar() {
 
                 </Box>
 
-                {loggedIn === true ?
+                {token ?
                   <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
                     {productsInCart.length === 0 && (
                       <Typography variant="h6" style={{ color: 'black' }} align="center">
