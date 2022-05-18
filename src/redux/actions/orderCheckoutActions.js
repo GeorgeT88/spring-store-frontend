@@ -14,7 +14,7 @@ export const createNewOrder = (firstName, lastName, addressLine1, addressLine2, 
     if (token) {
         const emailUser = jwtDecode(token);
         const response = await axios
-            .post(`http://localhost:8762/order/createNewOrder?email=${emailUser.sub}`, {
+            .post(process.env.REACT_APP_CREATE_ORDER + emailUser.sub, {
                 firstName,
                 lastName,
                 addressLine1,
