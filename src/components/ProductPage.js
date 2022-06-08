@@ -17,6 +17,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { addProductToFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
 import { removeProductfromFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
+import { addProductToLocalCart } from '../../src/redux/actions/cartLocalActions';
+
+
 
 
 
@@ -49,7 +52,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     if (token) {
-      if (favoriteProducts.some(p => (p.productName === product.productName))) {
+      if (favoriteProducts.some(p => (p.name === product.name))) {
         setClicked(true);
       }
       else {
@@ -57,36 +60,36 @@ const ProductPage = () => {
       }
     }
     else {
-      if (favoriteLocalProducts.some(p => (p.productName === product.productName))) {
+      if (favoriteLocalProducts.some(p => (p.name === product.name))) {
         setClicked(true);
       }
       else {
         setClicked(false)
       }
     }
-  }, [token, favoriteLocalProducts, favoriteProducts, product.productName]);
+  }, [token, favoriteLocalProducts, favoriteProducts, product.name]);
 
 
   useEffect(() => {
-    if (productsInCart.some(p => (p.productDto.productName === product.productName))) {
+    if (productsInCart.some(p => (p.productDto.name === product.name))) {
       setCartClicked(true);
     }
     else {
       setCartClicked(false)
     }
-  }, [productsInCart, product.productName]);
+  }, [productsInCart, product.name]);
 
   const handleFavoriteClick = () => {
     if (token) {
       if (clicked === false) {
         setClicked(true)
         dispatch(
-          addProductToFavorites(product.productName)
+          addProductToFavorites(product.name)
         );
       } else {
         setClicked(false)
         dispatch(
-          removeProductFromFavorites(product.productName)
+          removeProductFromFavorites(product.name)
         );
       }
     } else {
@@ -105,11 +108,20 @@ const ProductPage = () => {
   }
 
   const handleClickCart = () => {
-    if (cartClicked === false) {
-      setCartClicked(true)
-      dispatch(
-        addProductToCart(product.productName, 1)
-      );
+    if (token) {
+      if (cartClicked === false) {
+        setCartClicked(true)
+        dispatch(
+          addProductToCart(product.name, 1)
+        );
+      }
+    } else {
+      if (cartClicked === false) {
+        setCartClicked(true)
+        dispatch(
+          addProductToLocalCart(product, 1)
+        );
+      }
     }
   }
 
@@ -208,13 +220,13 @@ const ProductPage = () => {
             <Grid item xs={12}
             >
               <Typography component="h2" variant="h4">
-                {product.productName}
+                {product.name}
               </Typography>
               <Typography component="h3" variant="h4">
-                Description: {product.productDescription}
+                Description: {product.description}
               </Typography>
               <Typography component="h3" variant="h4">
-                Price: {product.productPrice}
+                Price: {product.price}
               </Typography>
 
             </Grid>

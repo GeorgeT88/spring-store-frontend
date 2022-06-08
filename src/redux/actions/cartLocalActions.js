@@ -46,27 +46,27 @@ const cartLocalActions = (state = initialState, action) => {
             return {
                 ...initialState,
                 products: [...state.products, action.product],
-                total: state.total + action.product.productPrice
+                total: state.total + action.product.price
             }
         case UPDATE_PRODUCT_TO_LOCAL_CART:
 
-            const index = state.products.findIndex(product => product.productName === action.product.productName); //finding index of the item
+            const index = state.products.findIndex(product => product.name === action.product.name); //finding index of the item
             const newArray = [...state.products]; //making a new array
             newArray[index].quantity = action.product.quantity//changing value in the new array
             return {
                 ...initialState, //copying the orignal state
                 products: newArray, //reassingning todos to new array
-                total: (newArray.reduce((a,v) =>  a = a + v.productPrice *  v.quantity, 0 ))
+                total: (newArray.reduce((a,v) =>  a = a + v.price *  v.quantity, 0 ))
 
             }
 
         case REMOVE_PRODUCT_FROM_LOCAL_CART:
 
-            const newRemovedDataArray = state.products.filter((product) => product.productName !== action.product.productName)
+            const newRemovedDataArray = state.products.filter((product) => product.name !== action.product.name)
             return {
                 ...initialState,
                 products: newRemovedDataArray,
-                total:(newRemovedDataArray.reduce((a,v) =>  a = a + v.productPrice *  v.quantity, 0 ))
+                total:(newRemovedDataArray.reduce((a,v) =>  a = a + v.price *  v.quantity, 0 ))
             }
         default:
             return state;

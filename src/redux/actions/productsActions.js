@@ -28,9 +28,9 @@ export const getAllProductsByCategory = (category) => async (dispatch) => {
   })
 }
 
-export const getProductByProductName = (productName) => async (dispatch) => {
+export const getProductByProductName = (name) => async (dispatch) => {
   try {
-   const response = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_PRODUCT_NAME + productName)
+   const response = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_PRODUCT_NAME + name)
     let tmpArray = []
     tmpArray.push(response.data)
     dispatch({

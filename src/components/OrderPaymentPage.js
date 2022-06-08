@@ -41,10 +41,10 @@ const OrderPaymentPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      nameOnCard: "",
-      cardNumber: "",
-      expiryDate: "",
-      cvv: ""
+      nameOnCard: "Test User",
+      cardNumber: "0983 1219 3120 3123",
+      expiryDate: "02/29",
+      cvv: "test"
     },
     onSubmit: (values) => {
       console.log(JSON.stringify(values))

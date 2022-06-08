@@ -101,7 +101,7 @@ const Product = (product) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const classes = useStyles();
-  const { productPhotoLink, productName, productDescription, productPrice } = product;
+  const { photoLink, name, description, price } = product;
   const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const productsInCart = useSelector((state) => state.cart.productsInCartList);
@@ -118,7 +118,7 @@ const Product = (product) => {
 
   useEffect(() => {
     if (token) {
-      if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.productName === product.productName))) {
+      if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.name === product.name))) {
         setCartClicked(true);
       }
       else {
@@ -126,18 +126,18 @@ const Product = (product) => {
       }
     }
     else {
-      if (productsInCartLocal.length !== 0 && productsInCartLocal.some(p => (p.productName === product.productName))) {
+      if (productsInCartLocal.length !== 0 && productsInCartLocal.some(p => (p.name === product.name))) {
         setCartClicked(true);
       }
       else {
         setCartClicked(false);
       }
     }
-  }, [token, productsInCart, productsInCartLocal, product.productName]);
+  }, [token, productsInCart, productsInCartLocal, product.name]);
 
   useEffect(() => {
     if (token) {
-      if (favoriteProducts.some(p => (p.productName === product.productName))) {
+      if (favoriteProducts.some(p => (p.name === product.name))) {
         setClicked(true);
       }
       else {
@@ -145,14 +145,14 @@ const Product = (product) => {
       }
     }
     else {
-      if (favoriteLocalProducts.some(p => (p.productName === product.productName))) {
+      if (favoriteLocalProducts.some(p => (p.name === product.name))) {
         setClicked(true);
       }
       else {
         setClicked(false)
       }
     }
-  }, [token, favoriteLocalProducts, favoriteProducts, product.productName]);
+  }, [token, favoriteLocalProducts, favoriteProducts, product.name]);
 
 
   const handleClick = () => {
@@ -160,12 +160,12 @@ const Product = (product) => {
       if (clicked === false) {
         setClicked(true)
         dispatch(
-          addProductToFavorites(product.productName)
+          addProductToFavorites(product.name)
         );
       } else {
         setClicked(false)
         dispatch(
-          removeProductFromFavorites(product.productName)
+          removeProductFromFavorites(product.name)
         );
       }
     } else {
@@ -188,7 +188,7 @@ const Product = (product) => {
       if (cartClicked === false) {
         setCartClicked(true)
         dispatch(
-          addProductToCart(product.productName, 1)
+          addProductToCart(product.name, 1)
         );
       }
     } else {
@@ -209,18 +209,18 @@ const Product = (product) => {
             <StyledCard className={classes.card} >
               <CardMedia
                 className={classes.cardMedia}
-                image={productPhotoLink}
+                image={photoLink}
                 onClick={() => handleProductPage()}
               />
               <CardContent className={classes.cardContent} onClick={() => handleProductPage()} >
                 <Typography gutterBottom variant="h5" component="h2">
-                  {productName}
+                  {name}
                 </Typography>
                 <Typography>
-                  {`Description: ${productDescription}`}
+                  {`Description: ${description}`}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="h2">
-                  {`Product price:  ${productPrice}`}
+                  {`Product price:  ${price}`}
                 </Typography>
               </CardContent>
               <CardActions>

@@ -24,7 +24,7 @@ const FavoriteProduct = (product) => {
 
   const dispatch = useDispatch();
   let history = useHistory();
-  const { productPhotoLink, productName, productPrice } = product;
+  const { photoLink, name, price } = product;
   const token = localStorage.getItem('token');
 
 
@@ -37,7 +37,7 @@ const FavoriteProduct = (product) => {
   const handleClickRemoveProductFromFavorites = () => {
     if (token) {
       dispatch(
-        removeProductFromFavorites(product.productName)
+        removeProductFromFavorites(product.name)
       );
     } else {
       dispatch(
@@ -54,7 +54,7 @@ const FavoriteProduct = (product) => {
       <Grid container spacing={2} style={{ border: "1px solid grey" }}  >
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleProductPage()}>
-            <Img alt="complex" src={productPhotoLink} />
+            <Img alt="complex" src={photoLink} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
@@ -64,10 +64,10 @@ const FavoriteProduct = (product) => {
                 Product
               </Typography>
               <Typography variant="body2" gutterBottom>
-                {productName}
+                {name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Product price: {productPrice}
+                Product price: {price}
               </Typography>
               <Grid   >
                 <Button onClick={() => handleClickRemoveProductFromFavorites()} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}

@@ -40,23 +40,23 @@ const CartPage = () => {
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
 
-  const handleProductQuantity = (productName, quantity) => {
+  const handleProductQuantity = (name, quantity) => {
     if (token) {
-      dispatch(updateProductToCart(productName, quantity));
+      dispatch(updateProductToCart(name, quantity));
     } else {
-      dispatch(updateProductToLocalCart(productName, quantity));
+      dispatch(updateProductToLocalCart(name, quantity));
     }
   }
 
-  const handleClickRemoveProductFromCart = (productName) => {
+  const handleClickRemoveProductFromCart = (name) => {
 
     if (token) {
       dispatch(
-        removeProductFromCart(productName, 1)
+        removeProductFromCart(name, 1)
       );
     } else {
       dispatch(
-        removeProductfromLocalCart(productName)
+        removeProductfromLocalCart(name)
       );
     }
   };
@@ -91,20 +91,20 @@ const CartPage = () => {
             <Grid container spacing={2}>
               <Grid item>
                 <ButtonBase sx={{ width: 128, height: 128 }}>
-                  <Img alt="complex" src={product.productDto.productPhotoLink} />
+                  <Img alt="complex" src={product.productDto.photoLink} />
                 </ButtonBase>
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
                     <Typography gutterBottom variant="subtitle1" component="div">
-                      {product.productDto.productName}
+                      {product.productDto.name}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      {product.productDto.productDescription}
+                      {product.productDto.description}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Product Price: {product.productDto.productPrice}
+                      Product Price: {product.productDto.price}
                     </Typography>
                   </Grid>
                   <FormControl sx={{ m: 1, minWidth: 120 }} variant="standard">
@@ -118,22 +118,22 @@ const CartPage = () => {
                         value={product.quantity - 1}
                         MenuProps={{ PaperProps: { sx: { maxHeight: 220 } } }}
                       >
-                        {[...Array(product.productDto.productStock !== 0 && product.productDto.productStock)].map((e, i) => {
-                          return <MenuItem value={i} onClick={() => handleProductQuantity(product.productDto.productName, i + 1)}>
+                        {[...Array(product.productDto.stock !== 0 && product.productDto.stock)].map((e, i) => {
+                          return <MenuItem value={i} onClick={() => handleProductQuantity(product.productDto.name, i + 1)}>
                             {i + 1}
                           </MenuItem>
                         })}
                       </Select>
                     </Typography>
                     <Grid   >
-                      <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                      <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.name)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                       </Button>
                     </Grid>
                   </FormControl>
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1" component="div">
-                    Product price : {product.productTotalPrice}
+                    Product price : {product.totalPrice}
                   </Typography>
                 </Grid>
                 <Grid >
@@ -180,20 +180,20 @@ const CartPage = () => {
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase sx={{ width: 128, height: 128 }}>
-                <Img alt="complex" src={product.productPhotoLink} />
+                <Img alt="complex" src={product.photoLink} />
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
                   <Typography gutterBottom variant="subtitle1" component="div">
-                    {product.productName}
+                    {product.name}
                   </Typography>
                   <Typography variant="body2" gutterBottom>
-                    {product.productDescription}
+                    {product.description}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Product Price: {product.productPrice}
+                    Product Price: {product.price}
                   </Typography>
                 </Grid>
                 <FormControl sx={{ m: 1, minWidth: 120 }} variant="standard">
@@ -207,7 +207,7 @@ const CartPage = () => {
                       value={product.quantity - 1}
                       MenuProps={{ PaperProps: { sx: { maxHeight: 220 } } }}
                     >
-                      {[...Array(product.productStock !== 0 && product.productStock)].map((e, i) => {
+                      {[...Array(product.stock !== 0 && product.stock)].map((e, i) => {
                         return <MenuItem value={i} onClick={() => handleProductQuantity(product, i + 1)}>
                           {i + 1}
                         </MenuItem>
@@ -222,7 +222,7 @@ const CartPage = () => {
               </Grid>
               <Grid item>
                 <Typography variant="subtitle1" component="div">
-                  Product price : {product.productPrice * product.quantity}
+                  Product price : {product.price * product.quantity}
                 </Typography>
               </Grid>
               <Grid >

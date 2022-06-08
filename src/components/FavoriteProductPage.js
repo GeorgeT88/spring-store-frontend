@@ -34,13 +34,13 @@ const FavoriteProductPage = (product) => {
 
 
   useEffect(() => {
-    if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.productName === product.productName))) {
+    if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.name === product.name))) {
       setCartClicked(true);
     }
     else {
       setCartClicked(false)
     }
-  }, [productsInCart, product.productName]);
+  }, [productsInCart, product.name]);
 
 
 
@@ -50,7 +50,7 @@ const FavoriteProductPage = (product) => {
     if (cartClicked === false) {
       setCartClicked(true)
       dispatch(
-        addProductToCart(product.productName, 1)
+        addProductToCart(product.name, 1)
       );
     }
   }
@@ -60,7 +60,7 @@ const FavoriteProductPage = (product) => {
   const handleClickRemoveProductFromFavorites = (product) => {
     if (token) {
       dispatch(
-        removeProductFromFavorites(product.productName)
+        removeProductFromFavorites(product.name)
       );
     } else {
       dispatch(
@@ -76,17 +76,17 @@ const FavoriteProductPage = (product) => {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="complex" src={product.productPhotoLink} />
+            <Img alt="complex" src={product.photoLink} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={3}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                {product.productName}
+                {product.name}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                {product.productDescription}
+                {product.description}
               </Typography>
 
               {cartClicked !== true && (
@@ -110,7 +110,7 @@ const FavoriteProductPage = (product) => {
           </Grid>
           <Grid item>
             <Typography variant="subtitle1" component="div">
-              Product price : {product.productPrice}
+              Product price : {product.price}
             </Typography>
           </Grid>
           <Grid >

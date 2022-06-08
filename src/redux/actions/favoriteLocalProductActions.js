@@ -37,7 +37,7 @@ const favoriteProductActions = (state = initialState, action) => {
     case REMOVE_PRODUCT_TO_FAVORITES_LIST:
       return {
         ...initialState,
-        products: state.products.filter((product) => product.productName !== action.product.productName)
+        products: state.products.filter((product) => product.name !== action.product.name)
       }
     default:
       return state;

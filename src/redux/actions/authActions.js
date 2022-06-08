@@ -72,7 +72,7 @@ export const signIn = (email, password) => async (dispatch) => {
             email: response.data.email,
             phoneNumber: response.data.phoneNumber,
             deliveryAddress: response.data.deliveryAddress,
-            favoriteProductList: response.data.favoriteProductList,
+            userFavorites: response.data.userFavorites,
             err: null
         });
 
@@ -123,7 +123,7 @@ export const loadUser = () => async (dispatch) => {
             email: response.data.email,
             phoneNumber: response.data.phoneNumber,
             deliveryAddress: response.data.deliveryAddress,
-            favoriteProductList: response.data.favoriteProductList,
+            userFavorites: response.data.userFavorites,
             err: null
         });
     } else return null;
@@ -138,7 +138,7 @@ const initialState = {
     email: null,
     phoneNumber: null,
     deliveryAddress: null,
-    favoriteProductList: [],
+    userFavorites: [],
     err: null
 };
 
@@ -158,7 +158,7 @@ const authActions = (state = initialState, action) => {
                 email: action.email,
                 phoneNumber: action.phoneNumber,
                 deliveryAddress: action.deliveryAddress,
-                favoriteProductList: action.favoriteProductList,
+                userFavorites: action.userFavorites,
                 err: action.err
             };
         case SIGN_OUT:
@@ -171,7 +171,7 @@ const authActions = (state = initialState, action) => {
                 email: null,
                 phoneNumber: null,
                 deliveryAddress: null,
-                favoriteProductList: [],
+                userFavorites: [],
                 err: null
             };
         default:

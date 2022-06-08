@@ -6,10 +6,10 @@ export const setProduct = (product) =>(
   {
     type: SET_PRODUCT,
     id: product.id,
-    productName: product.productName,
-    productDescription: product.productDescription,
-    productPrice: product.productPrice,
-    productPhotoLink: product.productPhotoLink
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    photoLink: product.photoLink
     
 }
 
@@ -22,10 +22,10 @@ export const getProduct = () =>({
 
 const initialState = {
   id: null,
-  productName: null,
-  productDescription: null,
-  productPrice: null,
-  productPhotoLink: null
+  name: null,
+  description: null,
+  price: null,
+  photoLink: null
   }
   
   // eslint-disable-next-line import/no-anonymous-default-export
@@ -36,10 +36,10 @@ const initialState = {
         return {
             ...initialState,
             id: action.id,
-            productName: action.productName,
-            productDescription: action.productDescription,
-            productPrice: action.productPrice,
-            productPhotoLink: action.productPhotoLink    
+            name: action.name,
+            description: action.description,
+            price: action.price,
+            photoLink: action.photoLink    
         }
       case GET_PRODUCT:
           return {...state}

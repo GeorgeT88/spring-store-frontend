@@ -45,7 +45,7 @@ const Cart = (product) => {
   const handleClickRemoveProductFromCart = () => {
     if (token){
     dispatch(
-      removeProductFromCart(productDto.productName, 1)
+      removeProductFromCart(productDto.name, 1)
     );
     }else{
       dispatch(
@@ -62,7 +62,7 @@ const Cart = (product) => {
         <Grid container spacing={2} style={{ border: "1px solid grey" }}  >
           <Grid item>
             <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleProductPage()}>
-              <Img alt="complex" src={productDto.productPhotoLink} />
+              <Img alt="complex" src={productDto.photoLink} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
@@ -72,13 +72,13 @@ const Cart = (product) => {
                   Product
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {productDto.productName} quantity: {quantity}
+                  {productDto.name} quantity: {quantity}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Product price: {productDto.productPrice}
+                  Product price: {productDto.price}
                 </Typography>
                 <Grid   >
-                  <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                  <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.name)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                   </Button>
                 </Grid>
               </Grid>
@@ -95,7 +95,7 @@ const Cart = (product) => {
         <Grid container spacing={2} style={{ border: "1px solid grey" }}  >
           <Grid item>
             <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleProductPage()}>
-              <Img alt="complex" src={product.productPhotoLink} />
+              <Img alt="complex" src={product.photoLink} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
@@ -105,10 +105,10 @@ const Cart = (product) => {
                   Product
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {product.productName} quantity: {product.quantity}
+                  {product.name} quantity: {product.quantity}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Product price: {product.productPrice}
+                  Product price: {product.price}
                 </Typography>
                 <Grid   >
                   <Button onClick={() => handleClickRemoveProductFromCart()} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
