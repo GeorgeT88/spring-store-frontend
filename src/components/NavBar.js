@@ -106,9 +106,9 @@ export default function NavBar() {
   const dispatch = useDispatch();
 
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
-  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const favoriteProducts = useSelector((state) => state.favoriteProduct.products);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
-  const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const productsInCart = useSelector((state) => state.cart.entries);
   const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const token = localStorage.getItem('token');
 
@@ -441,7 +441,7 @@ export default function NavBar() {
                     )}
                     {productsInCart.length !== 0 && (
                       productsInCart.slice(0, 3).map((productInCart) => (
-                        <Cart key={productInCart.productDto.id} {...productInCart} />
+                        <Cart key={productInCart.id} {...productInCart} />
                       ))
                     )}
                   </MenuList>

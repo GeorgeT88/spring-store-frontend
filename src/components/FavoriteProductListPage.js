@@ -10,7 +10,7 @@ import FavoriteProductPage from './FavoriteProductPage';
 
 const FavoriteProductListPage = () => {
 
-  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const favoriteProducts = useSelector((state) => state.favoriteProduct.products);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
   const token = localStorage.getItem('token');
 

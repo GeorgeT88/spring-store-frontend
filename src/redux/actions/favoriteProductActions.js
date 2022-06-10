@@ -17,7 +17,10 @@ export const addProductToFavorites = (product) => async (dispatch, getState) => 
 
     if (token) {
         const user = jwtDecode(token);
-        const response = await axios.put(process.env.REACT_APP_ADD_PRODUCT_TO_USER_FAVORITES + user.sub + "/" + product, {},
+        const response = await axios.post(process.env.REACT_APP_ADD_PRODUCT_TO_USER_FAVORITES + user.sub + "/" + product, {
+            email: user.sub,
+            productName: product
+        },
             {
                 headers: {
                     'Content-type': 'application/json',
@@ -26,8 +29,7 @@ export const addProductToFavorites = (product) => async (dispatch, getState) => 
             })
         dispatch({
             type: PRODUCT_FAVORITES,
-            id: response.data.id,
-            productList: response.data.favoriteProductList,
+            products: response.data,
         });
         toast.success("Product Added To Favorites!", { position: "top-right" })
 
@@ -43,7 +45,7 @@ export const removeProductFromFavorites = (product) => {
         const token = getState().auth.token;
         if (token) {
             const user = jwtDecode(token);
-            axios.put(process.env.REACT_APP_REMOVE_PRODUCT_FROM_USER_FAVORITES + user.sub + "/" + product, {},
+            axios.delete(process.env.REACT_APP_REMOVE_PRODUCT_FROM_USER_FAVORITES + user.sub + "/" + product,
                 {
                     headers: {
                         'Content-type': 'application/json',
@@ -52,8 +54,7 @@ export const removeProductFromFavorites = (product) => {
                 }).then((response) => {
                     dispatch({
                         type: PRODUCT_FAVORITES,
-                        id: response.data.id,
-                        productList: response.data.favoriteProductList,
+                        products: response.data,
                     });
                     toast.error("Product removed from Favorites!", { position: "top-right" })
                 })
@@ -82,8 +83,7 @@ export const getAllProductsFromUserFavorites = () => {
                     console.log('initial fav prod', response.data);
                     dispatch({
                         type: PRODUCT_FAVORITES,
-                        id: response.data.id,
-                        productList: response.data,
+                        products: response.data,
                     });
                 })
         } else return null;
@@ -99,8 +99,7 @@ export const signOutProductFavorites = () => {
 };
 
 const initialState = {
-    id: null,
-    productList: [],
+    products: []
 };
 
 
@@ -110,18 +109,16 @@ const favoriteProductActions = (state = initialState, action) => {
         case PRODUCT_FAVORITES:
             return {
                 ...initialState,
-                id: action.id,
-                productList: action.productList,
+                products: action.products,
             };
         case PRODUCT_FAVORITES_LOCAL:
             return {
                 ...initialState,
-                productList: [...state.productList, action.product]
+                products: [...state.products, action.product]
             };
         case PRODUCT_FAVORITES_SIGN_OUT:
             return {
-                id: null,
-                productList: []
+                products: []
             };
         default:
             return state;

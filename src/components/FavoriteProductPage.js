@@ -27,14 +27,14 @@ const Img = styled('img')({
 const FavoriteProductPage = (product) => {
 
   const dispatch = useDispatch();
-  const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const productsInCart = useSelector((state) => state.cart.entries);
   const token = localStorage.getItem('token');
   const [cartClicked, setCartClicked] = useState(false);
 
 
 
   useEffect(() => {
-    if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.name === product.name))) {
+    if (productsInCart.length !== 0 && productsInCart.some(p => (p.name === product.name))) {
       setCartClicked(true);
     }
     else {

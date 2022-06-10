@@ -23,7 +23,7 @@ export const getCartByUserEmail = () => async (dispatch) => {
         dispatch({
             type: GET_CART,
             id: response.data.id,
-            productsInCartList: response.data.productsInCartList,
+            entries: response.data.entries,
             total: response.data.total
         });
 
@@ -46,7 +46,7 @@ export const addProductToCart = (product, size) => async (dispatch, getState) =>
         dispatch({
             type: ADD_PRODUCT_TO_CART,
             id: response.data.id,
-            productsInCartList: response.data.productsInCartList,
+            entries: response.data.entries,
             total: response.data.total
         });
         toast.success("Product Added To Cart!", { position: "top-right" })
@@ -72,8 +72,7 @@ export const updateProductToCart = (product, size) => {
                 }).then((response) => {
                     dispatch({
                         type: REMOVE_PRODUCT_FROM_CART,
-                        id: response.data.id,
-                        productsInCartList: response.data.productsInCartList,
+                        entries: response.data.entries,
                         total: response.data.total
                     });
                     toast.info("Product Quantity updated!", { position: "top-right" })
@@ -97,8 +96,7 @@ export const removeProductFromCart = (product, size) => {
                 }).then((response) => {
                     dispatch({
                         type: REMOVE_PRODUCT_FROM_CART,
-                        id: response.data.id,
-                        productsInCartList: response.data.productsInCartList,
+                        entries: response.data.entries,
                         total: response.data.total
                     });
                     toast.error("Product Removed from Cart!", { position: "top-right" })
@@ -115,8 +113,7 @@ export const signOutCart = () => {
 };
 
 const initialState = {
-    id: null,
-    productsInCartList: [],
+    entries: [],
     total: 0
 };
 
@@ -130,14 +127,12 @@ const cartActions = (state = initialState, action) => {
         case REMOVE_PRODUCT_FROM_CART:
             return {
                 ...initialState,
-                id: action.id,
-                productsInCartList: action.productsInCartList,
+                entries: action.entries,
                 total: action.total
             };
         case CART_SIGN_OUT:
             return {
-                id: null,
-                productsInCartList: [],
+                entries: [],
                 total: 0
             };
 

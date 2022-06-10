@@ -33,7 +33,7 @@ const Img = styled('img')({
 
 const CartPage = () => {
   let history = useHistory();
-  const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const productsInCart = useSelector((state) => state.cart.entries);
   const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const cart = useSelector((state) => state.cart);
   const cartLocal = useSelector((state) => state.cartLocal);
@@ -91,20 +91,20 @@ const CartPage = () => {
             <Grid container spacing={2}>
               <Grid item>
                 <ButtonBase sx={{ width: 128, height: 128 }}>
-                  <Img alt="complex" src={product.productDto.photoLink} />
+                  <Img alt="complex" src={product.photoLink} />
                 </ButtonBase>
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>
                   <Grid item xs>
                     <Typography gutterBottom variant="subtitle1" component="div">
-                      {product.productDto.name}
+                      {product.name}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      {product.productDto.description}
+                      {product.description}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Product Price: {product.productDto.price}
+                      Product Price: {product.price}
                     </Typography>
                   </Grid>
                   <FormControl sx={{ m: 1, minWidth: 120 }} variant="standard">
@@ -118,15 +118,15 @@ const CartPage = () => {
                         value={product.quantity - 1}
                         MenuProps={{ PaperProps: { sx: { maxHeight: 220 } } }}
                       >
-                        {[...Array(product.productDto.stock !== 0 && product.productDto.stock)].map((e, i) => {
-                          return <MenuItem value={i} onClick={() => handleProductQuantity(product.productDto.name, i + 1)}>
+                        {[...Array(product.stock !== 0 && product.stock)].map((e, i) => {
+                          return <MenuItem value={i} onClick={() => handleProductQuantity(product.name, i + 1)}>
                             {i + 1}
                           </MenuItem>
                         })}
                       </Select>
                     </Typography>
                     <Grid   >
-                      <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.name)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                      <Button onClick={() => handleClickRemoveProductFromCart(product.name)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                       </Button>
                     </Grid>
                   </FormControl>

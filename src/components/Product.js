@@ -102,9 +102,9 @@ const Product = (product) => {
   let history = useHistory();
   const classes = useStyles();
   const { photoLink, name, description, price } = product;
-  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const favoriteProducts = useSelector((state) => state.favoriteProduct.products);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
-  const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const productsInCart = useSelector((state) => state.cart.entries);
   const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const token = localStorage.getItem('token');
   const [clicked, setClicked] = useState(false)
@@ -118,7 +118,7 @@ const Product = (product) => {
 
   useEffect(() => {
     if (token) {
-      if (productsInCart.length !== 0 && productsInCart.some(p => (p.productDto.name === product.name))) {
+      if (productsInCart.length !== 0 && productsInCart.some(p => (p.name === product.name))) {
         setCartClicked(true);
       }
       else {

@@ -42,9 +42,9 @@ const useStyles = makeStyles((theme) => ({
 const ProductPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const favoriteProducts = useSelector((state) => state.favoriteProduct.productList);
+  const favoriteProducts = useSelector((state) => state.favoriteProduct.products);
   const favoriteLocalProducts = useSelector((state) => state.favoriteLocalProduct.products);
-  const productsInCart = useSelector((state) => state.cart.productsInCartList);
+  const productsInCart = useSelector((state) => state.cart.entries);
   const product = useSelector((state) => state.product);
   const token = localStorage.getItem('token');
   const [clicked, setClicked] = useState(false)
@@ -71,7 +71,7 @@ const ProductPage = () => {
 
 
   useEffect(() => {
-    if (productsInCart.some(p => (p.productDto.name === product.name))) {
+    if (productsInCart.some(p => (p.name === product.name))) {
       setCartClicked(true);
     }
     else {
