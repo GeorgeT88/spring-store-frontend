@@ -118,7 +118,7 @@ const Product = (product) => {
 
   useEffect(() => {
     if (token) {
-      if (productsInCart.length !== 0 && productsInCart.some(p => (p.name === product.name))) {
+      if (productsInCart.length !== 0 && productsInCart.some(p => (p.productName === product.name))) {
         setCartClicked(true);
       }
       else {

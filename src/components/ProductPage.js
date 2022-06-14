@@ -71,7 +71,7 @@ const ProductPage = () => {
 
 
   useEffect(() => {
-    if (productsInCart.some(p => (p.name === product.name))) {
+    if (productsInCart.some(p => (p.productName === product.name))) {
       setCartClicked(true);
     }
     else {

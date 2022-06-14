@@ -40,23 +40,23 @@ const CartPage = () => {
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
 
-  const handleProductQuantity = (name, quantity) => {
+  const handleProductQuantity = (productName, quantity) => {
     if (token) {
-      dispatch(updateProductToCart(name, quantity));
+      dispatch(updateProductToCart(productName, quantity));
     } else {
-      dispatch(updateProductToLocalCart(name, quantity));
+      dispatch(updateProductToLocalCart(productName, quantity));
     }
   }
 
-  const handleClickRemoveProductFromCart = (name) => {
+  const handleClickRemoveProductFromCart = (productName) => {
 
     if (token) {
       dispatch(
-        removeProductFromCart(name, 1)
+        removeProductFromCart(productName)
       );
     } else {
       dispatch(
-        removeProductfromLocalCart(name)
+        removeProductfromLocalCart(productName)
       );
     }
   };
@@ -119,21 +119,21 @@ const CartPage = () => {
                         MenuProps={{ PaperProps: { sx: { maxHeight: 220 } } }}
                       >
                         {[...Array(product.stock !== 0 && product.stock)].map((e, i) => {
-                          return <MenuItem value={i} onClick={() => handleProductQuantity(product.name, i + 1)}>
+                          return <MenuItem value={i} onClick={() => handleProductQuantity(product.productName, i + 1)}>
                             {i + 1}
                           </MenuItem>
                         })}
                       </Select>
                     </Typography>
                     <Grid   >
-                      <Button onClick={() => handleClickRemoveProductFromCart(product.name)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                      <Button onClick={() => handleClickRemoveProductFromCart(product.productName)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                       </Button>
                     </Grid>
                   </FormControl>
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1" component="div">
-                    Product price : {product.totalPrice}
+                    Product total price : {product.price * product.quantity}
                   </Typography>
                 </Grid>
                 <Grid >

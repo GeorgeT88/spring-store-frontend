@@ -26,12 +26,12 @@ const Cart = (product) => {
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
   let history = useHistory();
-  const { productDto, quantity } = product;
+  const { productName, photoLink, quantity, price } = product;
 
 
   const handleProductPage = () => {
     if (token){
-    dispatch(setProduct(productDto));
+    dispatch(setProduct(product));
     history.push(`/productPage`);
   }else{
     dispatch(setProduct(product));
@@ -45,7 +45,7 @@ const Cart = (product) => {
   const handleClickRemoveProductFromCart = () => {
     if (token){
     dispatch(
-      removeProductFromCart(productDto.name, 1)
+      removeProductFromCart(productName)
     );
     }else{
       dispatch(
@@ -62,7 +62,7 @@ const Cart = (product) => {
         <Grid container spacing={2} style={{ border: "1px solid grey" }}  >
           <Grid item>
             <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleProductPage()}>
-              <Img alt="complex" src={productDto.photoLink} />
+              <Img alt="complex" src={photoLink} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
@@ -72,13 +72,13 @@ const Cart = (product) => {
                   Product
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {productDto.name} quantity: {quantity}
+                  {productName} quantity: {quantity}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Product price: {productDto.price}
+                  Product price: {price}
                 </Typography>
                 <Grid   >
-                  <Button onClick={() => handleClickRemoveProductFromCart(product.productDto.name)} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
+                  <Button onClick={() => handleClickRemoveProductFromCart()} style={{ maxWidth: '300px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', fontSize: '11px' }} startIcon={<ClearIcon />}> {'Remove'}
                   </Button>
                 </Grid>
               </Grid>

@@ -30,17 +30,21 @@ export const getCartByUserEmail = () => async (dispatch) => {
     };
 };
 
-export const addProductToCart = (product, size) => async (dispatch, getState) => {
+export const addProductToCart = (productName, quantity) => async (dispatch) => {
 
-    const token = getState().auth.token;
+    const token = localStorage.getItem('token');
 
     if (token) {
         const user = jwtDecode(token);
-        const response = await axios.put(process.env.REACT_APP_ADD_PRODUCT_TO_CART + user.sub + "/" + product + "/" + size, {},
+        const response = await axios.post(process.env.REACT_APP_ADD_PRODUCT_TO_CART + user.sub + "/" + productName + "/" + quantity, {
+            email: user.sub,
+            productName: productName,
+            quantity:quantity
+        },
             {
                 headers: {
                     'Content-type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
+                    'Authorization': token
                 }
             })
         dispatch({
@@ -81,13 +85,13 @@ export const updateProductToCart = (product, size) => {
     };
 };
 
-export const removeProductFromCart = (product, size) => {
+export const removeProductFromCart = (productName) => {
     return (dispatch, getState) => {
 
         const token = getState().auth.token;
         if (token) {
             const user = jwtDecode(token);
-            axios.put(process.env.REACT_APP_REMOVE_PRODUCT_FROM_CART + user.sub + "/" + product + "/" + size, {},
+            axios.delete(process.env.REACT_APP_REMOVE_PRODUCT_FROM_CART + user.sub + "/" + productName,
                 {
                     headers: {
                         'Content-type': 'application/json',
