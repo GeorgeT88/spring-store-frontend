@@ -13,7 +13,7 @@ export const getCartByUserEmail = () => async (dispatch) => {
     const token = localStorage.getItem('token');
     if (token) {
         const user = jwtDecode(token);
-        const response = await axios.get(process.env.REACT_APP_GET_CART_BY_EMAIL + user.sub, {
+        const response = await axios.get(process.env.REACT_APP_CART_PATH + user.sub, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token')
@@ -36,7 +36,7 @@ export const addProductToCart = (productName, quantity) => async (dispatch) => {
 
     if (token) {
         const user = jwtDecode(token);
-        const response = await axios.post(process.env.REACT_APP_ADD_PRODUCT_TO_CART + user.sub + "/" + productName + "/" + quantity, {
+        const response = await axios.post(process.env.REACT_APP_CART_PATH + user.sub + "/" + productName + "/" + quantity, {
             email: user.sub,
             productName: productName,
             quantity:quantity
@@ -67,7 +67,7 @@ export const updateProductToCart = (product, size) => {
         console.log('log', size);
         if (token) {
             const user = jwtDecode(token);
-            axios.put(process.env.REACT_APP_UPDATE_PRODUCT_TO_CART + user.sub + "/" + product + "/" + size, {},
+            axios.put(process.env.REACT_APP_CART_PATH + user.sub + "/" + product + "/" + size, {},
                 {
                     headers: {
                         'Content-type': 'application/json',
@@ -91,7 +91,7 @@ export const removeProductFromCart = (productName) => {
         const token = getState().auth.token;
         if (token) {
             const user = jwtDecode(token);
-            axios.delete(process.env.REACT_APP_REMOVE_PRODUCT_FROM_CART + user.sub + "/" + productName,
+            axios.delete(process.env.REACT_APP_CART_PATH + user.sub + "/" + productName,
                 {
                     headers: {
                         'Content-type': 'application/json',

@@ -16,7 +16,7 @@ const SIGN_OUT = "SIGN_OUT";
 export const signUp = (firstName, lastName, email, phoneNumber, deliveryAddress, password) => async () => {
 
     await axios
-        .post(process.env.REACT_APP_ADD_USER, {
+        .post(process.env.REACT_APP_USER_PATH, {
             firstName,
             lastName,
             email,
@@ -57,7 +57,7 @@ export const signIn = (email, password) => async (dispatch) => {
     }
 
     try {
-        const response = await axios.get(process.env.REACT_APP_GET_USER_BY_EMAIL + email, {
+        const response = await axios.get(process.env.REACT_APP_USER_PATH + `?email=${email}` ,{
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token')
@@ -109,7 +109,7 @@ export const loadUser = () => async (dispatch) => {
 
     if (token) {
         const user = jwtDecode(token);
-        const response = await axios.get(process.env.REACT_APP_GET_USER_BY_EMAIL + user.sub, {
+        const response = await axios.get(process.env.REACT_APP_USER_PATH + `?email=${user.sub}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token')

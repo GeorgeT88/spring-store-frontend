@@ -9,7 +9,7 @@ const PRODUCTBYPRODUCTNAME = "PRODUCTBYPRODUCTNAME";
 export const getAllProducts = () => async (dispatch) => {
 
 
-  const response = await axios.get(process.env.REACT_APP_GET_ALL_PRODUCTS)
+  const response = await axios.get(process.env.REACT_APP_PRODUCT_PATH)
 
   dispatch({
     type: ALLPRODUCTS,
@@ -20,7 +20,7 @@ export const getAllProducts = () => async (dispatch) => {
 
 
 export const getAllProductsByCategory = (category) => async (dispatch) => {
-  const response = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_PRODUCT_CATEGORY + category)
+  const response = await axios.get(process.env.REACT_APP_PRODUCT_PATH + `?category=${category}`)
   dispatch({
     type: ALLPRODUCTSBYCATEGORY,
     category: category,
@@ -30,7 +30,7 @@ export const getAllProductsByCategory = (category) => async (dispatch) => {
 
 export const getProductByProductName = (name) => async (dispatch) => {
   try {
-   const response = await axios.get(process.env.REACT_APP_GET_PRODUCT_BY_PRODUCT_NAME + name)
+   const response = await axios.get(process.env.REACT_APP_PRODUCT_PATH + name)
     let tmpArray = []
     tmpArray.push(response.data)
     dispatch({
