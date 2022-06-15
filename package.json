@@ -40,6 +40,10 @@
     "web-vitals": "^1.1.2",
     "webfontloader": "^1.6.28",
     "yup": "^0.32.11"
+    
+  },
+  "engines": {
+    "node": "14.17.4"
   },
   "scripts": {
     "start-dev": "env-cmd -e dev react-scripts start",
