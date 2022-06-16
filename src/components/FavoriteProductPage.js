@@ -13,6 +13,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { addProductToCart } from '../redux/actions/cartActions';
 import { removeProductFromFavorites } from '../redux/actions/favoriteProductActions';
 import { removeProductfromFavoritesLocal } from '../../src/redux/actions/favoriteLocalProductActions';
+import { addProductToLocalCart } from '../../src/redux/actions/cartLocalActions';
 
 
 const Img = styled('img')({
@@ -34,7 +35,7 @@ const FavoriteProductPage = (product) => {
 
 
   useEffect(() => {
-    if (productsInCart.length !== 0 && productsInCart.some(p => (p.name === product.name))) {
+    if (productsInCart.length !== 0 && productsInCart.some(p => (p.productName === product.name))) {
       setCartClicked(true);
     }
     else {
@@ -44,18 +45,23 @@ const FavoriteProductPage = (product) => {
 
 
 
-
-
   const handleClickCart = () => {
-    if (cartClicked === false) {
-      setCartClicked(true)
-      dispatch(
-        addProductToCart(product.name, 1)
-      );
+    if (token) {
+      if (cartClicked === false) {
+        setCartClicked(true)
+        dispatch(
+          addProductToCart(product.name, 1)
+        );
+      }
+    } else {
+      if (cartClicked === false) {
+        setCartClicked(true)
+        dispatch(
+          addProductToLocalCart(product, 1)
+        );
+      }
     }
   }
-
-
 
   const handleClickRemoveProductFromFavorites = (product) => {
     if (token) {

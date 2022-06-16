@@ -144,7 +144,8 @@ const CartPage = () => {
 
         ))}
         <p></p>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        {productsInCart.length !== 0 && (
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>   
           <Button
             onClick={handlekOrderStep}
             type="submit"
@@ -152,8 +153,9 @@ const CartPage = () => {
             sx={{ mt: 3, ml: 1 }}
             variant="primary" style={{ backgroundColor: "#3f51b5", color: '#FFFFFF' }}>
             order
-          </Button>
+          </Button>       
         </Box>
+        )}
       </Paper>
     );
   } else return (
@@ -234,7 +236,9 @@ const CartPage = () => {
       ))
       }
       <p></p>
+      {productsInCartLocal.length !==0 && (
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+     
         <Button
           onClick={handlekOrderStep}
           type="submit"
@@ -243,7 +247,9 @@ const CartPage = () => {
           variant="primary" style={{ backgroundColor: "#3f51b5", color: '#FFFFFF' }}>
           order
         </Button>
+      
       </Box>
+      )}
     </Paper>
   );
 }
