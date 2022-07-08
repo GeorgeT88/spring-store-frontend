@@ -1,17 +1,16 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import ClearIcon from '@mui/icons-material/Clear';
+import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setProduct } from "../redux/actions/productActions";
+import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import ButtonBase from '@mui/material/ButtonBase';
-import { setProduct } from "../redux/actions/productActions";
 import { removeProductFromCart } from '../redux/actions/cartActions';
 import { removeProductfromLocalCart } from '../redux/actions/cartLocalActions';
-import { styled } from '@mui/material/styles';
-
+import Button from '@material-ui/core/Button';
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const Img = styled('img')({

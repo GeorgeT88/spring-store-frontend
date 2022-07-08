@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState,useEffect } from "react";
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import {Link} from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import { useDispatch } from 'react-redux';
+import { appBarFalse,appBarTrue }from "../redux/actions/secondaryAppBar";
 
-const axios = require("axios").default;
+const axios = require('axios').default;
 const ACCESS_TOKEN = "access_token";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/" to="/">
+    <Typography variant="body2" color="textSecondary" align="center" >
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/" to='/'>
         Spring Store App
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
@@ -32,16 +32,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -50,30 +50,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function handleSignIn(username, password) {
-  axios
-    .post("http://localhost:8762/login", {
-      username: username,
-      password: password,
+    axios.post('http://localhost:8762/login', {
+        username: username,
+        password: password
+    }).then((response) => {
+        localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
+    }).catch((error) => {
+        console.log(error)
     })
-    .then((response) => {
-      localStorage.setItem(ACCESS_TOKEN, response.headers.authorization);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 }
 
-function ForgotPassword() {
+ function ForgotPassword() {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('')
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(appBarFalse());
+    dispatch (appBarFalse());
     return () => {
-      dispatch(appBarTrue());
-    };
+      dispatch (appBarTrue());
+    }     
   }, [dispatch]);
 
   return (
@@ -86,10 +83,7 @@ function ForgotPassword() {
         <Typography component="h1" variant="h5">
           Password Reset
         </Typography>
-        <p>
-          Lost your password? Please enter your email address. You will receive
-          a link to create a new password via email.
-        </p>
+        <p>Lost your password? Please enter your email address. You will receive a link to create a new password via email.</p>
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
@@ -101,7 +95,7 @@ function ForgotPassword() {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           />
           <Button
             type="submit"
@@ -109,15 +103,15 @@ function ForgotPassword() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => handleSignIn(email)}
+            onClick={() => handleSignIn(email)}       
           >
-            Reset Password
+           Reset Password
           </Button>
-          <Grid item xs>
-            <Link href="#" variant="body2" to="/signIn">
-              Rememberd the password? Go back to Sign in!
-            </Link>
-          </Grid>
+            <Grid item xs>
+              <Link href="#" variant="body2" to= '/signIn'>
+                Rememberd the password? Go back to Sign in!
+              </Link>
+            </Grid>
         </form>
       </div>
       <Box mt={8}>
