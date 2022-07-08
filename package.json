@@ -44,9 +44,7 @@
   },
   "scripts": {
     "start-dev": "env-cmd -e dev react-scripts start",
-    "start": "env-cmd -e production react-scripts start",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "env-cmd -e production react-scripts start"
   },
   "eslintConfig": {
     "extends": [
