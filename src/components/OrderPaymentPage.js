@@ -1,55 +1,73 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox'
 import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { setOrderCreditCardInfo } from "../redux/actions/orderCreditCardInfoActions";
-import { setOrderStep } from "../redux/actions/orderStepActions";
+import { setOrderStep } from "../redux/actions/orderStepActions";;
 
 const OrderPaymentPage = () => {
+
   const dispatch = useDispatch();
 
-  const validationSchema = yup.object({});
+
+  const validationSchema = yup.object({
+
+    // nameOnCard: yup.string().required("Name on card is required!")
+    //   .matches('^[aA-zZ]+$', "Only characters are allowed in this field")
+    //   .min(3, 'Name on card has to be be atleast 3 characters long!')
+    //   .max(16, 'Name on card can not contain more than 32 characters!'),
+    // cardNumber: yup.string().required("Card number is required!")
+    //   .matches('^[0-9]+$', "Only digits are allowed in this field")
+    //   .min(3, 'Card Number has to be be atleast 3 digits long!')
+    //   .max(16, 'Card Number can not contain more than 32 digits!'),
+    // expiryDate: yup.string().required("Expiry date is required!")
+    //   .matches('^[0-9 ]+$', "Only  digits are allowed in this field")
+    //   .min(10, 'Expiry date has to be be atleast 10 digits!')
+    //   .max(32, 'Expiry date can not contain more than 32 digits!'),
+    // cvv: yup.string().required("ccv is required!")
+    //   .matches('^[0-9 ]+$', "Only digits are allowed in this field")
+    //   .min(8, 'ccv has to be be atleast 8 digits!')
+    //   .max(300, 'ccv can not contain more than 300 digits!'),
+  })
+
 
   const formik = useFormik({
     initialValues: {
       nameOnCard: "Test User",
       cardNumber: "0983 1219 3120 3123",
       expiryDate: "02/29",
-      cvv: "test",
+      cvv: "test"
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values));
-      dispatch(
-        setOrderCreditCardInfo(
-          values.nameOnCard,
-          values.cardNumber,
-          values.expiryDate,
-          values.cvv
-        )
-      );
+      console.log(JSON.stringify(values))
+      dispatch(setOrderCreditCardInfo(values.nameOnCard, values.cardNumber, values.expiryDate, values.cvv));
       dispatch(setOrderStep(2));
     },
-    validationSchema: validationSchema,
+    validationSchema: validationSchema
+
   });
 
   useEffect(() => {
     dispatch(appBarFalse());
     return () => {
       dispatch(appBarTrue());
-    };
+    }
+
   }, [dispatch]);
 
   const handleBackOrderStep = () => {
     dispatch(setOrderStep(0));
-  };
+
+  }
+
 
   return (
     <React.Fragment>
@@ -71,9 +89,7 @@ const OrderPaymentPage = () => {
               value={"Test Name"}
               //value={formik.values.nameOnCard}
               onChange={formik.handleChange}
-              error={
-                formik.touched.nameOnCard && Boolean(formik.errors.nameOnCard)
-              }
+              error={formik.touched.nameOnCard && Boolean(formik.errors.nameOnCard)}
               helperText={formik.touched.nameOnCard && formik.errors.nameOnCard}
             />
           </Grid>
@@ -90,9 +106,7 @@ const OrderPaymentPage = () => {
               value={"1111-2222-3333-4444"}
               //value={formik.values.cardNumber}
               onChange={formik.handleChange}
-              error={
-                formik.touched.cardNumber && Boolean(formik.errors.cardNumber)
-              }
+              error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
               helperText={formik.touched.cardNumber && formik.errors.cardNumber}
             />
           </Grid>
@@ -109,9 +123,7 @@ const OrderPaymentPage = () => {
               value={"01/27"}
               //value={formik.values.expiryDate}
               onChange={formik.handleChange}
-              error={
-                formik.touched.expiryDate && Boolean(formik.errors.expiryDate)
-              }
+              error={formik.touched.expiryDate && Boolean(formik.errors.expiryDate)}
               helperText={formik.touched.expiryDate && formik.errors.expiryDate}
             />
           </Grid>
@@ -134,29 +146,29 @@ const OrderPaymentPage = () => {
           </Grid>
           <Grid item xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox color="secondary" name="saveCard" value="yes" />
-              }
+              control={<Checkbox color="secondary" name="saveCard" value="yes" />}
               label="Remember credit card details for next time"
             />
           </Grid>
         </Grid>
 
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button sx={{ mt: 3, ml: 1 }} onClick={handleBackOrderStep}>
             Back
           </Button>
           <Button
             type="submit"
+
             sx={{ mt: 3, ml: 1 }}
             variant="primary"
-            style={{ backgroundColor: "#3f51b5", color: "#FFFFFF" }}
-          >
+            style={{ backgroundColor: "#3f51b5", color: '#FFFFFF' }}>
+
             Next
           </Button>
         </Box>
+
       </form>
     </React.Fragment>
   );
-};
+}
 export default OrderPaymentPage;
