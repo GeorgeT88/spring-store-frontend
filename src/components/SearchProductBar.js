@@ -39,8 +39,6 @@ export default function SearchProductBar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(getProductByProductName(product));
-
-    console.log("OASDA:,", products);
     if (products.length !== 0) {
       history.push("/");
     } else {

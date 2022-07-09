@@ -117,7 +117,6 @@ function SignUp() {
       confirmPassword: "",
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values));
       dispatch(
         signUp(
           values.firstName,

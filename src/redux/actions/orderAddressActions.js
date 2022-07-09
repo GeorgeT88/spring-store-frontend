@@ -2,30 +2,34 @@ const SET_ORDER_ADDRESS = "SET_ORDER_ADDRESS";
 const GET_ORDER_ADDRESS = "GET_ORDER_ADDRESS";
 const CLEAR_ORDER_ADDRESS = "CLEAR_ORDER_ADDRESS";
 
-export const setOrderAddress = (firstName,lastName,addressLine1 ,addressLine2,city,state,zipPostalCode,country) => (
-  {
-    type: SET_ORDER_ADDRESS,
-    firstName: firstName,
-    lastName: lastName,
-    addressLine1: addressLine1,
-    addressLine2: addressLine2,
-    city: city,
-    state: state,
-    zipPostalCode: zipPostalCode,
-    country: country
-  }
-)
+export const setOrderAddress = (
+  firstName,
+  lastName,
+  addressLine1,
+  addressLine2,
+  city,
+  state,
+  zipPostalCode,
+  country
+) => ({
+  type: SET_ORDER_ADDRESS,
+  firstName: firstName,
+  lastName: lastName,
+  addressLine1: addressLine1,
+  addressLine2: addressLine2,
+  city: city,
+  state: state,
+  zipPostalCode: zipPostalCode,
+  country: country,
+});
 
 export const getOrderAddress = () => ({
   type: GET_ORDER_ADDRESS,
-})
+});
 
-
-export const clearOrderAddress = () => (
-  {
-    type: CLEAR_ORDER_ADDRESS
-  }
-)
+export const clearOrderAddress = () => ({
+  type: CLEAR_ORDER_ADDRESS,
+});
 
 const initialState = {
   firstName: null,
@@ -35,14 +39,12 @@ const initialState = {
   city: null,
   state: null,
   zipPostalCode: null,
-  country: null
-}
+  country: null,
+};
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (state = initialState, action) => {
 
+const orderAddressActions = (state = initialState, action) => {
   switch (action.type) {
-    
     case SET_ORDER_ADDRESS:
       return {
         ...initialState,
@@ -53,13 +55,14 @@ export default (state = initialState, action) => {
         city: action.city,
         state: action.state,
         zipPostalCode: action.zipPostalCode,
-        country: action.country
-      }
+        country: action.country,
+      };
     case GET_ORDER_ADDRESS:
-      return { ...state }
+      return { ...state };
     case CLEAR_ORDER_ADDRESS:
-      return initialState 
+      return initialState;
     default:
       return state;
   }
 };
+export default orderAddressActions;

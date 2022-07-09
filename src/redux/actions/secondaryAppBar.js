@@ -1,30 +1,28 @@
 const APPBARFALSE = "APPBARFALSE";
 const APPBARTRUE = "APPBARTRUE";
 
-export const appBarFalse = () =>({
-    type: APPBARFALSE
-})
+export const appBarFalse = () => ({
+  type: APPBARFALSE,
+});
 
+export const appBarTrue = () => ({
+  type: APPBARTRUE,
+});
 
-export const appBarTrue = () =>({
-  type: APPBARTRUE
-})
+const initialState = {
+  appbar: true,
+};
 
-const initalState = {
-    appbar: true
-  }
-  
-  // eslint-disable-next-line import/no-anonymous-default-export
-  export default (state = initalState, action) => {
-  
-    switch (action.type) {
-      case APPBARFALSE: {
-        return {...state, appbar: false };
-      }
-      case APPBARTRUE: {
-        return {...state, appbar: true };
-      }
-      default:
-        return state;
+const secondaryAppBar = (state = initialState, action) => {
+  switch (action.type) {
+    case APPBARFALSE: {
+      return { ...state, appbar: false };
     }
-  };
+    case APPBARTRUE: {
+      return { ...state, appbar: true };
+    }
+    default:
+      return state;
+  }
+};
+export default secondaryAppBar;
