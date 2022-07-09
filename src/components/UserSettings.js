@@ -1,27 +1,26 @@
-import React, {useEffect } from "react";
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
-import { appBarFalse,appBarTrue }from "../redux/actions/secondaryAppBar";
-import { useDispatch } from 'react-redux';
-
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import { appBarFalse, appBarTrue } from "../redux/actions/secondaryAppBar";
+import { makeStyles } from "@material-ui/core/styles";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/" to='/'>
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/" to="/">
         Spring Store App
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -29,16 +28,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -46,33 +45,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-function UserSettings ()  {
-
+function UserSettings() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-
-
-
   useEffect(() => {
-    dispatch (appBarFalse());
+    dispatch(appBarFalse());
     return () => {
-      dispatch (appBarTrue());
-    }     
+      dispatch(appBarTrue());
+    };
   }, [dispatch]);
 
-
-
-  const updatePassword = (e) =>{
-  }
-
- 
-
-
-  
-
+  const updatePassword = (e) => {};
 
   return (
     <Container component="main" maxWidth="xs">
@@ -94,8 +78,8 @@ function UserSettings ()  {
             label="Select New Password"
             name="username"
             autoComplete="username"
-            autoFocus        
-            onChange={e => updatePassword(e.target.value)}
+            autoFocus
+            onChange={(e) => updatePassword(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -107,9 +91,9 @@ function UserSettings ()  {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={e => updatePassword(e.target.value)}
+            onChange={(e) => updatePassword(e.target.value)}
           />
-         
+
           <Button
             type="submit"
             fullWidth
@@ -120,7 +104,6 @@ function UserSettings ()  {
           >
             Update password
           </Button>
-        
         </form>
       </div>
       <Box mt={8}>
