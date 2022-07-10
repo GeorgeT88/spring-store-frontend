@@ -64,8 +64,8 @@ export const addProductToCart = (productName, quantity) => async (dispatch) => {
 };
 
 export const updateProductToCart = (product, size) => {
-  return (dispatch, getState) => {
-    const token = getState().auth.token;
+  return (dispatch) => {
+    const token = localStorage.getItem("token");
     if (token) {
       const user = jwtDecode(token);
       axios
@@ -97,8 +97,8 @@ export const updateProductToCart = (product, size) => {
 };
 
 export const removeProductFromCart = (productName) => {
-  return (dispatch, getState) => {
-    const token = getState().auth.token;
+  return (dispatch) => {
+    const token = localStorage.getItem("token");
     if (token) {
       const user = jwtDecode(token);
       axios

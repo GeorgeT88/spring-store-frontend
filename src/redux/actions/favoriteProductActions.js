@@ -9,8 +9,8 @@ const PRODUCT_FAVORITES_SIGN_OUT = "PRODUCT_FAVORITES_SIGN_OUT";
 const PRODUCT_FAVORITES_LOCAL = "PRODUCT_FAVORITES_LOCAL";
 
 export const addProductToFavorites =
-  (product) => async (dispatch, getState) => {
-    const token = getState().auth.token;
+  (product) => async (dispatch) => {
+    const token = localStorage.getItem("token");
 
     if (token) {
       const user = jwtDecode(token);
@@ -42,8 +42,8 @@ export const addProductToFavorites =
   };
 
 export const removeProductFromFavorites = (product) => {
-  return (dispatch, getState) => {
-    const token = getState().auth.token;
+  return (dispatch) => {
+    const token = localStorage.getItem("token");
     if (token) {
       const user = jwtDecode(token);
       axios
@@ -76,8 +76,8 @@ export const removeProductFromFavorites = (product) => {
 };
 
 export const getAllProductsFromUserFavorites = () => {
-  return (dispatch, getState) => {
-    const token = getState().auth.token;
+  return (dispatch) => {
+    const token = localStorage.getItem("token");
     if (token) {
       const user = jwtDecode(token);
       axios
