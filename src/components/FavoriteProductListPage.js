@@ -13,71 +13,33 @@ const FavoriteProductListPage = () => {
   );
   const token = localStorage.getItem("token");
 
-  if (token) {
-    return (
-      <Paper sx={{ p: 5, margin: "auto", maxWidth: 1000, flexGrow: 1 }}>
-        {favoriteProducts.length !== 0 && (
-          <Typography
-            display="flex"
-            justifyContent="center"
-            variant="h5"
-            component="div"
-            paragraph={true}
-          >
-            Favorite Product List
-          </Typography>
-        )}
+  return (
+    <Paper sx={{ p: 5, margin: "auto", maxWidth: 1000, flexGrow: 1 }}>
+      <Typography
+        display="flex"
+        justifyContent="center"
+        variant="h5"
+        component="div"
+        paragraph={true}
+      >
+        {token
+          ? favoriteProducts.length > 0
+            ? "Favorite Product List!"
+            : "Favorite Product List is empty!"
+          : favoriteLocalProducts.length > 0
+          ? "Favorite Product List!"
+          : "Favorite Product List is empty!"}
+      </Typography>
 
-        {favoriteProducts.length === 0 && (
-          <Typography
-            display="flex"
-            justifyContent="center"
-            gutterBottom
-            variant="h6"
-            component="div"
-          >
-            Favorite Product List is empty!
-          </Typography>
-        )}
-
-        {favoriteProducts.map((product) => (
-          <FavoriteProductPage key={product.id} {...product} />
-        ))}
-      </Paper>
-    );
-  } else {
-    return (
-      <Paper sx={{ p: 5, margin: "auto", maxWidth: 1000, flexGrow: 1 }}>
-        {favoriteLocalProducts.length !== 0 && (
-          <Typography
-            display="flex"
-            justifyContent="center"
-            variant="h5"
-            component="div"
-            paragraph={true}
-          >
-            Favorite Product List
-          </Typography>
-        )}
-
-        {favoriteLocalProducts.length === 0 && (
-          <Typography
-            display="flex"
-            justifyContent="center"
-            gutterBottom
-            variant="h6"
-            component="div"
-          >
-            Favorite Product List is empty!
-          </Typography>
-        )}
-
-        {favoriteLocalProducts.map((product) => (
-          <FavoriteProductPage key={product.id} {...product} />
-        ))}
-      </Paper>
-    );
-  }
+      {token
+        ? favoriteProducts.map((product) => (
+            <FavoriteProductPage key={product.id} {...product} />
+          ))
+        : favoriteLocalProducts.map((product) => (
+            <FavoriteProductPage key={product.id} {...product} />
+          ))}
+    </Paper>
+  );
 };
 
 export default FavoriteProductListPage;

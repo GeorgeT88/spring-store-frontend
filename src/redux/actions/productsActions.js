@@ -1,14 +1,14 @@
 import axios from "axios";
 
-const ALLPRODUCTSBYCATEGORY = "ALLPRODUCTSBYCATEGORY";
-const ALLPRODUCTS = "ALLPRODUCTS";
-const PRODUCTBYPRODUCTNAME = "PRODUCTBYPRODUCTNAME";
+const GET_ALLPRODUCTS_BY_CATEGORY = "GET_ALLPRODUCTS_BY_CATEGORY";
+const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
+const GET_PRODUCT_BY_PRODUCTNAME = "GET_PRODUCT_BY_PRODUCTNAME";
 
 export const getAllProducts = () => async (dispatch) => {
   const response = await axios.get(process.env.REACT_APP_PRODUCT_PATH);
 
   dispatch({
-    type: ALLPRODUCTS,
+    type: GET_ALL_PRODUCTS,
     category: "All Products",
     products: response.data,
   });
@@ -19,7 +19,7 @@ export const getAllProductsByCategory = (category) => async (dispatch) => {
     process.env.REACT_APP_PRODUCT_PATH + `?category=${category}`
   );
   dispatch({
-    type: ALLPRODUCTSBYCATEGORY,
+    type: GET_ALLPRODUCTS_BY_CATEGORY,
     category: category,
     products: response.data,
   });
@@ -31,13 +31,13 @@ export const getProductByProductName = (name) => async (dispatch) => {
     let tmpArray = [];
     tmpArray.push(response.data);
     dispatch({
-      type: PRODUCTBYPRODUCTNAME,
+      type: GET_PRODUCT_BY_PRODUCTNAME,
       category: "No Category",
       products: tmpArray,
     });
   } catch (e) {
     dispatch({
-      type: PRODUCTBYPRODUCTNAME,
+      type: GET_PRODUCT_BY_PRODUCTNAME,
       category: "No Category",
       products: [],
     });
@@ -51,9 +51,9 @@ const initialState = {
 
 const productsActions = (state = initialState, action) => {
   switch (action.type) {
-    case ALLPRODUCTS:
-    case ALLPRODUCTSBYCATEGORY:
-    case PRODUCTBYPRODUCTNAME:
+    case GET_ALL_PRODUCTS:
+    case GET_ALLPRODUCTS_BY_CATEGORY:
+    case GET_PRODUCT_BY_PRODUCTNAME:
       return {
         ...initialState,
         category: action.category,
