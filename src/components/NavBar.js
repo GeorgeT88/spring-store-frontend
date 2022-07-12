@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
@@ -125,7 +125,7 @@ export default function NavBar() {
     useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-  const anchorRef = React.useRef(null);
+  const anchorRef = useRef(null);
   let history = useHistory();
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -203,7 +203,7 @@ export default function NavBar() {
   const prevOpen = React.useRef(open);
 
   useEffect(() => {
-    if (prevOpen.current === true && open === false) {
+    if (prevOpen.current && !open) {
       anchorRef.current.focus();
     }
 
@@ -384,7 +384,7 @@ export default function NavBar() {
                         {"Favorite Product List is empty!"}
                       </Typography>
                     )}
-                    {favoriteProducts !== null &&
+                    {favoriteProducts &&
                       favoriteProducts
                         .slice(0, 3)
                         .map((favoriteProduct) => (
@@ -405,7 +405,7 @@ export default function NavBar() {
                         {"Favorite Product List is empty!"}
                       </Typography>
                     )}
-                    {favoriteLocalProducts !== null &&
+                    {favoriteLocalProducts &&
                       favoriteLocalProducts
                         .slice(0, 3)
                         .map((favoriteProduct) => (
@@ -594,7 +594,7 @@ export default function NavBar() {
         style={{ minHeight: "6vh" }}
       >
         <Grid item xs={12}>
-          {appBar !== false && (
+          {appBar && (
             <div className={classes.root}>
               <div>
                 <Button
