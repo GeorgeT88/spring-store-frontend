@@ -22,31 +22,44 @@ const Img = styled("img")({
 });
 
 const FavoriteProductPage = (product) => {
+  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const productsInCart = useSelector((state) => state.cart.entries);
-  const token = localStorage.getItem("token");
+  const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const [cartClicked, setCartClicked] = useState(false);
+  const [cartClickedLocal, setCartClickedLocal] = useState(false);
 
   useEffect(() => {
-    if (
-      productsInCart.length !== 0 &&
-      productsInCart.some((p) => p.productName === product.name)
-    ) {
-      setCartClicked(true);
+    if (token) {
+      if (
+        productsInCart.length !== 0 &&
+        productsInCart.some((p) => p.productName === product.name)
+      ) {
+        setCartClicked(true);
+      } else {
+        setCartClicked(false);
+      }
     } else {
-      setCartClicked(false);
+      if (
+        productsInCartLocal.length !== 0 &&
+        productsInCartLocal.some((p) => p.name === product.name)
+      ) {
+        setCartClickedLocal(true);
+      } else {
+        setCartClickedLocal(false);
+      }
     }
-  }, [productsInCart, product.name]);
+  }, [token, productsInCartLocal, productsInCart, product.name, product]);
 
   const handleClickCart = () => {
     if (token) {
-      if (cartClicked === false) {
+      if (!cartClicked) {
         setCartClicked(true);
         dispatch(addProductToCart(product.name, 1));
       }
     } else {
-      if (cartClicked === false) {
-        setCartClicked(true);
+      if (!cartClickedLocal) {
+        setCartClickedLocal(true);
         dispatch(addProductToLocalCart(product, 1));
       }
     }
@@ -78,7 +91,48 @@ const FavoriteProductPage = (product) => {
                 {product.description}
               </Typography>
 
-              {cartClicked !== true && (
+              {token ? (
+                !cartClicked ? (
+                  <Grid>
+                    <Button
+                      onClick={() => handleClickCart()}
+                      variant="primary"
+                      style={{
+                        maxWidth: "300px",
+                        maxHeight: "30px",
+                        minWidth: "30px",
+                        minHeight: "30px",
+                        fontSize: "11px",
+                        backgroundColor: "#eeeeee",
+                      }}
+                      startIcon={<AddShoppingCartIcon />}
+                    >
+                      {" "}
+                      {"Add to Cart"}
+                    </Button>
+                  </Grid>
+                ) : (
+                  <Grid>
+                    <Button
+                      onClick={() => handleClickCart()}
+                      variant="primary"
+                      style={{
+                        maxWidth: "300px",
+                        maxHeight: "30px",
+                        minWidth: "30px",
+                        minHeight: "30px",
+                        fontSize: "11px",
+                        backgroundColor: "#3f51b5",
+                        color: "#FFFFFF",
+                      }}
+                      startIcon={<ShoppingCartIcon />}
+                    >
+                      {" "}
+                      {"Prod. in Cart"}
+                    </Button>
+                  </Grid>
+                )
+              ) : !cartClickedLocal ? (
                 <Grid>
                   <Button
                     onClick={() => handleClickCart()}
@@ -97,8 +151,7 @@ const FavoriteProductPage = (product) => {
                     {"Add to Cart"}
                   </Button>
                 </Grid>
-              )}
-              {cartClicked === true && (
+              ) : (
                 <Grid>
                   <Button
                     onClick={() => handleClickCart()}
