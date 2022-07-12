@@ -14,10 +14,16 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { setProduct } from "../redux/actions/productActions";
-import { addProductToFavorites, removeProductFromFavorites } from "../../src/redux/actions/favoriteProductActions";
+import {
+  addProductToFavorites,
+  removeProductFromFavorites,
+} from "../../src/redux/actions/favoriteProductActions";
 import { addProductToCart } from "../../src/redux/actions/cartActions";
 import { addProductToLocalCart } from "../../src/redux/actions/cartLocalActions";
-import { addProductToFavoritesLocal ,removeProductfromFavoritesLocal } from "../../src/redux/actions/favoriteLocalProductActions";
+import {
+  addProductToFavoritesLocal,
+  removeProductfromFavoritesLocal,
+} from "../../src/redux/actions/favoriteLocalProductActions";
 import { red } from "@mui/material/colors";
 import styled, { ThemeProvider } from "styled-components";
 import NoSsr from "@material-ui/core/NoSsr";
@@ -98,8 +104,9 @@ const Product = (product) => {
   const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const token = localStorage.getItem("token");
   const [clicked, setClicked] = useState(false);
+  const [clickedLocal, setClickedLocal] = useState(false);
   const [cartClicked, setCartClicked] = useState(false);
-
+  const [cartClickedLocal, setCartClickedLocal] = useState(false);
   const handleProductPage = () => {
     dispatch(setProduct(product));
     history.push(`/productPage`);
@@ -120,9 +127,9 @@ const Product = (product) => {
         productsInCartLocal.length !== 0 &&
         productsInCartLocal.some((p) => p.name === product.name)
       ) {
-        setCartClicked(true);
+        setCartClickedLocal(true);
       } else {
-        setCartClicked(false);
+        setCartClickedLocal(false);
       }
     }
   }, [token, productsInCart, productsInCartLocal, product.name]);
@@ -145,7 +152,7 @@ const Product = (product) => {
 
   const handleClick = () => {
     if (token) {
-      if (clicked === false) {
+      if (!clicked) {
         setClicked(true);
         dispatch(addProductToFavorites(product.name));
       } else {
@@ -153,11 +160,11 @@ const Product = (product) => {
         dispatch(removeProductFromFavorites(product.name));
       }
     } else {
-      if (clicked === false) {
+      if (!clickedLocal) {
         setClicked(true);
         dispatch(addProductToFavoritesLocal(product));
       } else {
-        setClicked(false);
+        setClickedLocal(false);
         dispatch(removeProductfromFavoritesLocal(product));
       }
     }
@@ -165,13 +172,13 @@ const Product = (product) => {
 
   const handleClickCart = () => {
     if (token) {
-      if (cartClicked === false) {
+      if (!cartClicked) {
         setCartClicked(true);
         dispatch(addProductToCart(product.name, 1));
       }
     } else {
-      if (cartClicked === false) {
-        setCartClicked(true);
+      if (!cartClickedLocal) {
+        setCartClickedLocal(true);
         dispatch(addProductToLocalCart(product, 1));
       }
     }
@@ -201,27 +208,48 @@ const Product = (product) => {
                 </Typography>
               </CardContent>
               <CardActions>
-                {cartClicked !== true && (
-                  <Grid>
-                    <Button
-                      onClick={() => handleClickCart()}
-                      variant="primary"
-                      style={{
-                        maxWidth: "300px",
-                        maxHeight: "30px",
-                        minWidth: "30px",
-                        minHeight: "30px",
-                        fontSize: "11px",
-                        backgroundColor: "#eeeeee",
-                      }}
-                      startIcon={<AddShoppingCartIcon />}
-                    >
-                      {" "}
-                      {"Add to Cart"}
-                    </Button>
-                  </Grid>
-                )}
-                {cartClicked === true && (
+                {token ? (
+                  cartClicked ? (
+                    <Grid>
+                      <Button
+                        onClick={() => handleClickCart()}
+                        variant="primary"
+                        style={{
+                          maxWidth: "300px",
+                          maxHeight: "30px",
+                          minWidth: "30px",
+                          minHeight: "30px",
+                          fontSize: "11px",
+                          backgroundColor: "#3f51b5",
+                          color: "#FFFFFF",
+                        }}
+                        startIcon={<ShoppingCartIcon />}
+                      >
+                        {" "}
+                        {"Prod. in Cart"}
+                      </Button>
+                    </Grid>
+                  ) : (
+                    <Grid>
+                      <Button
+                        onClick={() => handleClickCart()}
+                        variant="primary"
+                        style={{
+                          maxWidth: "300px",
+                          maxHeight: "30px",
+                          minWidth: "30px",
+                          minHeight: "30px",
+                          fontSize: "11px",
+                          backgroundColor: "#eeeeee",
+                        }}
+                        startIcon={<AddShoppingCartIcon />}
+                      >
+                        {" "}
+                        {"Add to Cart"}
+                      </Button>
+                    </Grid>
+                  )
+                ) : cartClickedLocal ? (
                   <Grid>
                     <Button
                       onClick={() => handleClickCart()}
@@ -241,13 +269,31 @@ const Product = (product) => {
                       {"Prod. in Cart"}
                     </Button>
                   </Grid>
+                ) : (
+                  <Grid>
+                    <Button
+                      onClick={() => handleClickCart()}
+                      variant="primary"
+                      style={{
+                        maxWidth: "300px",
+                        maxHeight: "30px",
+                        minWidth: "30px",
+                        minHeight: "30px",
+                        fontSize: "11px",
+                        backgroundColor: "#eeeeee",
+                      }}
+                      startIcon={<AddShoppingCartIcon />}
+                    >
+                      {" "}
+                      {"Add to Cart"}
+                    </Button>
+                  </Grid>
                 )}
-                {clicked === true && (
+                {clicked ? (
                   <IconButton color="default" onClick={() => handleClick()}>
                     <FavoriteIcon style={{ color: red[500] }} />
                   </IconButton>
-                )}
-                {clicked !== true && (
+                ) : (
                   <IconButton color="default" onClick={() => handleClick()}>
                     <FavoriteBorderIcon />
                   </IconButton>
