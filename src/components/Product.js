@@ -143,9 +143,9 @@ const Product = (product) => {
       }
     } else {
       if (favoriteLocalProducts.some((p) => p.name === product.name)) {
-        setClicked(true);
+        setClickedLocal(true);
       } else {
-        setClicked(false);
+        setClickedLocal(false);
       }
     }
   }, [token, favoriteLocalProducts, favoriteProducts, product.name]);
@@ -289,7 +289,17 @@ const Product = (product) => {
                     </Button>
                   </Grid>
                 )}
-                {clicked ? (
+                {token ? (
+                  clicked ? (
+                    <IconButton color="default" onClick={() => handleClick()}>
+                      <FavoriteIcon style={{ color: red[500] }} />
+                    </IconButton>
+                  ) : (
+                    <IconButton color="default" onClick={() => handleClick()}>
+                      <FavoriteBorderIcon />
+                    </IconButton>
+                  )
+                ) : clickedLocal ? (
                   <IconButton color="default" onClick={() => handleClick()}>
                     <FavoriteIcon style={{ color: red[500] }} />
                   </IconButton>
