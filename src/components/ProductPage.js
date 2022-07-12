@@ -11,9 +11,15 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { Carousel } from "react-carousel-minimal";
 import { addProductToCart } from "../../src/redux/actions/cartActions";
-import { addProductToFavoritesLocal, removeProductfromFavoritesLocal } from "../../src/redux/actions/favoriteLocalProductActions";
+import {
+  addProductToFavoritesLocal,
+  removeProductfromFavoritesLocal,
+} from "../../src/redux/actions/favoriteLocalProductActions";
 import { addProductToLocalCart } from "../../src/redux/actions/cartLocalActions";
-import { addProductToFavorites, removeProductFromFavorites } from "../../src/redux/actions/favoriteProductActions";
+import {
+  addProductToFavorites,
+  removeProductFromFavorites,
+} from "../../src/redux/actions/favoriteProductActions";
 import { red } from "@mui/material/colors";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -43,10 +49,13 @@ const ProductPage = () => {
     (state) => state.favoriteLocalProduct.products
   );
   const productsInCart = useSelector((state) => state.cart.entries);
+  const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const product = useSelector((state) => state.product);
   const token = localStorage.getItem("token");
   const [clicked, setClicked] = useState(false);
+  const [clickedLocal, setClickedLocal] = useState(false);
   const [cartClicked, setCartClicked] = useState(false);
+  const [cartClickedLocal, setCartClickedLocal] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -57,24 +66,32 @@ const ProductPage = () => {
       }
     } else {
       if (favoriteLocalProducts.some((p) => p.name === product.name)) {
-        setClicked(true);
+        setClickedLocal(true);
       } else {
-        setClicked(false);
+        setClickedLocal(false);
       }
     }
   }, [token, favoriteLocalProducts, favoriteProducts, product.name]);
 
   useEffect(() => {
-    if (productsInCart.some((p) => p.productName === product.name)) {
-      setCartClicked(true);
+    if (token) {
+      if (productsInCart.some((p) => p.productName === product.name)) {
+        setCartClicked(true);
+      } else {
+        setCartClicked(false);
+      }
     } else {
-      setCartClicked(false);
+      if (productsInCartLocal.some((p) => p.name === product.name)) {
+        setCartClickedLocal(true);
+      } else {
+        setCartClickedLocal(false);
+      }
     }
-  }, [productsInCart, product.name]);
+  }, [token, productsInCartLocal, productsInCart, product.name]);
 
   const handleFavoriteClick = () => {
     if (token) {
-      if (clicked === false) {
+      if (!clicked) {
         setClicked(true);
         dispatch(addProductToFavorites(product.name));
       } else {
@@ -82,11 +99,11 @@ const ProductPage = () => {
         dispatch(removeProductFromFavorites(product.name));
       }
     } else {
-      if (clicked === false) {
-        setClicked(true);
+      if (!clickedLocal) {
+        setClickedLocal(true);
         dispatch(addProductToFavoritesLocal(product));
       } else {
-        setClicked(false);
+        setClickedLocal(false);
         dispatch(removeProductfromFavoritesLocal(product));
       }
     }
@@ -99,8 +116,8 @@ const ProductPage = () => {
         dispatch(addProductToCart(product.name, 1));
       }
     } else {
-      if (cartClicked === false) {
-        setCartClicked(true);
+      if (cartClickedLocal === false) {
+        setCartClickedLocal(true);
         dispatch(addProductToLocalCart(product, 1));
       }
     }
@@ -196,7 +213,45 @@ const ProductPage = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              {clicked !== true && (
+              {token ? (
+                !clicked ? (
+                  <Button
+                    onClick={() => handleFavoriteClick()}
+                    className={classes.submit}
+                    variant="primary"
+                    style={{
+                      maxWidth: "300px",
+                      maxHeight: "30px",
+                      minWidth: "30px",
+                      minHeight: "30px",
+                      fontSize: "11px",
+                      backgroundColor: "#eeeeee",
+                    }}
+                    startIcon={<FavoriteBorderIcon />}
+                  >
+                    {" "}
+                    {"Add to Favorites"}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleFavoriteClick()}
+                    className={classes.submit}
+                    variant="primary"
+                    style={{
+                      maxWidth: "300px",
+                      maxHeight: "30px",
+                      minWidth: "30px",
+                      minHeight: "30px",
+                      fontSize: "11px",
+                      backgroundColor: "#eeeeee",
+                    }}
+                    startIcon={<FavoriteIcon sx={{ color: red[500] }} />}
+                  >
+                    {" "}
+                    {"Added to Favorites"}
+                  </Button>
+                )
+              ) : !clickedLocal ? (
                 <Button
                   onClick={() => handleFavoriteClick()}
                   className={classes.submit}
@@ -214,8 +269,7 @@ const ProductPage = () => {
                   {" "}
                   {"Add to Favorites"}
                 </Button>
-              )}
-              {clicked === true && (
+              ) : (
                 <Button
                   onClick={() => handleFavoriteClick()}
                   className={classes.submit}
@@ -234,7 +288,45 @@ const ProductPage = () => {
                   {"Added to Favorites"}
                 </Button>
               )}
-              {cartClicked !== true && (
+              {token ? (
+                !cartClicked ? (
+                  <Button
+                    onClick={() => handleClickCart()}
+                    className={classes.submit}
+                    variant="primary"
+                    style={{
+                      maxWidth: "300px",
+                      maxHeight: "30px",
+                      minWidth: "30px",
+                      minHeight: "30px",
+                      fontSize: "11px",
+                      backgroundColor: "#eeeeee",
+                    }}
+                    startIcon={<AddShoppingCartIcon />}
+                  >
+                    {" "}
+                    {"Add to Cart"}
+                  </Button>
+                ) : (
+                  <Button
+                    className={classes.submit}
+                    variant="primary"
+                    style={{
+                      maxWidth: "300px",
+                      maxHeight: "30px",
+                      minWidth: "30px",
+                      minHeight: "30px",
+                      fontSize: "11px",
+                      backgroundColor: "#3f51b5",
+                      color: "#FFFFFF",
+                    }}
+                    startIcon={<ShoppingCartIcon />}
+                  >
+                    {" "}
+                    {"Prod. in Cart"}
+                  </Button>
+                )
+              ) : !cartClickedLocal ? (
                 <Button
                   onClick={() => handleClickCart()}
                   className={classes.submit}
@@ -252,8 +344,7 @@ const ProductPage = () => {
                   {" "}
                   {"Add to Cart"}
                 </Button>
-              )}
-              {cartClicked === true && (
+              ) : (
                 <Button
                   className={classes.submit}
                   variant="primary"

@@ -161,7 +161,7 @@ const Product = (product) => {
       }
     } else {
       if (!clickedLocal) {
-        setClicked(true);
+        setClickedLocal(true);
         dispatch(addProductToFavoritesLocal(product));
       } else {
         setClickedLocal(false);
