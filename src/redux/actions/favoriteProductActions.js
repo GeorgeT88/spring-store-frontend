@@ -8,38 +8,63 @@ const PRODUCT_FAVORITES_SIGN_OUT = "PRODUCT_FAVORITES_SIGN_OUT";
 
 const PRODUCT_FAVORITES_LOCAL = "PRODUCT_FAVORITES_LOCAL";
 
-export const addProductToFavorites =
-  (product) => async (dispatch) => {
-    const token = localStorage.getItem("token");
+export const addProductToFavorites = (product) => async (dispatch) => {
+  const token = localStorage.getItem("token");
 
-    if (token) {
-      const user = jwtDecode(token);
-      const response = await axios.post(
-        process.env.REACT_APP_USER_PATH +
-          "userFavorites/" +
-          user.sub +
-          "/" +
-          product,
-        {
-          email: user.sub,
-          productName: product,
+  if (token) {
+    const user = jwtDecode(token);
+    const response = await axios.post(
+      process.env.REACT_APP_USER_PATH +
+        "userFavorites/" +
+        user.sub +
+        "/" +
+        product,
+      {
+        email: user.sub,
+        productName: product,
+      },
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.getItem("token"),
         },
-        {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
-      dispatch({
-        type: PRODUCT_FAVORITES,
-        products: response.data,
-      });
-      toast.success("Product Added To Favorites!", { position: "top-right" });
-    } else {
-      return null;
-    }
-  };
+      }
+    );
+    dispatch({
+      type: PRODUCT_FAVORITES,
+      products: response.data,
+    });
+    toast.success("Product Added To Favorites!", { position: "top-right" });
+  } else {
+    return null;
+  }
+};
+
+export const addProductsToFavorites = (products) => async (dispatch) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    const user = jwtDecode(token);
+
+    const response = await axios.put(
+      process.env.REACT_APP_USER_PATH +"userFavorites/" + user.sub, products
+      ,
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+    dispatch({
+      type: PRODUCT_FAVORITES,
+      products: response.data,
+    });
+    toast.success("Products Updated!", { position: "top-right" });
+  } else {
+    return null;
+  }
+};
 
 export const removeProductFromFavorites = (product) => {
   return (dispatch) => {

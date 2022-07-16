@@ -2,7 +2,13 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 import { getCartByUserEmail } from "../actions/cartActions";
-import { getAllProductsFromUserFavorites } from "../actions/favoriteProductActions";
+import {
+  getAllProductsFromUserFavorites,
+  addProductsToFavorites,
+} from "../actions/favoriteProductActions";
+import {
+  clearProductsFromFavoritesLocal,
+} from "../actions/favoriteLocalProductActions";
 
 const SIGN_IN = "SIGN_IN";
 const SIGN_UP = "SIGN_UP";
@@ -29,7 +35,7 @@ export const signUp =
     });
   };
 
-export const signIn = (email, password) => async (dispatch) => {
+export const signIn = (email, password) => async (dispatch, getState) => {
   try {
     const responseLogin = await axios.post(process.env.REACT_APP_LOGIN, {
       email,
@@ -76,15 +82,31 @@ export const signIn = (email, password) => async (dispatch) => {
   }
 
   try {
+    const favoriteLocalProducts = JSON.parse(
+      JSON.stringify(getState().favoriteLocalProduct.products)
+    ).map(({ name }) => name);
+
+    dispatch(addProductsToFavorites(favoriteLocalProducts));
+  } catch (e) {
+    console.log("Products could not be updated by login!");
+  }
+
+  try {
+    dispatch(clearProductsFromFavoritesLocal());
+  } catch (e) {
+    console.log("clear Products To Favorites Local failed!");
+  }
+
+  try {
     dispatch(getAllProductsFromUserFavorites());
   } catch (e) {
-    console.log("Login failed!");
+    console.log("get All Products From User Favorites failed!");
   }
 
   try {
     dispatch(getCartByUserEmail());
   } catch (e) {
-    console.log("Login failed!");
+    console.log("get Cart By User Email failed!");
   }
 };
 

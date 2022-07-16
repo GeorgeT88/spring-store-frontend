@@ -2,6 +2,8 @@ import { toast } from "react-toastify";
 
 const ADD_PRODUCT_TO_FAVORITES_LIST = "ADD_PRODUCT_TO_FAVORITES_LIST";
 const REMOVE_PRODUCT_TO_FAVORITES_LIST = "REMOVE_PRODUCT_TO_FAVORITES_LIST";
+const CLEAR_PRODUCTS_TO_FAVORITES_LIST = "CLEAR_PRODUCTS_TO_FAVORITES_LIST";
+
 
 export const addProductToFavoritesLocal = (product) => async (dispatch) => {
   dispatch({
@@ -19,6 +21,12 @@ export const removeProductfromFavoritesLocal =
     });
     toast.error("Product Removed from Local Favorites!", {
       position: "top-right",
+    });
+  };
+
+  export const clearProductsFromFavoritesLocal = () => async (dispatch) => {
+    dispatch({
+      type: CLEAR_PRODUCTS_TO_FAVORITES_LIST,
     });
   };
 
@@ -40,6 +48,11 @@ const favoriteProductActions = (state = initialState, action) => {
           (product) => product.name !== action.product.name
         ),
       };
+      case CLEAR_PRODUCTS_TO_FAVORITES_LIST:
+        return {
+          ...initialState,
+          products: [],
+        };                   
     default:
       return state;
   }
