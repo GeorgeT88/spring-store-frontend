@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 const ADD_PRODUCT_TO_LOCAL_CART = "ADD_PRODUCT_TO_LOCAL_CART";
 const REMOVE_PRODUCT_FROM_LOCAL_CART = "REMOVE_PRODUCT_FROM_LOCAL_CART";
 const UPDATE_PRODUCT_TO_LOCAL_CART = "UPDATE_PRODUCT_TO_LOCAL_CART";
+const CLEAR_PRODUCTS_FROM_LOCAL_CART = "CLEAR_PRODUCTS_FROM_LOCAL_CART";
 
 export const addProductToLocalCart =
   (product, quantity) => async (dispatch) => {
@@ -28,6 +29,12 @@ export const removeProductfromLocalCart = (product) => async (dispatch) => {
     product: product,
   });
   toast.error("Product Removed from Local Cart!", { position: "top-right" });
+};
+
+export const clearProductsFromLocalCart = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_PRODUCTS_FROM_LOCAL_CART,
+  });
 };
 
 const initialState = {
@@ -67,6 +74,12 @@ const cartLocalActions = (state = initialState, action) => {
           0
         ),
       };
+      case CLEAR_PRODUCTS_FROM_LOCAL_CART:
+        return {
+          ...initialState,
+          products: [],
+          total: 0,
+        };   
     default:
       return state;
   }

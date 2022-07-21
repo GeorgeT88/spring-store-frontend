@@ -60,7 +60,6 @@ export const addProductsToFavorites = (products) => async (dispatch) => {
       type: PRODUCT_FAVORITES,
       products: response.data,
     });
-    toast.success("Products Updated!", { position: "top-right" });
   } else {
     return null;
   }

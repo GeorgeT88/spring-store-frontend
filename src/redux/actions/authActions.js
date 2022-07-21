@@ -9,6 +9,14 @@ import {
 import {
   clearProductsFromFavoritesLocal,
 } from "../actions/favoriteLocalProductActions";
+import {
+  addProductsToCartFavorites,
+} from "../actions/cartActions";
+import {
+  clearProductsFromLocalCart,
+} from "../actions/cartLocalActions";
+
+
 
 const SIGN_IN = "SIGN_IN";
 const SIGN_UP = "SIGN_UP";
@@ -101,6 +109,21 @@ export const signIn = (email, password) => async (dispatch, getState) => {
     dispatch(getAllProductsFromUserFavorites());
   } catch (e) {
     console.log("get All Products From User Favorites failed!");
+  }
+
+  try {
+    const productsInCartLocal = JSON.parse(
+      JSON.stringify(getState().cartLocal.products));
+
+    dispatch(addProductsToCartFavorites(productsInCartLocal));
+  } catch (e) {
+    console.log("Cart could not be updated on login!");
+  }
+
+  try {
+    dispatch(clearProductsFromLocalCart());
+  } catch (e) {
+    console.log("clear Products from Cart Local failed!");
   }
 
   try {

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 const GET_CART = "GET_CART";
 const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
+const ADD_PRODUCTS_TO_CART = "ADD_PRODUCTS_TO_CART";
 const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART";
 const CART_SIGN_OUT = "CART_SIGN_OUT";
 
@@ -61,6 +62,26 @@ export const addProductToCart = (productName, quantity) => async (dispatch) => {
     });
     toast.success("Product Added To Cart!", { position: "top-right" });
   } else return null;
+};
+
+export const addProductsToCartFavorites = (products) => async (dispatch) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    const user = jwtDecode(token);
+     await axios.put(
+      process.env.REACT_APP_CART_PATH + user.sub, products
+      ,
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+  } else {
+    return null;
+  }
 };
 
 export const updateProductToCart = (product, size) => {
