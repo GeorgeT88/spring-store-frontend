@@ -67,7 +67,7 @@ export const addProductToCart = (productName, quantity) => async (dispatch) => {
 export const addProductsToCartFavorites = (products) => async (dispatch) => {
   const token = localStorage.getItem("token");
 
-  if (token) {
+  if (token && products?.length > 0) {
     const user = jwtDecode(token);
      await axios.put(
       process.env.REACT_APP_CART_PATH + user.sub, products
