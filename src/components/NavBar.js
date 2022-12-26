@@ -304,7 +304,7 @@ export default function NavBar() {
               noWrap
               onClick={handleBackToMainPage}
             >
-              Springwebstore
+              Springwebstore <b>{process.env.NODE_ENV}</b> mode
             </Typography>
           </Button>
           <SearchProductBar />

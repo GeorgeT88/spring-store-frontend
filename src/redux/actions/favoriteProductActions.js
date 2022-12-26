@@ -43,7 +43,7 @@ export const addProductToFavorites = (product) => async (dispatch) => {
 export const addProductsToFavorites = (products) => async (dispatch) => {
   const token = localStorage.getItem("token");
 
-  if (token) {
+  if (token && products?.length > 0) {
     const user = jwtDecode(token);
 
     const response = await axios.put(
