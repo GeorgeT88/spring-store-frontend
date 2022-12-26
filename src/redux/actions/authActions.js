@@ -63,73 +63,77 @@ export const signIn = (email, password) => async (dispatch, getState) => {
     console.log("Token setup failed!");
   }
 
-  try {
-    const response = await axios.get(
-      process.env.REACT_APP_USER_PATH + `?email=${email}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    );
-    dispatch({
-      type: SIGN_IN,
-      token: localStorage.getItem("token"),
-      id: response.data.id,
-      firstName: response.data.firstName,
-      lastName: response.data.lastName,
-      email: response.data.email,
-      phoneNumber: response.data.phoneNumber,
-      deliveryAddress: response.data.deliveryAddress,
-      userFavorites: response.data.userFavorites,
-      err: null,
-    });
-  } catch (e) {
-    console.log("Login failed!");
-  }
 
-  try {
-    const favoriteLocalProducts = JSON.parse(
-      JSON.stringify(getState().favoriteLocalProduct.products)
-    ).map(({ name }) => name);
+  //Load user data only if login was successful
+  if(localStorage.getItem("token")){
+    try {
+      const response = await axios.get(
+          process.env.REACT_APP_USER_PATH + `?email=${email}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+      );
+      dispatch({
+        type: SIGN_IN,
+        token: localStorage.getItem("token"),
+        id: response.data.id,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        email: response.data.email,
+        phoneNumber: response.data.phoneNumber,
+        deliveryAddress: response.data.deliveryAddress,
+        userFavorites: response.data.userFavorites,
+        err: null,
+      });
+    } catch (e) {
+      console.log("Login failed!");
+    }
 
-    dispatch(addProductsToFavorites(favoriteLocalProducts));
-  } catch (e) {
-    console.log("Products could not be updated by login!");
-  }
+    try {
+      const favoriteLocalProducts = JSON.parse(
+          JSON.stringify(getState().favoriteLocalProduct.products)
+      ).map(({ name }) => name);
 
-  try {
-    dispatch(clearProductsFromFavoritesLocal());
-  } catch (e) {
-    console.log("clear Products To Favorites Local failed!");
-  }
+      dispatch(addProductsToFavorites(favoriteLocalProducts));
+    } catch (e) {
+      console.log("Products could not be updated by login!");
+    }
 
-  try {
-    dispatch(getAllProductsFromUserFavorites());
-  } catch (e) {
-    console.log("get All Products From User Favorites failed!");
-  }
+    try {
+      dispatch(clearProductsFromFavoritesLocal());
+    } catch (e) {
+      console.log("clear Products To Favorites Local failed!");
+    }
 
-  try {
-    const productsInCartLocal = JSON.parse(
-      JSON.stringify(getState().cartLocal.products));
+    try {
+      dispatch(getAllProductsFromUserFavorites());
+    } catch (e) {
+      console.log("get All Products From User Favorites failed!");
+    }
 
-    dispatch(addProductsToCartFavorites(productsInCartLocal));
-  } catch (e) {
-    console.log("Cart could not be updated on login!");
-  }
+    try {
+      const productsInCartLocal = JSON.parse(
+          JSON.stringify(getState().cartLocal.products));
 
-  try {
-    dispatch(clearProductsFromLocalCart());
-  } catch (e) {
-    console.log("clear Products from Cart Local failed!");
-  }
+      dispatch(addProductsToCartFavorites(productsInCartLocal));
+    } catch (e) {
+      console.log("Cart could not be updated on login!");
+    }
 
-  try {
-    dispatch(getCartByUserEmail());
-  } catch (e) {
-    console.log("get Cart By User Email failed!");
+    try {
+      dispatch(clearProductsFromLocalCart());
+    } catch (e) {
+      console.log("clear Products from Cart Local failed!");
+    }
+
+    try {
+      dispatch(getCartByUserEmail());
+    } catch (e) {
+      console.log("get Cart By User Email failed!");
+    }
   }
 };
 
