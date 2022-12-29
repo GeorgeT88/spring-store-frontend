@@ -4,16 +4,14 @@ import { toast } from "react-toastify";
 
 const GET_CART = "GET_CART";
 const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
-const ADD_PRODUCTS_TO_CART = "ADD_PRODUCTS_TO_CART";
 const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART";
 const CART_SIGN_OUT = "CART_SIGN_OUT";
 
 export const getCartByUserEmail = () => async (dispatch) => {
   const token = localStorage.getItem("token");
   if (token) {
-    const user = jwtDecode(token);
     const response = await axios.get(
-      process.env.REACT_APP_CART_PATH + user.sub,
+      process.env.REACT_APP_CART_PATH,
       {
         headers: {
           "Content-Type": "application/json",
@@ -37,8 +35,6 @@ export const addProductToCart = (productName, quantity) => async (dispatch) => {
     const user = jwtDecode(token);
     const response = await axios.post(
       process.env.REACT_APP_CART_PATH +
-        user.sub +
-        "/" +
         productName +
         "/" +
         quantity,
@@ -68,9 +64,8 @@ export const addProductsToCartFavorites = (products) => async (dispatch) => {
   const token = localStorage.getItem("token");
 
   if (token && products?.length > 0) {
-    const user = jwtDecode(token);
      await axios.put(
-      process.env.REACT_APP_CART_PATH + user.sub, products
+      process.env.REACT_APP_CART_PATH, products
       ,
       {
         headers: {
@@ -88,12 +83,9 @@ export const updateProductToCart = (product, size) => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     if (token) {
-      const user = jwtDecode(token);
       axios
         .put(
           process.env.REACT_APP_CART_PATH +
-            user.sub +
-            "/" +
             product +
             "/" +
             size,
@@ -121,10 +113,9 @@ export const removeProductFromCart = (productName) => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     if (token) {
-      const user = jwtDecode(token);
       axios
         .delete(
-          process.env.REACT_APP_CART_PATH + user.sub + "/" + productName,
+          process.env.REACT_APP_CART_PATH + productName,
           {
             headers: {
               "Content-type": "application/json",
