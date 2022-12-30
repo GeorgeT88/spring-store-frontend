@@ -16,8 +16,6 @@ export const addProductToFavorites = (product) => async (dispatch) => {
     const response = await axios.post(
       process.env.REACT_APP_USER_PATH +
         "userFavorites/" +
-        user.sub +
-        "/" +
         product,
       {
         email: user.sub,
@@ -44,10 +42,8 @@ export const addProductsToFavorites = (products) => async (dispatch) => {
   const token = localStorage.getItem("token");
 
   if (token && products?.length > 0) {
-    const user = jwtDecode(token);
-
     const response = await axios.put(
-      process.env.REACT_APP_USER_PATH +"userFavorites/" + user.sub, products
+      process.env.REACT_APP_USER_PATH +"userFavorites", products
       ,
       {
         headers: {
@@ -69,13 +65,10 @@ export const removeProductFromFavorites = (product) => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     if (token) {
-      const user = jwtDecode(token);
       axios
         .delete(
           process.env.REACT_APP_USER_PATH +
             "userFavorites/" +
-            user.sub +
-            "/" +
             product,
           {
             headers: {
@@ -103,9 +96,8 @@ export const getAllProductsFromUserFavorites = () => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     if (token) {
-      const user = jwtDecode(token);
       axios
-        .get(process.env.REACT_APP_USER_PATH + "userFavorites/" + user.sub, {
+        .get(process.env.REACT_APP_USER_PATH + "userFavorites", {
           headers: {
             "Content-type": "application/json",
             Authorization: localStorage.getItem("token"),

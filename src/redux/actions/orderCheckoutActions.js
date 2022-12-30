@@ -1,5 +1,4 @@
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 
 const CREATE_NEW_ORDER = "CREATE_NEW_ORDER";
@@ -23,9 +22,8 @@ export const createNewOrder =
     const token = getState().auth.token;
 
     if (token) {
-      const emailUser = jwtDecode(token);
       const response = await axios.post(
-        process.env.REACT_APP_CREATE_ORDER + emailUser.sub,
+        process.env.REACT_APP_CREATE_ORDER,
         {
           firstName,
           lastName,
