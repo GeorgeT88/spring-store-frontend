@@ -13,10 +13,7 @@ export const createNewOrder =
     state,
     zipPostalCode,
     country,
-    nameOnCard,
-    cardNumber,
-    expiryDate,
-    cvv
+    entries
   ) =>
   async (dispatch, getState) => {
     const token = getState().auth.token;
@@ -33,10 +30,7 @@ export const createNewOrder =
           state,
           zipPostalCode,
           country,
-          nameOnCard,
-          cardNumber,
-          expiryDate,
-          cvv,
+          entries
         },
         {
           headers: {
@@ -56,10 +50,7 @@ export const createNewOrder =
         state: response.data.state,
         zipPostalCode: response.data.zipPostalCode,
         country: response.data.country,
-        nameOnCard: response.data.nameOnCard,
-        cardNumber: response.data.cardNumber,
-        expiryDate: response.data.expiryDate,
-        cvv: response.data.cvv,
+        entries: response.data.entries
       });
       toast.success("Succesfully created new order!", {
         position: "top-right",
@@ -77,10 +68,7 @@ const initialState = {
   state: null,
   zipPostalCode: null,
   country: null,
-  nameOnCard: null,
-  cardNumber: null,
-  expiryDate: null,
-  cvv: null,
+  entries: null
 };
 
 const orderCheckoutActions = (state = initialState, action) => {
@@ -96,10 +84,7 @@ const orderCheckoutActions = (state = initialState, action) => {
         city: action.city,
         state: action.state,
         zipPostalCode: action.zipPostalCode,
-        country: action.country,
-        nameOnCard: action.nameOnCard,
-        expiryDate: action.expiryDate,
-        cvv: action.cvv,
+        entries: action.entries
       };
     default:
       return state;
