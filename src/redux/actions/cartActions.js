@@ -32,16 +32,11 @@ export const addProductToCart = (productName, quantity) => async (dispatch) => {
   const token = localStorage.getItem("token");
 
   if (token) {
-    const user = jwtDecode(token);
     const response = await axios.post(
-      process.env.REACT_APP_CART_PATH +
-        productName +
-        "/" +
-        quantity,
+      process.env.REACT_APP_CART_PATH,
       {
-        email: user.sub,
-        productName: productName,
-        quantity: quantity,
+        name: productName,
+        quantity: quantity
       },
       {
         headers: {
@@ -79,17 +74,17 @@ export const addProductsToCartFavorites = (products) => async (dispatch) => {
   }
 };
 
-export const updateProductToCart = (product, size) => {
+export const updateProductToCart = (product, quantity) => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     if (token) {
       axios
         .put(
-          process.env.REACT_APP_CART_PATH +
-            product +
-            "/" +
-            size,
-          {},
+          process.env.REACT_APP_CART_PATH,
+            [{
+              name: product,
+              quantity: quantity
+            }],
           {
             headers: {
               "Content-type": "application/json",
