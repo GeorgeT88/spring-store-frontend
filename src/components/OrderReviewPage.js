@@ -12,9 +12,7 @@ import { createNewOrder } from "../redux/actions/orderCheckoutActions";
 
 export default function OrderReviewPage() {
   const dispatch = useDispatch();
-  const productsInCart = useSelector((state) => state.cart.productsInCartList);
   const orderAddress = useSelector((state) => state).orderAddress;
-  const orderCreditCardInfo = useSelector((state) => state).orderCreditCardInfo;
   const cart = useSelector((state) => state.cart);
 
   const handleBackOrderStep = () => {
@@ -22,20 +20,17 @@ export default function OrderReviewPage() {
   };
   const handlekOrderStep = () => {
     dispatch(
-      createNewOrder(
-        orderAddress.firstName,
-        orderAddress.lastName,
-        orderAddress.addressLine1,
-        orderAddress.addressLine2,
-        orderAddress.city,
-        orderAddress.state,
-        orderAddress.zipPostalCode,
-        orderAddress.country,
-        orderCreditCardInfo.nameOnCard,
-        orderCreditCardInfo.cardNumber,
-        orderCreditCardInfo.expiryDate,
-        orderCreditCardInfo.cvv
-      )
+        createNewOrder(
+            orderAddress.firstName,
+            orderAddress.lastName,
+            orderAddress.addressLine1,
+            orderAddress.addressLine2,
+            orderAddress.city,
+            orderAddress.state,
+            orderAddress.zipPostalCode,
+            orderAddress.country,
+            cart.entries
+        )
     );
     dispatch(setOrderStep(3));
   };
@@ -46,15 +41,15 @@ export default function OrderReviewPage() {
         Order summary
       </Typography>
       <List disablePadding>
-        {productsInCart.map((product) => (
-          <ListItem key={product.productDto.productName} sx={{ py: 1, px: 0 }}>
+        {cart.entries.map((product) => (
+          <ListItem key={product.productName} sx={{ py: 1, px: 0 }}>
             <ListItemText
               primary={
-                product.productDto.productName + "   x " + product.quantity
+                product.productName + "   x " + product.quantity
               }
-              secondary={product.productDto.productDescription}
+              secondary={product.description}
             />
-            <Typography variant="body2">{product.productTotalPrice}</Typography>
+            <Typography variant="body2">{product.price*product.quantity}</Typography>
           </ListItem>
         ))}
 
