@@ -43,6 +43,7 @@ export default function OrderCheckoutPage() {
               href="#"
               variant="body2"
               onClick={() => handleBackToMainPage()}
+              to="#"
             >
               {"Go back to the main page"}
             </Link>

@@ -98,7 +98,7 @@ export default function OrderReviewPage() {
               onClick={handlekOrderStep}
               type="submit"
               sx={{ mt: 3, ml: 1 }}
-              variant="primary"
+              variant="contained"
               style={{ backgroundColor: "#3f51b5", color: "#FFFFFF" }}
             >
               order

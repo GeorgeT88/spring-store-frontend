@@ -19,13 +19,13 @@ const OrderAddressPage = () => {
       .required("First Name is required!")
       .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
       .min(3, "First Name has to be be at least 3 characters long!")
-      .max(20, "First Name can not contain more than 16 characters!"),
+      .max(50, "First Name can not contain more than 16 characters!"),
     lastName: yup
       .string()
       .required("Last Name is required!")
       .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
       .min(3, "Last Name has to be be at least 3 characters long!")
-      .max(20, "Last Name can not contain more than 16 characters!"),
+      .max(50, "Last Name can not contain more than 16 characters!"),
     addressLine1: yup
       .string()
       .required("Delivery Address 1 is required!")
@@ -34,7 +34,7 @@ const OrderAddressPage = () => {
         "Only characters and digits are allowed in this field"
       )
       .min(8, "Delivery Address has to be be at least 8 characters!")
-      .max(300, "Delivery Address 1 can not contain more than 300 characters!"),
+      .max(150, "Delivery Address 1 can not contain more than 150 characters!"),
     addressLine2: yup
       .string()
       .notRequired("Delivery Address 2 is not required!")
@@ -43,7 +43,7 @@ const OrderAddressPage = () => {
         "Only characters and digits are allowed in this field"
       )
       .min(8, "Delivery Address has to be be at least 8 characters!")
-      .max(300, "Delivery Address 2 can not contain more than 300 characters!"),
+      .max(150, "Delivery Address 2 can not contain more than 150 characters!"),
     city: yup
       .string()
       .required("City is required!")
@@ -243,7 +243,7 @@ const OrderAddressPage = () => {
             <Button
               type="submit"
               sx={{ mt: 3, ml: 1 }}
-              variant="primary"
+              variant="contained"
               style={{ backgroundColor: "#3f51b5", color: "#FFFFFF" }}
             >
               Next

@@ -16,9 +16,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://www.springwebstore.com/">
+      <Link color="inherit" href="https://www.springwebstore.com/" to="https://www.springwebstore.com/">
         springwebstore.com
       </Link>{" "}
       {new Date().getFullYear()}

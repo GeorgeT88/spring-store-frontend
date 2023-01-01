@@ -33,7 +33,6 @@ const initialState = {
 const orderCreditCardInfoActions = (state = initialState, action) => {
   switch (action.type) {
     case SET_ORDER_CREDITCARD_INFO:
-      console.log(JSON.stringify(state));
       return {
         ...initialState,
         nameOnCard: action.nameOnCard,

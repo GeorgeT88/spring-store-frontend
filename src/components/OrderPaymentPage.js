@@ -26,7 +26,6 @@ const OrderPaymentPage = () => {
       cvv: "test",
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values));
       dispatch(
         setOrderCreditCardInfo(
           values.nameOnCard,
@@ -149,7 +148,7 @@ const OrderPaymentPage = () => {
           <Button
             type="submit"
             sx={{ mt: 3, ml: 1 }}
-            variant="primary"
+            variant="contained"
             style={{ backgroundColor: "#3f51b5", color: "#FFFFFF" }}
           >
             Next

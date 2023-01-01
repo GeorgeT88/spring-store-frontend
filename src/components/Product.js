@@ -213,7 +213,7 @@ const Product = (product) => {
                     <Grid>
                       <Button
                         onClick={() => handleClickCart()}
-                        variant="primary"
+                        variant="contained"
                         style={{
                           maxWidth: "300px",
                           maxHeight: "30px",
@@ -233,7 +233,7 @@ const Product = (product) => {
                     <Grid>
                       <Button
                         onClick={() => handleClickCart()}
-                        variant="primary"
+                        variant="contained"
                         style={{
                           maxWidth: "300px",
                           maxHeight: "30px",
@@ -253,7 +253,7 @@ const Product = (product) => {
                   <Grid>
                     <Button
                       onClick={() => handleClickCart()}
-                      variant="primary"
+                      variant="contained"
                       style={{
                         maxWidth: "300px",
                         maxHeight: "30px",
@@ -273,7 +273,7 @@ const Product = (product) => {
                   <Grid>
                     <Button
                       onClick={() => handleClickCart()}
-                      variant="primary"
+                      variant="contained"
                       style={{
                         maxWidth: "300px",
                         maxHeight: "30px",
