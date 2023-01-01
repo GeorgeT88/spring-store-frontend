@@ -17,15 +17,15 @@ const OrderAddressPage = () => {
     firstName: yup
       .string()
       .required("First Name is required!")
-      .matches("^[aA-zZ]+$", "Only characters are allowed in this field")
-      .min(0, "First Name has to be be atleast 3 characters long!")
-      .max(16, "First Name can not contain more than 16 characters!"),
+      .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
+      .min(3, "First Name has to be be at least 3 characters long!")
+      .max(20, "First Name can not contain more than 16 characters!"),
     lastName: yup
       .string()
       .required("Last Name is required!")
-      .matches("^[aA-zZ]+$", "Only characters are allowed in this field")
-      .min(0, "Last Name has to be be atleast 3 characters long!")
-      .max(16, "Last Name can not contain more than 16 characters!"),
+      .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
+      .min(3, "Last Name has to be be at least 3 characters long!")
+      .max(20, "Last Name can not contain more than 16 characters!"),
     addressLine1: yup
       .string()
       .required("Delivery Address 1 is required!")
@@ -33,7 +33,7 @@ const OrderAddressPage = () => {
         "^[a-zA-Z0-9 ]+$",
         "Only characters and digits are allowed in this field"
       )
-      .min(0, "Delivery Address has to be be atleast 8 characters!")
+      .min(8, "Delivery Address has to be be at least 8 characters!")
       .max(300, "Delivery Address 1 can not contain more than 300 characters!"),
     addressLine2: yup
       .string()
@@ -42,34 +42,33 @@ const OrderAddressPage = () => {
         "^[a-zA-Z0-9 ]+$",
         "Only characters and digits are allowed in this field"
       )
-      .min(0, "Delivery Address has to be be atleast 8 characters!")
+      .min(8, "Delivery Address has to be be at least 8 characters!")
       .max(300, "Delivery Address 2 can not contain more than 300 characters!"),
     city: yup
       .string()
       .required("City is required!")
-      .matches("^[aA-zZ]+$", "Only characters are allowed in this field")
-      .min(0, "City has to be be atleast 3 characters long!")
+      .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
+      .min(3, "City has to be be at least 3 characters long!")
       .max(25, "City can not contain more than 25 characters!"),
     state: yup
       .string()
       .required("State is required!")
-      .matches("^[aA-zZ]+$", "Only characters are allowed in this field")
-      .min(0, "State has to be be atleast 3 characters long!")
+      .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
+      .min(3, "State has to be be at least 3 characters long!")
       .max(25, "State not contain more than 25 characters!"),
     zipPostalCode: yup
       .string()
       .required("Zip/Postal Code is required!")
       .matches(
-        "^[a-zA-Z0-9 ]+$",
-        "Only characters and digits are allowed in this field"
+        "^\\d+$",
+        "Only digits are allowed in this field"
       )
-      .min(0, "Zip/Postal Code has to be be atleast 2 characters!")
-      .max(60, "Zip/Postal Code can not contain more than 60 characters!"),
+      .length(6, "Zip/Postal Code has to be have 6 characters!"),
     country: yup
       .string()
       .required("Country is required!")
-      .matches("^[aA-zZ]+$", "Only characters are allowed in this field")
-      .min(0, "Country has to be be atleast 3 characters long!")
+      .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
+      .min(3, "Country has to be be at least 3 characters long!")
       .max(25, "Country not contain more than 25 characters!"),
   });
 
