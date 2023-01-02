@@ -111,7 +111,7 @@ const CartPage = () => {
                       <Typography variant="body2" gutterBottom>
                         {product.description}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="body2" color="textSecondary">
                         Product Price: {product.price}
                       </Typography>
                     </Grid>
@@ -134,6 +134,7 @@ const CartPage = () => {
                               return (
                                 <MenuItem
                                   value={i}
+                                  key={i}
                                   onClick={() =>
                                     handleProductQuantity(
                                       product.productName,
@@ -187,7 +188,7 @@ const CartPage = () => {
               onClick={handlekOrderStep}
               type="submit"
               sx={{ mt: 3, ml: 1 }}
-              variant="primary"
+              variant="contained"
               style={{ backgroundColor: "#3f51b5", color: "#FFFFFF" }}
             >
               order
@@ -254,7 +255,7 @@ const CartPage = () => {
                       <Typography variant="body2" gutterBottom>
                         {product.description}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="body2" color="textSecondary">
                         Product Price: {product.price}
                       </Typography>
                     </Grid>
@@ -277,6 +278,7 @@ const CartPage = () => {
                               return (
                                 <MenuItem
                                   value={i}
+                                  key={i}
                                   onClick={() =>
                                     handleProductQuantity(product, i + 1)
                                   }
@@ -325,7 +327,7 @@ const CartPage = () => {
               onClick={handlekOrderStep}
               type="submit"
               sx={{ mt: 3, ml: 1 }}
-              variant="primary"
+              variant="contained"
               style={{ backgroundColor: "#3f51b5", color: "#FFFFFF" }}
             >
               order

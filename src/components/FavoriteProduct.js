@@ -63,7 +63,7 @@ const FavoriteProduct = (product) => {
               <Typography variant="body2" gutterBottom>
                 {name}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="textSecondary">
                 Product price: {price}
               </Typography>
               <Grid>

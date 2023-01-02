@@ -1,5 +1,4 @@
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 
 const GET_CART = "GET_CART";

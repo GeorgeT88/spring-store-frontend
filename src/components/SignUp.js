@@ -62,13 +62,13 @@ function SignUp() {
       .required("First Name is required!")
       .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
       .min(4, "First Name has to be be at least 4 characters long!")
-      .max(16, "First Name can not contain more than 16 characters!"),
+      .max(50, "First Name can not contain more than 50 characters!"),
     lastName: yup
       .string()
       .required("Last Name is required!")
       .matches("^[a-zA-Z][a-zA-Z\\s-]*$", "Only characters, dashes and spaces are allowed in this field")
       .min(3, "Last Name has to be be at least 3 characters long!")
-      .max(16, "Last Name can not contain more than 16 characters!"),
+      .max(50, "Last Name can not contain more than 50 characters!"),
     email: yup
       .string()
       .required("Email is required!")
@@ -77,13 +77,13 @@ function SignUp() {
         "Invalid Email!"
       )
       .min(8, "Email has to be be at least 8 characters long!")
-      .max(56, "Email can not contain more than 56 characters!"),
+      .max(100, "Email can not contain more than 100 characters!"),
     phoneNumber: yup
       .string()
       .required("Phone Number is required!")
       .matches("^(?=(?:[07]){2})(?=[0-9]{10}).*", "Invalid Phone Number!")
       .min(10, "Phone Number has to be be at least 10 digits long!")
-      .max(24, "Phone Number can not contain more than 24 digits!"),
+      .max(25, "Phone Number can not contain more than 25 digits!"),
     deliveryAddress: yup
       .string()
       .required("Delivery Address is required!")
@@ -92,12 +92,12 @@ function SignUp() {
         "Only characters and digits are allowed in this field"
       )
       .min(8, "Delivery Address has to be be at least 8 characters!")
-      .max(300, "Delivery Address can not contain more than 300 characters!"),
+      .max(150, "Delivery Address can not contain more than 150 characters!"),
     password: yup
       .string()
       .required("Password is required!")
       .min(8, "Password has to be be at least 8 characters long!")
-      .max(56, "Password can not contain max 56 characters!"),
+      .max(50, "Password can not contain max 50 characters!"),
     confirmPassword: yup.string().when("password", {
       is: (val) => (val && val.length > 0 ? true : false),
       then: yup

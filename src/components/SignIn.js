@@ -80,8 +80,6 @@ function SignIn() {
       password: "",
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values));
-
       dispatch(signIn(values.email, values.password));
     },
     validationSchema: validationSchema,
@@ -108,7 +106,7 @@ function SignIn() {
           spacing={0}
           direction="column"
           alignItems="center"
-          justify="center"
+          justifyContent="center"
           style={{ minHeight: "3vh" }}
         >
           <Grid item xs={12}>

@@ -198,7 +198,7 @@ const ProductPage = () => {
             spacing={0}
             direction="column"
             alignItems="left"
-            justify="center"
+            justifyContent="center"
             style={{ minHeight: "3vh" }}
           >
             <Grid item xs={12}>
@@ -218,7 +218,7 @@ const ProductPage = () => {
                   <Button
                     onClick={() => handleFavoriteClick()}
                     className={classes.submit}
-                    variant="primary"
+                    variant="contained"
                     style={{
                       maxWidth: "300px",
                       maxHeight: "30px",
@@ -236,7 +236,7 @@ const ProductPage = () => {
                   <Button
                     onClick={() => handleFavoriteClick()}
                     className={classes.submit}
-                    variant="primary"
+                    variant="contained"
                     style={{
                       maxWidth: "300px",
                       maxHeight: "30px",
@@ -255,7 +255,7 @@ const ProductPage = () => {
                 <Button
                   onClick={() => handleFavoriteClick()}
                   className={classes.submit}
-                  variant="primary"
+                  variant="contained"
                   style={{
                     maxWidth: "300px",
                     maxHeight: "30px",
@@ -273,7 +273,7 @@ const ProductPage = () => {
                 <Button
                   onClick={() => handleFavoriteClick()}
                   className={classes.submit}
-                  variant="primary"
+                  variant="contained"
                   style={{
                     maxWidth: "300px",
                     maxHeight: "30px",
@@ -293,7 +293,7 @@ const ProductPage = () => {
                   <Button
                     onClick={() => handleClickCart()}
                     className={classes.submit}
-                    variant="primary"
+                    variant="contained"
                     style={{
                       maxWidth: "300px",
                       maxHeight: "30px",
@@ -310,7 +310,7 @@ const ProductPage = () => {
                 ) : (
                   <Button
                     className={classes.submit}
-                    variant="primary"
+                    variant="contained"
                     style={{
                       maxWidth: "300px",
                       maxHeight: "30px",
@@ -330,7 +330,7 @@ const ProductPage = () => {
                 <Button
                   onClick={() => handleClickCart()}
                   className={classes.submit}
-                  variant="primary"
+                  variant="contained"
                   style={{
                     maxWidth: "300px",
                     maxHeight: "30px",
@@ -347,7 +347,7 @@ const ProductPage = () => {
               ) : (
                 <Button
                   className={classes.submit}
-                  variant="primary"
+                  variant="contained"
                   style={{
                     maxWidth: "300px",
                     maxHeight: "30px",

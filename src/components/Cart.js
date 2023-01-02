@@ -69,7 +69,7 @@ const Cart = (product) => {
                 <Typography variant="body2" gutterBottom>
                   {productName} quantity: {quantity}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="textSecondary">
                   Product price: {price}
                 </Typography>
                 <Grid>
@@ -120,7 +120,7 @@ const Cart = (product) => {
                 <Typography variant="body2" gutterBottom>
                   {product.name} quantity: {product.quantity}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="textSecondary">
                   Product price: {product.price}
                 </Typography>
                 <Grid>

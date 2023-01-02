@@ -218,6 +218,7 @@ export default function NavBar() {
       id={menuId}
       keepMounted
       transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={false}
       onClose={handleMenuClose}
     ></Menu>
   );
@@ -426,7 +427,7 @@ export default function NavBar() {
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <Link href="#" style={{ color: "white" }} underline="hover">
+                  <Link href="#" style={{ color: "white" }} underline="hover" to="#">
                     {" "}
                     {"View All Favorite Products >>>>"}
                   </Link>
@@ -561,7 +562,7 @@ export default function NavBar() {
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <Link href="#" style={{ color: "white" }} underline="hover">
+                  <Link href="#" style={{ color: "white" }} underline="hover" to="#">
                     {" "}
                     {"View All Products In Cart >>>>"}
                   </Link>
