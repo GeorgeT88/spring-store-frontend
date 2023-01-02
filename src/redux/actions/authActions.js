@@ -40,6 +40,7 @@ export const signUp =
       });
     toast.success("Succesfully signed Up! Please confirm your Email!", {
       position: "top-right",
+      toastId:"signUpMsg"
     });
   };
 

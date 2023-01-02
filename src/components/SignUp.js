@@ -288,6 +288,7 @@ function SignUp() {
             fullWidth
             variant="contained"
             color="primary"
+            id="signUpButton"
             className={classes.submit}
           >
             Sign Up

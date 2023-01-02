@@ -122,6 +122,7 @@ function SignIn() {
                 variant="body2"
                 gutterBottom
                 style={{ color: "#e53935" }}
+                id="signInMsg"
               >
                 {auth.err !== null && "Invalid Email or Password!"}
               </Typography>
@@ -170,6 +171,7 @@ function SignIn() {
             fullWidth
             variant="contained"
             color="primary"
+            id="signInButton"
             className={classes.submit}
           >
             Sign In
