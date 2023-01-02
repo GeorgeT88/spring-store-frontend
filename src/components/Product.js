@@ -189,7 +189,7 @@ const Product = (product) => {
       <NoSsr>
         <MuiThemeProvider theme={customTheme}>
           <ThemeProvider theme={customTheme}>
-            <StyledCard className={classes.card}>
+            <StyledCard className={classes.card} id="product">
               <CardMedia
                 className={classes.cardMedia}
                 image={photoLink}

@@ -117,6 +117,7 @@ export default function UserMenu() {
         aria-owns={anchorEl ? "simple-menu" : undefined}
         onClick={handleClick}
         color="inherit"
+        id='userButton'
       >
         {auth.id === null || auth.id === undefined ? (
           <AccountCircle fontSize="large" />
@@ -140,13 +141,13 @@ export default function UserMenu() {
           {" "}
           <MenuList id="simple-menu" onKeyDown={handleListKeyDown}>
             {auth.id === null && (
-              <MenuItem onClick={() => [handleSignIn(), handleClose()]}>
+              <MenuItem onClick={() => [handleSignIn(), handleClose()]} id="signIn">
                 Sign In
               </MenuItem>
             )}
 
             {auth.id === null && (
-              <MenuItem onClick={() => [handleSignUp(), handleClose()]}>
+              <MenuItem onClick={() => [handleSignUp(), handleClose()]}  id="signUp">
                 Sign Up
               </MenuItem>
             )}
@@ -157,7 +158,7 @@ export default function UserMenu() {
               </MenuItem>
             )}
             {auth.id !== null && (
-              <MenuItem onClick={() => [handleLogout(), handleClose()]}>
+              <MenuItem onClick={() => [handleLogout(), handleClose()]} id="logout">
                 Logout
               </MenuItem>
             )}
