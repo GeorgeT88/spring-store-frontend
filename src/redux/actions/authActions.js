@@ -16,33 +16,40 @@ import {
   clearProductsFromLocalCart,
 } from "../actions/cartLocalActions";
 
-
-
 const SIGN_IN = "SIGN_IN";
 const SIGN_UP = "SIGN_UP";
 const USER_LOADED = "USER_LOADED";
 const SIGN_OUT = "SIGN_OUT";
 
 export const signUp =
-  (firstName, lastName, email, phoneNumber, deliveryAddress, password) =>
-  async () => {
-    await axios
-      .post(process.env.REACT_APP_USER_PATH, {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        deliveryAddress,
-        password,
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-    toast.success("Succesfully signed Up! Please confirm your Email!", {
-      position: "top-right",
-      toastId:"signUpMsg"
-    });
-  };
+    (firstName, lastName, email, phoneNumber, deliveryAddress, password, formik) =>
+        () => {
+          return axios.post(process.env.REACT_APP_USER_PATH, {
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                deliveryAddress,
+                password,
+              }).then(res => {
+                toast.success("Succesfully signed Up! Please confirm your Email!", {
+                  position: "top-right",
+                  toastId: "signUpMsg"
+                });
+
+                return Promise.resolve();
+              }).catch((error) => {
+                console.log("Signup error:" + error.response.data);
+                if (error.response.data.messages) {
+                  error.response.data.messages.forEach((message) => {
+                        formik.setFieldError(message.fieldKey, message.message)
+                      }
+                  );
+                }
+
+               return Promise.reject();
+              });
+        };
 
 export const signIn = (email, password) => async (dispatch, getState) => {
   try {

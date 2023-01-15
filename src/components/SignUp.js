@@ -116,7 +116,7 @@ function SignUp() {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values) => {
+    onSubmit: (values, formit) => {
       dispatch(
         signUp(
           values.firstName,
@@ -124,10 +124,12 @@ function SignUp() {
           values.email,
           values.phoneNumber,
           values.deliveryAddress,
-          values.password
+          values.password,
+            formik
         )
-      );
-      history.push("/signIn");
+      ).then(() => {
+        history.push("/signIn");
+      });
     },
     validationSchema: validationSchema,
   });
