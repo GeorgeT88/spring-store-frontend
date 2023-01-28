@@ -108,7 +108,7 @@ function ProductCatalog() {
       <main>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
-          <Grid container spacing={4}>
+          <Grid container spacing={4} id="productCatalog">
             {productsOnPage.map((product) => (
               <Product key={product.id} {...product} />
             ))}
@@ -123,7 +123,7 @@ function ProductCatalog() {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          Springwebstore
         </Typography>
         <Typography
           variant="subtitle1"
@@ -131,7 +131,7 @@ function ProductCatalog() {
           color="textSecondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          {`${new Date().getFullYear()} | React | Material UI | React Router`}
         </Typography>
         <Copyright />
       </footer>
