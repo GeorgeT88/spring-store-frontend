@@ -125,7 +125,7 @@ export default function UserMenu() {
           <Avatar
             {...stringAvatar(`${auth.firstName} ${auth.lastName}`)}
             style={{ height: "35px", width: "35px" }}
-          />
+           id = "avatar"/>
         )}
         <Menu
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
