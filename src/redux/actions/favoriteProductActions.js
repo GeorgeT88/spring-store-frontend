@@ -32,7 +32,10 @@ export const addProductToFavorites = (product) => async (dispatch) => {
       type: PRODUCT_FAVORITES,
       products: response.data,
     });
-    toast.success("Product Added To Favorites!", { position: "top-right" });
+    toast.success("Product Added To Favorites!", {
+       position: "top-right",
+       toastId: "addProdToFavMsg"
+       });
   } else {
     return null;
   }
@@ -84,6 +87,7 @@ export const removeProductFromFavorites = (product) => {
           });
           toast.error("Product removed from Favorites!", {
             position: "top-right",
+            toastId: "removeProdFromFavMsg"
           });
         });
     } else {

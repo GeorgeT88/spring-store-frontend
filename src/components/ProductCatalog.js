@@ -109,8 +109,8 @@ function ProductCatalog() {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4} id="productCatalog">
-            {productsOnPage.map((product) => (
-              <Product key={product.id} {...product} />
+            {productsOnPage.map((product, index) => (
+              <Product key={product.id} product={product} index={index} />
             ))}
           </Grid>
         </Container>

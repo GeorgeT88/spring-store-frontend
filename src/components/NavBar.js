@@ -242,13 +242,16 @@ export default function NavBar() {
           onClick={() => history.push("/favoriteProductListPage")}
         >
           {token ? (
-            <Badge badgeContent={favoriteProducts?.length} color="secondary">
+            <Badge badgeContent={favoriteProducts?.length}
+              color="secondary"
+              id= "favoriteIconBadge">
               <FavoriteIcon />
             </Badge>
           ) : (
             <Badge
               badgeContent={favoriteLocalProducts?.length}
               color="secondary"
+              id= "favoriteIconBadge"
             >
               <FavoriteIcon />
             </Badge>
@@ -320,6 +323,7 @@ export default function NavBar() {
                 <Badge
                   badgeContent={favoriteProducts?.length}
                   color="secondary"
+                  id= "favoriteIconBadge"
                 >
                   <FavoriteIcon
                     aria-owns={
@@ -334,6 +338,7 @@ export default function NavBar() {
                 <Badge
                   badgeContent={favoriteLocalProducts?.length}
                   color="secondary"
+                  id= "favoriteIconBadge"
                 >
                   <FavoriteIcon
                     aria-owns={

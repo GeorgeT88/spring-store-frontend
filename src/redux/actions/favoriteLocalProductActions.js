@@ -10,7 +10,10 @@ export const addProductToFavoritesLocal = (product) => async (dispatch) => {
     type: ADD_PRODUCT_TO_FAVORITES_LIST,
     product: product,
   });
-  toast.success("Product Added To Local Favorites!", { position: "top-right" });
+  toast.success("Product Added To Local Favorites!", {
+     position: "top-right",
+     toastId: "addProdToFavMsg"
+    });
 };
 
 export const removeProductfromFavoritesLocal =
@@ -21,6 +24,7 @@ export const removeProductfromFavoritesLocal =
     });
     toast.error("Product Removed from Local Favorites!", {
       position: "top-right",
+      toastId: "removeProdFromFavMsg"
     });
   };
 

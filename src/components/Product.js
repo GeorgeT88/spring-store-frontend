@@ -89,7 +89,8 @@ const StyledCard = styled(Card)`
   `}
 `;
 
-const Product = (product) => {
+const Product = ({product, index}) => {
+
   const dispatch = useDispatch();
   let history = useHistory();
   const classes = useStyles();
@@ -291,20 +292,20 @@ const Product = (product) => {
                 )}
                 {token ? (
                   clicked ? (
-                    <IconButton color="default" onClick={() => handleClick()}>
-                      <FavoriteIcon style={{ color: red[500] }} />
+                    <IconButton color="default" id={"unselect_fav_prod_" + index} onClick={() => handleClick()}>
+                      <FavoriteIcon style={{ color: red[500] }}  />
                     </IconButton>
                   ) : (
-                    <IconButton color="default" onClick={() => handleClick()}>
+                    <IconButton color="default" id={"select_fav_prod_" + index} onClick={() => handleClick()}>
                       <FavoriteBorderIcon />
                     </IconButton>
                   )
                 ) : clickedLocal ? (
-                  <IconButton color="default" onClick={() => handleClick()}>
+                  <IconButton color="default" id={"unselect_fav_prod_" + index} onClick={() => handleClick()}>
                     <FavoriteIcon style={{ color: red[500] }} />
                   </IconButton>
                 ) : (
-                  <IconButton color="default" onClick={() => handleClick()}>
+                  <IconButton color="default" id={"select_fav_prod_" + index} onClick={() => handleClick()}>
                     <FavoriteBorderIcon />
                   </IconButton>
                 )}
