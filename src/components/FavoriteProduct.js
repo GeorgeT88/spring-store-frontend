@@ -22,8 +22,9 @@ const Img = styled("img")({
 const FavoriteProduct = (product) => {
   const dispatch = useDispatch();
   let history = useHistory();
-  const { photoLink, name, price } = product;
+  const { photoLinks, name, price } = product;
   const token = localStorage.getItem("token");
+  const photoLink = photoLinks.map(photo => photo.image);
 
   const handleProductPage = () => {
     dispatch(setProduct(product));
@@ -46,7 +47,7 @@ const FavoriteProduct = (product) => {
             sx={{ width: 128, height: 128 }}
             onClick={() => handleProductPage()}
           >
-            <Img alt="complex" src={photoLink} />
+            <Img alt="complex" src={photoLink[0]} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>

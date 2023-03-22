@@ -7,7 +7,7 @@ export const setProduct = (product) => ({
   name: product.name,
   description: product.description,
   price: product.price,
-  photoLink: product.photoLink,
+  photoLinks: product.photoLinks,
 });
 
 export const getProduct = () => ({
@@ -19,7 +19,7 @@ const initialState = {
   name: null,
   description: null,
   price: null,
-  photoLink: null,
+  photoLink: [],
 };
 
 const productActions = (state = initialState, action) => {
@@ -31,7 +31,7 @@ const productActions = (state = initialState, action) => {
         name: action.name,
         description: action.description,
         price: action.price,
-        photoLink: action.photoLink,
+        photoLinks: action.photoLinks,
       };
     case GET_PRODUCT:
       return { ...state };

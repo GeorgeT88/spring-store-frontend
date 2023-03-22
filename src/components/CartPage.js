@@ -95,7 +95,7 @@ const CartPage = () => {
               <Grid container spacing={2}>
                 <Grid item>
                   <ButtonBase sx={{ width: 128, height: 128 }}>
-                    <Img alt="complex" src={product.photoLink} />
+                    <Img alt="complex" src={product.photoLinks.map(photo => photo.image)[0]} />
                   </ButtonBase>
                 </Grid>
                 <Grid item xs={12} sm container>
@@ -239,7 +239,7 @@ const CartPage = () => {
               <Grid container spacing={2}>
                 <Grid item>
                   <ButtonBase sx={{ width: 128, height: 128 }}>
-                    <Img alt="complex" src={product.photoLink} />
+                    <Img alt="complex" src={product.photoLinks.map(photo => photo.image)[0]} />
                   </ButtonBase>
                 </Grid>
                 <Grid item xs={12} sm container>

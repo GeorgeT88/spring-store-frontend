@@ -120,18 +120,6 @@ const ProductPage = () => {
     }
   };
 
-  const data = [
-    {
-      image: "https://source.unsplash.com/featured/720x480/?{chair yellow}",
-    },
-    {
-      image: "https://source.unsplash.com/featured/720x480/?{chair pink}",
-    },
-    {
-      image: "https://source.unsplash.com/featured/720x480/?{chair green}",
-    },
-  ];
-
   const captionStyle = {
     fontSize: "2em",
     fontWeight: "bold",
@@ -148,7 +136,7 @@ const ProductPage = () => {
         <CssBaseline />
 
         <Carousel
-          data={data}
+          data={product.photoLinks}
           time={2000}
           width="800px"
           height="450px"

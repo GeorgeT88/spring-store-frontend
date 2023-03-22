@@ -94,13 +94,14 @@ const Product = ({product, index}) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const classes = useStyles();
-  const { photoLink, name, description, price } = product;
+  const { photoLinks, name, description, price } = product;
   const favoriteProducts = useSelector(
     (state) => state.favoriteProduct.products
   );
   const favoriteLocalProducts = useSelector(
     (state) => state.favoriteLocalProduct.products
   );
+  const photoLink = photoLinks.map(photo => photo.image);
   const productsInCart = useSelector((state) => state.cart.entries);
   const productsInCartLocal = useSelector((state) => state.cartLocal.products);
   const token = localStorage.getItem("token");
@@ -112,6 +113,8 @@ const Product = ({product, index}) => {
     dispatch(setProduct(product));
     history.push(`/productPage`);
   };
+
+
 
   useEffect(() => {
     if (token) {
@@ -193,7 +196,7 @@ const Product = ({product, index}) => {
             <StyledCard className={classes.card} id="product">
               <CardMedia
                 className={classes.cardMedia}
-                image={photoLink}
+                image={photoLink[0]}
                 onClick={() => handleProductPage()}
               />
               <CardContent

@@ -23,7 +23,8 @@ const Cart = (product) => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   let history = useHistory();
-  const { productName, photoLink, quantity, price } = product;
+  const { productName, photoLinks, quantity, price } = product;
+  const photoLink = photoLinks.map(photo => photo.image);
 
   const handleProductPage = () => {
     if (token) {
@@ -52,7 +53,7 @@ const Cart = (product) => {
               sx={{ width: 128, height: 128 }}
               onClick={() => handleProductPage()}
             >
-              <Img alt="complex" src={photoLink} />
+              <Img alt="complex" src={photoLink[0]} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
@@ -103,7 +104,7 @@ const Cart = (product) => {
               sx={{ width: 128, height: 128 }}
               onClick={() => handleProductPage()}
             >
-              <Img alt="complex" src={product.photoLink} />
+              <Img alt="complex" src={photoLink[0]} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
