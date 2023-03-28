@@ -19,7 +19,7 @@ const initialState = {
   name: null,
   description: null,
   price: null,
-  photoLink: [],
+  photoLinks: [],
 };
 
 const productActions = (state = initialState, action) => {
