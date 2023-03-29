@@ -130,7 +130,7 @@ const ProductPage = () => {
   };
 
   return (
-    <Container fixed="false" maxWidth="md">
+    <Container maxWidth="md">
       <Paper>
         <Divider />
         <CssBaseline />

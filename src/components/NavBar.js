@@ -21,6 +21,10 @@ import FavoriteProduct from "./FavoriteProduct";
 import Cart from "./Cart";
 import SearchProductBar from "./SearchProductBar";
 import { getAllProductsByCategory } from "../redux/actions/productsActions";
+import { signOut } from "../redux/actions/authActions";
+import { signOutProductFavorites } from "../redux/actions/favoriteProductActions";
+import { signOutCart } from "../redux/actions/cartActions";
+import { getAllProducts } from "../redux/actions/productsActions";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -103,6 +107,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const appBar = useSelector((state) => state.secondaryAppBar.appbar);
   const favoriteProducts = useSelector(
@@ -126,7 +131,6 @@ export default function NavBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-  let history = useHistory();
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   function handleClickDropDownProductFavorites(event) {
@@ -209,6 +213,20 @@ export default function NavBar() {
 
     prevOpen.current = open;
   }, [open]);
+
+  useEffect(() => {
+    if(token){
+    const decode = JSON.parse(atob(token.split('.')[1]));
+    if (decode.exp * 1000 < new Date().getTime()) {
+      history.push("/");
+      dispatch(getAllProducts());
+      dispatch(signOut());
+      dispatch(signOutProductFavorites());
+      dispatch(signOutCart());
+      console.log('Token Expired!');
+    }
+  }
+  }, [token, dispatch, history]);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
