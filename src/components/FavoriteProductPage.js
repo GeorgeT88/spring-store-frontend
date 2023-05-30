@@ -21,7 +21,7 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-const FavoriteProductPage = (product) => {
+const FavoriteProductPage = ({product, index}) => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const productsInCart = useSelector((state) => state.cart.entries);

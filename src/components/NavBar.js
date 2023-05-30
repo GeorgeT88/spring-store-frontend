@@ -255,7 +255,7 @@ export default function NavBar() {
     >
       <MenuItem onClick={() => history.push("/favoriteProductListPage")}>
         <IconButton
-          aria-label="show 4 new mails"
+          aria-label="show favorite products"
           color="inherit"
           onClick={() => history.push("/favoriteProductListPage")}
         >
@@ -279,12 +279,14 @@ export default function NavBar() {
       </MenuItem>
       <MenuItem onClick={() => history.push("/cartPage")}>
         <IconButton
-          aria-label="show 11 new notifications"
+          aria-label="show products in cart"
           color="inherit"
+          id= "cartIcon"
           onClick={() => history.push("/cartPage")}
         >
           {token ? (
             <Badge
+              id= "cartIconBadge"
               badgeContent={productsInCart.reduce(function (tot, productDto) {
                 return tot + productDto.quantity;
               }, 0)}
@@ -294,6 +296,7 @@ export default function NavBar() {
             </Badge>
           ) : (
             <Badge
+              id= "cartIconBadge"
               badgeContent={productsInCartLocal.reduce(function (tot, product) {
                 return tot + product.quantity;
               }, 0)}
@@ -335,6 +338,7 @@ export default function NavBar() {
             <IconButton
               aria-label="show favorite products"
               color="inherit"
+              id= "favoriteIcon"
               onClick={handleClickDropDownProductFavorites}
             >
               {token ? (
@@ -346,7 +350,7 @@ export default function NavBar() {
                   <FavoriteIcon
                     aria-owns={
                       anchorElDropDownProductFavorites
-                        ? "simple-dropdown"
+                        ? "favoriteProducts-dropdown"
                         : undefined
                     }
                     aria-haspopup="true"
@@ -361,7 +365,7 @@ export default function NavBar() {
                   <FavoriteIcon
                     aria-owns={
                       anchorElDropDownProductFavorites
-                        ? "simple-dropdown"
+                        ? "favoriteProducts-dropdown"
                         : undefined
                     }
                     aria-haspopup="true"
@@ -371,7 +375,7 @@ export default function NavBar() {
               <Menu
                 anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                 transformOrigin={{ vertical: "top", horizontal: "left" }}
-                id="simple-dropdown"
+                id="favoriteProducts-dropdown"
                 anchorEl={anchorElDropDownProductFavorites}
                 open={Boolean(anchorElDropDownProductFavorites)}
                 onClose={handleCloseDropDownProductFavorites}
@@ -393,12 +397,13 @@ export default function NavBar() {
                     variant="h6"
                     style={{ color: "white" }}
                     align="center"
+                    id = "favoriteProductsListTitle"
                   >
                     {"Favorite Products"}
                   </Typography>
                 </Box>
                 {token ? (
-                  <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+                  <MenuList id="favoriteProducts-dropdown" onKeyDown={handleListKeyDown}>
                     {favoriteProducts.length === 0 && (
                       <Typography
                         variant="h6"
@@ -411,15 +416,12 @@ export default function NavBar() {
                     {favoriteProducts &&
                       favoriteProducts
                         .slice(0, 3)
-                        .map((favoriteProduct) => (
-                          <FavoriteProduct
-                            key={favoriteProduct.id}
-                            {...favoriteProduct}
-                          />
+                        .map((product, index) => (
+                          <FavoriteProduct key={product.id} product={product} index={index}/>
                         ))}
                   </MenuList>
                 ) : (
-                  <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+                  <MenuList id="favoriteProducts-dropdown" onKeyDown={handleListKeyDown}>
                     {favoriteLocalProducts.length === 0 && (
                       <Typography
                         variant="h6"
@@ -432,11 +434,8 @@ export default function NavBar() {
                     {favoriteLocalProducts &&
                       favoriteLocalProducts
                         .slice(0, 3)
-                        .map((favoriteProduct) => (
-                          <FavoriteProduct
-                            key={favoriteProduct.id}
-                            {...favoriteProduct}
-                          />
+                        .map((product, index) => (
+                          <FavoriteProduct key={product.id} product={product} index={index}/>
                         ))}
                   </MenuList>
                 )}
@@ -459,12 +458,14 @@ export default function NavBar() {
             </IconButton>
 
             <IconButton
-              aria-label="show 17 new notifications"
+              aria-label="show products in cart"
               color="inherit"
+              id= "cartIcon"
               onClick={handleClickDropDownProductInCart}
             >
               {token ? (
                 <Badge
+                  id= "cartIconBadge"
                   badgeContent={productsInCart.reduce(function (
                     tot,
                     productDto
@@ -477,7 +478,7 @@ export default function NavBar() {
                   <ShoppingCartIcon
                     aria-owns={
                       anchorElDropDownProductInCart
-                        ? "simple-dropdown"
+                        ? "cart-dropdown"
                         : undefined
                     }
                     aria-haspopup="true"
@@ -485,6 +486,7 @@ export default function NavBar() {
                 </Badge>
               ) : (
                 <Badge
+                id= "cartIconBadge"
                   badgeContent={productsInCartLocal.reduce(function (
                     tot,
                     product
@@ -497,7 +499,7 @@ export default function NavBar() {
                   <ShoppingCartIcon
                     aria-owns={
                       anchorElDropDownProductInCart
-                        ? "simple-dropdown"
+                        ? "cart-dropdown"
                         : undefined
                     }
                     aria-haspopup="true"
@@ -508,7 +510,7 @@ export default function NavBar() {
               <Menu
                 anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                 transformOrigin={{ vertical: "top", horizontal: "left" }}
-                id="simple-dropdown"
+                id="cart-dropdown"
                 anchorEl={anchorElDropDownProductInCart}
                 open={Boolean(anchorElDropDownProductInCart)}
                 onClose={handleCloseDropDownProductInCart}
@@ -530,13 +532,14 @@ export default function NavBar() {
                     variant="h6"
                     style={{ color: "white" }}
                     align="center"
+                    id = "CartListTitle"
                   >
                     {"Cart"}
                   </Typography>
                 </Box>
 
                 {token ? (
-                  <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+                  <MenuList id="cart-dropdown" onKeyDown={handleListKeyDown}>
                     {productsInCart.length === 0 && (
                       <Typography
                         variant="h6"
@@ -554,7 +557,7 @@ export default function NavBar() {
                         ))}
                   </MenuList>
                 ) : (
-                  <MenuList id="simple-dropdown" onKeyDown={handleListKeyDown}>
+                  <MenuList id="cart-dropdown" onKeyDown={handleListKeyDown}>
                     {productsInCartLocal.length === 0 && (
                       <Typography
                         variant="h6"

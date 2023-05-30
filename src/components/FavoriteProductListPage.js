@@ -32,11 +32,11 @@ const FavoriteProductListPage = () => {
       </Typography>
 
       {token
-        ? favoriteProducts.map((product) => (
-            <FavoriteProductPage key={product.id} {...product} />
+        ? favoriteProducts.map((product, index) => (
+            <FavoriteProductPage key={product.id} product={product} index={index} />
           ))
-        : favoriteLocalProducts.map((product) => (
-            <FavoriteProductPage key={product.id} {...product} />
+        : favoriteLocalProducts.map((product, index) => (
+            <FavoriteProductPage key={product.id} product={product} index={index} />
           ))}
     </Paper>
   );

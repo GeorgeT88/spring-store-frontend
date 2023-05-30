@@ -19,7 +19,7 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-const FavoriteProduct = (product) => {
+const FavoriteProduct = ({product, index}) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const { photoLinks, name, price } = product;
@@ -70,6 +70,7 @@ const FavoriteProduct = (product) => {
               <Grid>
                 <Button
                   onClick={() => handleClickRemoveProductFromFavorites()}
+                  id={"remove_from_fav_prod_dropdown_list_" + index}
                   style={{
                     maxWidth: "300px",
                     maxHeight: "30px",
